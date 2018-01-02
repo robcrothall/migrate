@@ -1,0 +1,19 @@
+/**********************************************************/
+/*  THIS EXEC UNLOADS 830HA004.GLMAIN95                   */
+/*                                                        */
+/**********************************************************/
+
+CLRSCRN
+Signal On Error
+ADDRESS COMMAND
+
+'FILEDEF GLM95 DISK GLMAIN95 DATA A (RECFM FB LRECL 120 BLOCK 3600'
+
+'EXEC SQLDBSU IN(GLMAIN95 UNLD)  PR(GLMAIN95 PUNLD)'
+
+Exit RC
+Error:
+Say Sourceline(SIGL)
+Say "gave return code" RC
+Exit RC
+

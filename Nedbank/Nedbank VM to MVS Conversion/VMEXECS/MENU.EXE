@@ -1,0 +1,32 @@
+/*  */
+CLRSCRN
+SAY' '
+SAY 'NEDCOR VM/ESA 2.0 - Information Centre CMS '
+say ' '
+say 'Invoke the facilities on this panel by entering the CMS command.'
+say ' '
+say '    FACILITY                CMS Command     Comments'
+say '   ==========              =============   =========='
+say
+say,
+'   Application System      VMAS            To proceed to AS from CMS'
+say,
+'   Query your reader       RL              Shows files sent to you'
+say,
+'   Change password         DIRM PW         Must be done every 60 days'
+say,
+'   Query your MDPW         DIRM MDPW       Shows your mini disk PW'
+say,
+'   Exit CMS                LOGOFF          To leave the system'
+say,
+'   Link to another ID      LINKID          Enables you to copy files'
+say,
+'                                           from another ID'
+say ' '
+say '  NOTE: Whenever MORE... or HOLDING appears in right bottom corner,'
+say '        You must clear the screen by pressing the 'CLEAR' key'
+SAY ' '
+SAY 'PF1 VMAS    PF2 CMS Panel    PF3 LOGOFF    PF5 Recall last Command'
+SAY ' '
+EXIT
+

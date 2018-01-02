@@ -1,0 +1,925 @@
+[ver]
+	4
+[sty]
+	
+[charset]
+	82
+	ANSI (Windows, IBM CP 1252)
+[PanoseFontTable]
+	4
+	5
+	Arial MT
+	2818
+	1030
+	514
+	514
+	1026
+	TimesNewRomanPS
+	514
+	774
+	1029
+	517
+	1027
+	Helv
+	2818
+	1029
+	514
+	770
+	1026
+	Times New Roman
+	514
+	774
+	1029
+	517
+	1027
+[revisions]
+	0
+[recfile]
+	
+	*
+	1
+	1
+	3
+	8
+	0
+	0
+[lang]
+	2
+[desc]
+	
+	
+	
+	
+	
+	824503525
+	2
+	824501132
+	40
+	0
+	0
+	0
+	0
+	0
+	
+	
+	
+	
+	
+	
+	1
+[prn]
+	Lexmark 4039 10 plus
+[port]
+	PCL 5-Lexmark 4039 10 plus LaserPrinter
+[fopts]
+	0
+	1
+	0
+	0
+[lnopts]
+	2
+	Body Text
+	1
+[docopts]
+	5
+	2
+[GramStyle]
+	
+[tag]
+	Footer
+	11
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		0
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		0
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Footer
+	0
+	0
+[tag]
+	Header
+	9
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		0
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		0
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Header
+	0
+	0
+[tag]
+	Title
+	8
+	[fnt]
+		Helv
+		360
+		0
+		49153
+	[algn]
+		4
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		0
+		1
+		144
+		72
+		1
+		100
+	[brk]
+		16
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		1
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		272
+		1
+		2
+		.
+		,
+		</c>
+	Title
+	0
+	0
+[tag]
+	Subhead
+	7
+	[fnt]
+		Times New Roman
+		240
+		0
+		49155
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		0
+		1
+		72
+		72
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		2
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		272
+		1
+		2
+		.
+		,
+		</c>
+	Subhead
+	0
+	0
+[tag]
+	Number List
+	6
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		360
+		360
+		360
+	[spc]
+		33
+		0
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		0
+		<*:>.
+		0
+		1
+		1
+		0
+		16
+		0
+		0
+	[nfmt]
+		272
+		1
+		2
+		.
+		,
+		</c>
+	Number List
+	0
+	0
+[tag]
+	Bullet 1
+	5
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		288
+		288
+		288
+	[spc]
+		33
+		0
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		0
+		<*5>
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Bullet 1
+	0
+	0
+[tag]
+	Bullet
+	4
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		288
+		288
+	[spc]
+		33
+		0
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		0
+		<*0>
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		272
+		1
+		2
+		.
+		,
+		</c>
+	Bullet
+	0
+	0
+[tag]
+	Body Single
+	3
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		0
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		0
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Body Single
+	0
+	0
+[tag]
+	Body Text
+	2
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		0
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		0
+		1
+		1
+		144
+		144
+		1
+	[spec]
+		0
+		0
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Body Text
+	0
+	0
+[lay]
+	Standard
+	516
+	[rght]
+		16838
+		11905
+		1
+		1440
+		1440
+		1
+		1440
+		1440
+		0
+		1
+		0
+		1
+		0
+		2
+		1
+		1440
+		10465
+		12
+		1
+		720
+		1
+		1440
+		1
+		2160
+		1
+		2880
+		1
+		3600
+		1
+		4320
+		1
+		5040
+		1
+		5760
+		1
+		6480
+		1
+		7200
+		1
+		7920
+		1
+		8640
+	[frght]
+	[lyfrm]
+		0
+		13184
+		0
+		15398
+		11905
+		16838
+		0
+		1
+		1
+		0 0 0 0 0 0 0
+		0
+		16777215
+		0
+	[frmlay]
+		16838
+		11905
+		1
+		1440
+		792
+		1
+		15470
+		1440
+		0
+		1
+		0
+		0
+		0
+		0
+		1
+		1440
+		10465
+		2
+		2
+		4680
+		3
+		9360
+	[txt]
+<:s>
+
+>
+	[hrght]
+	[lyfrm]
+		0
+		11136
+		0
+		0
+		11905
+		1440
+		0
+		1
+		1
+		0 0 0 0 0 0 0
+		0
+		16777215
+		0
+	[frmlay]
+		1440
+		11905
+		1
+		1440
+		72
+		1
+		792
+		1440
+		0
+		1
+		0
+		0
+		0
+		0
+		1
+		1440
+		10465
+		2
+		2
+		4680
+		3
+		9360
+	[txt]
+<:s>
+
+>
+[elay]
+[lay]
+	1
+	513
+	[rght]
+		15840
+		12240
+		1
+		1800
+		1440
+		1
+		1440
+		1440
+		2
+		1
+		0
+		0
+		0
+		5
+		1
+		1800
+		10800
+		16
+		1
+		720
+		1
+		1440
+		1
+		2160
+		1
+		2880
+		1
+		3600
+		1
+		4320
+		1
+		5040
+		1
+		5760
+		1
+		6480
+		1
+		7200
+		1
+		7920
+		1
+		8640
+		1
+		9360
+		1
+		10080
+		1
+		10800
+		1
+		11520
+	[frght]
+	[lyfrm]
+		0
+		13184
+		0
+		14400
+		12240
+		15840
+		0
+		1
+		1
+		0 0 0 0 0 0 0
+		0
+		16777215
+		0
+	[frmlay]
+		15840
+		12240
+		1
+		1800
+		0
+		1
+		14400
+		1440
+		0
+		0
+		0
+		0
+		0
+		0
+		1
+		1800
+		10800
+		0
+	[txt]
+<:s><:#P29491200,P943718>
+
+>
+	[hrght]
+	[lyfrm]
+		0
+		11136
+		0
+		0
+		12240
+		1440
+		0
+		1
+		1
+		0 0 0 0 0 0 0
+		0
+		16777215
+		0
+	[frmlay]
+		1440
+		12240
+		1
+		1800
+		0
+		1
+		0
+		1440
+		0
+		0
+		0
+		0
+		0
+		0
+		1
+		1800
+		10800
+		0
+	[txt]
+<:s><:#P29491200,P943718>
+
+>
+[elay]
+[l1]
+	1
+[edoc]
+<:s><:#P29491200,P943718><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>15 February 1996
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Nedcor
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>105 West Street
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Sandton
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>2196
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Attention: Mr Trevor Howcroft
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P943718><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Subject:   Application System (AS)  -  Year End - Streamline and Cleanup proposal
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>
+
+<:s><:#P29491200,P6606026><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Over the last year Eli Henig was on contract from IBM to Colin Hendry at Nedcor.   His role was to streamline and simplify the use of their AS systems, and implement any enhancements that were requested by the users.   What was previously an extremely  difficult, labour intensive and time consuming system, which took about one week to accomplish has been streamlined to take a few hours in an unattended (disconnected)  mode.   This means that a few hours after the month end "copy management" files become available for processing, all the reports have been run and submitted for printing.
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P9437180><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>With the Tax Year End coming up in a few weeks time, I would like to propose that Nedcor use a couple of our AS consultants, to investigate the most time critical systems, such as the Human Resources Tax Year End requirements, either before or after the 28 February 1996, and streamline them in order to get through them in the minimum amount of time and with the minimum amount of effort.  This would benefit the personnel in the Human Resources department, as it would give them more time to handle the heavier work load at year end.  All the reports required at Tax Year end would be available much sooner, which would benefit both the Human Resources department and many other departments within Nedcor who are reliant on getting information and reports from the Human Resources deparment at this busy time of the year.
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P3774872><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>During the streamlining process, any redundant files could be discarded (obviously after suitable backups have been taken in case they be needed again).   This would have a double benefit by reducing the disk space requirements and the number of files that would have to be converted during the VM to MVS migration.
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P3774872><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>We could also provide additional consultants to streamline other AS systems that are critical  for the Financial Year End in March.  This would result in even greater benefits to those described above, as  many people and departments throughout Nedcor are dependant on the rapid production of Year End reports and graphs.
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P1887436><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>An additional benefit would be that the streamlined systems above would be far easier for the users to run and test during the conversion  from VM to MVS.
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>As the hardware and software upgrades required for the move to MVS will most probably only become available by mid March 1996, this delay could be effectively used to the benefit of Nedcor  by using this period to implement our suggestions.   It would also mean that the testing and parallel running required for the move from VM to MVS would happen after the extremely busy Year End processing has been completed, and thus not put any additional load on the users during their busiest period of the year.
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P1887436><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Please do not hesitate to give us a call to discuss the above proposals, or any other that you may have.    We  look forward to working with you all at Nedcor.
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Yors sincerely,
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Ian Sutherland
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Decision Support Consultant
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Telephone:  (011) 320-8698
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R1,19,1,720,1,1440,1,2160,1,2880,1,3600,1,4320,1,5040,1,5760,1,6480,1,7200,1,7920,1,8640,1,9360,1,10080,1,10800,1,11520,1,12240,1,12960,1,13680,>Fax:           (011) 320-8722
+
+<:s><:#P29491200,P943718><+C><:I0,0,0,0><:R>
+>
+
+[Embedded]
+00013112

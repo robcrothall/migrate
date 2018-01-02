@@ -1,0 +1,157 @@
+/* */
+SET CMSTYPE HT
+/***** commented out 2/11/89... ref: ahmed
+ERASE USER DETAILS A         /* Erase the old details from last run*/
+*****/
+SET CMSTYPE RT
+SAY
+SAY
+SAY '        ********************************************************'
+SAY '        *    USE THIS PROGRAM TO SUBMIT CENTRE PRINT FILES     *'
+SAY '        *    TO THE XEROX LASER PRINTER.                       *'
+SAY '        *                                                      *'
+SAY '        *    Please phone the Information Centre to arrange    *'
+SAY '        *    for a tape with a ring to be mounted for you.     *'
+SAY '        ********************************************************'
+SAY
+SAY 'If you need more information type in HELP, to continue press ENTER'
+PULL need
+IF need='HELP' THEN
+   BROWSE XEROX HELP
+SAY 'Enter the number of files you want printed:'
+PULL quantity .
+DO WHILE ªDATATYPE(quantity,WHOLE)                       /* Integer?  */
+   SAY quantity 'is NOT a valid number, please re-enter' /* If not    */
+   PULL quantity .                                       /* try again */
+END
+IF quantity=0 THEN DO
+   SAY 'No files were required'
+   EXIT
+END
+exists='YES'
+DO index=1 TO quantity
+   CALL postfix index                   /* get the ST, TH etc right */
+   IF exists='YES' THEN
+      SAY 'Please enter the' index³³post  'FILE NAME'
+   ELSE SAY 'Re-enter the' index³³post 'file name or press ENTER',
+            'to continue'
+   PULL file_name.index
+   IF file_name.index='' THEN
+      exists='YES'
+   ELSE DO
+      DO WHILE DATATYPE(file_name.index,NUMBER)
+         SAY 'ERROR. Please re-enter FILE NAME'
+         PULL file_name.index .
+      END
+      STATE file_name.index LISTING A
+      IF RC=0 THEN
+         exists='YES'
+      ELSE DO
+         exists='NO'
+         index=index-1
+      END
+   END
+END /* do index=1 ... */
+
+copied=0
+DO index=1 TO quantity
+   STATE file_name.index 'LISTING A'
+   IF RCª=0 THEN
+      CLRSCRN
+   ELSE DO
+      SAY 'Busy copying' file_name.index 'LISTING into',
+          ' the required format ...'
+      COPY  file_name.index LISTING A '= = = (REP RECFM F'
+      COPY  file_name.index LISTING A '= = = (REP LRECL 133'
+      copied=copied + 1
+   END
+END /* do index=1 ... */
+
+IF copied=0 THEN DO
+  SAY '*** No files requested. End of procedure ***'
+  EXIT
+END
+/******** commentec out 2/11/89... ref:ahmed
+CALL details
+COPY  USER DETAILS A '= = = (REP RECFM F'
+COPY  USER DETAILS A '= = = (REP LRECL 133'
+*********/
+
+TAPE_ATTACHED = 0                 /* Loop till Op ATTACHES tape drive */
+DO UNTIL TAPE_ATTACHED
+   'EXECIO 0 CP (STRING Q V 181'          /* suppresses reply from CP */
+   IF RC=0 THEN DO
+       TAPE_ATTACHED = 1                             /* OK, we got it */
+       LEAVE
+   END
+   ELSE DO
+        SAY 'Please phone the IC to make sure the drive is attached'
+        SAY 'The program will wait until the tape is ready...'
+        SAY
+       'CP SLEEP 30 SEC'
+   END
+END
+TAPE_READY = 0                   /* Maybe attached, but is it READY ? */
+DO UNTIL TAPE_READY              /* Try rewind it and find out.....   */
+  'EXECIO * CP (STRING REW 181' /* Response is either REWIND COMPLETE */
+     PULL . STATUS .                       /* or REWIND NOT PERFORMED */
+       IF STATUS = 'NOT' THEN DO
+         SAY'*** Tape NOT ready. Please check tape drive'
+         'CP SLEEP 15 SEC'
+       END
+          ELSE DO
+             TAPE_READY = 1
+             LEAVE
+          END
+END
+SAY 'Busy dumping files onto tape ...'
+/******** commented out 2/11/89... ref:ahmed
+   'FI INMOVE DISK USER DETAILS A '
+   'FI OUTMOVE TAP1 (LRECL 133 RECFM FB BLKSIZE 1330'
+   MOVE
+***********/
+SET CMSTYPE HT
+DO index=1 TO quantity
+  STATE file_name.index LISTING A
+  IF RC=0 THEN DO
+     'FI INMOVE DISK' file_name.index LISTING A
+     'FI OUTMOVE TAP1 (LRECL 133 RECFM FB BLKSIZE 1330'
+     MOVE
+  END /* if rc=0 */
+END /* do index=1 ... */
+SET CMSTYPE RT
+TAPE WTM
+SAY
+SAY '*** Program finished successfully, the tape is ready for printing ***'
+DET 181
+
+POSTFIX:
+  index= ARG(1)
+  SELECT
+    WHEN index=1 THEN post='st'
+    WHEN index=2 THEN post='nd'
+    WHEN index=3 THEN post='rd'
+    OTHERWISE post='th'
+  END
+RETURN
+
+/************* commented out 2/11/89... ref :ahmed
+DETAILS:
+SAY
+SAY 'For printout dispatching please enter your name and address.'
+SAY 'You can enter the data in a free format, to finish press ENTER'
+SAY 'without entering any data.'
+'EXECIO 10 DISKW' USER DETAILS A '(STRING ***'
+'EXECIO  1 DISKW' USER DETAILS A '(STRING ***  D I S P A T C H   T O :'
+'EXECIO  1 DISKW' USER DETAILS A '(STRING ***'
+DO UNTIL RCª=0
+   PARSE PULL line
+   IF line=''
+   THEN LEAVE
+   'EXECIO 1 DISKW' USER DETAILS A '(STRING *** ' line
+END
+'EXECIO 10 DISKW' USER DETAILS A '(STRING ***'
+FINIS USER DETAILS A
+RETURN
+*****************/
+

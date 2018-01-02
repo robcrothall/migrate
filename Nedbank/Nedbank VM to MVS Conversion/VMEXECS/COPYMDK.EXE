@@ -1,0 +1,148 @@
+/******************************************************************/
+/*  Exec to dump mini disks to tape using the CMS VMFPLC2 module  */
+/*  This exec needs the USER DIRECT as input file, to obtain link */
+/*  access of the users mini disks being dumped to tape .         */
+/*  Any users not to be dumped to disk should be listed in a file */
+/*  called USER EXCLUDE. If a user is in this list none of its    */
+/*  mini disks will be dumped..                                   */
+/*  This exec produces a log file called USER COPYLOG. All results*/
+/*  good or bad - are logged in this file.                        */
+/******************************************************************/
+DIRM USER W
+cp sleep 5 sec
+MAKEBUF
+'EXECIO * CP (LIFO STRING Q R * ALL'
+PULL . num .
+RECEIVE num USER DIRECT A '(REPL'
+DROPBUF
+'copy user direct a = = =(repl lrecl 72'
+/**/
+'state user direct *'
+if rc <> 0 then call error nofile rc
+'state user exclude *'
+if rc <> 0 then do
+   exclude = 0
+   'execio 1 diskw user copylog a (STRING No exclude list found, all users will
+be processed.'
+   end
+'erase user work'
+'erase user tempdir a'
+'erase user dumplog a'
+'erase user excllog a'
+userid = ''
+do forever
+   'execio 1 diskr user direct '
+   if rc > 0 then do
+      'finis user direct a'
+      'finis user copylog a'
+      signal copyit
+      end
+   pull w1 w2 w3 w4 w5 w6 w7 w8 w9 w10 w11
+   chk = substr(w1,1,1)
+   if chk = '*' then iterate
+   if w5 > '884' then iterate
+   if w4 = '000' then iterate
+   if w1 = 'MDISK' then do
+      if w8 = '' then w8 = 'READ '
+      if w9 = '' then w9 = 'WRITE'
+      if w10 = '' then w10 = 'MULTI'
+      end
+   'execio 1 diskw user tempdir a (STRING' w1 w2 w3 w4 w5 w6 w7 w8 w9 w10
+   if w1 = 'USER' then userid = w2
+   if userid = '' then iterate
+   if w1 = 'MDISK' then 'execio 1 diskw user work a (STRING ' userid w2 w10
+ end
+copyit:
+'finis user tempdir a'
+'copy user tempdir a (lrecl 80 recfm f rep'
+'DIRECT USER TEMPDIR A '
+/* if rc <> 0 then exit 111*/
+copyit2:
+ do forever
+   docopy = 1
+   makebuf
+   bufno = rc
+   'execio * diskr user exclude '
+   'finis user exclude'
+   i = 1
+   do while queued()>0
+      pull exclu junk
+      excl.i = exclu
+      i = i + 1
+      end
+   i = i + 1
+   excl.i = ''
+   excl_count = i
+   desbuf bufno
+   do forever
+      'execio 1 diskr user work a'
+      if rc > 0 then signal finis
+      pull w1 w2 w3 junk
+      do  i = 1 to excl_count
+         if w1 = EXCL.i then docopy = 0
+         if excl.i = '' then leave
+         end
+      if docopy = 0 then 'execio 1 diskw user excllog a(STRING ' Skipping w1 w2
+      if docopy = 0 then signal copyit2
+      'cp det 666'
+      'execio 0 cp (STRING CP LINK ' w1 w2 '666 MR' w3
+      if rc > 0 then do
+         call error link rc
+         signal copyit2
+         end
+      'acc 666 z'
+      if rc > 0 then do
+         call error access  rc
+         signal copyit2
+         end
+      say 'Copying ' w1 w2    'to tape.....'
+      'execio 1 diskw user dumplog a(STRING 'Copying w1 w2
+      'execio 1 diskw mdisk control a (STRING ' w1 w2  w3
+      'finis mdisk control a'
+      'vmfplc2 dump mdisk control a'
+      if rc = 40 then do
+        call fulltape
+        'vmfplc2 dump mdisk control a'
+        end
+      'vmfplc2 dump * * z (disk'
+      if rc = 40 then do
+         call fulltape
+         'vmfplc2 dump * * z (disk'
+         end
+      if rc > 0 then call error dump rc
+      'execio 1 diskw user copylog a (STRING ' w1 ' dump of ' w2  'completed rc
+= ' rc
+      'release z (det'
+      'tape wtm'
+      'erase mdisk control a'
+      end
+      signal copyit2
+   end
+ end
+error:
+  arg func
+  if func = 'DUMP' then signal dumperr
+  if func = 'LINK' then signal linkerr
+  if func = 'ACCESS' then signal accesserr
+  return
+dumperr:
+  'execio 1 diskw user copylog a (STRING ' w1 ' dump of ' w2  'failed rc ='rc
+  return
+linkerr:
+  'execio 1 diskw user copylog a (STRING ' w1 ' link to ' w2  'failed rc ='rc
+  return
+accesserr:
+  'execio 1 diskw user copylog a (STRING ' w1 ' access to ' w2 ' failed rc = 'rc
+  return
+fulltape:
+  'vmfplc2 bsf'
+  'vmfplc2 fsf'
+  'vmfplc2 wtm 100'
+  say 'Tape full.... Mount next tape.'
+  'tape run'
+  'vmfplc2 dump mdisk control a'
+  return
+finis:
+ say 'VMFPLC2 dump completed.'
+ exit 0
+

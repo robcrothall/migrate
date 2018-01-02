@@ -1,0 +1,24 @@
+/** EXEC TO CHANGE ANY EXEC ON NEDMAINT **/
+arg filename filetype .;
+
+/* Check For missing parms */
+if filetype = ' '
+   then do
+   filetype = exec
+   end;
+
+
+/* Check if file exists */
+SET CMSTYPE HT;
+STATE filename filetype A;
+SET CMSTYPE RT;
+if RCª=0
+then say 'File' filename filetype 'A does not exists'
+
+/* Copy the filetype as change then edit, file and replace */
+copy filename filetype 'A = CHANGE ='
+xedit filename CHANGE
+copy filename change 'A = EXEC A(repl'
+erase filename CHANGE A
+say 'all done...'
+

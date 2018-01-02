@@ -1,0 +1,185 @@
+ CONNECT BGP IDENTIFIED BY BGP;
+
+ CREATE TABLE MAIN
+          ( ACCOUNT              DECIMAL   (10)  NOT NULL,
+            BRANCH               DECIMAL    (3)  NOT NULL,
+            TYPE                 DECIMAL    (4)  NOT NULL,
+            DIVISION             DECIMAL    (3)  NOT NULL,
+            REGION               DECIMAL    (3)  NOT NULL,
+            AREA                 DECIMAL    (3)  NOT NULL,
+            PARENT               DECIMAL    (3)  NOT NULL,
+            BALANCE              DECIMAL (13,2)  NOT NULL,
+           "DR COMPONENT"        DECIMAL (13,2)  NOT NULL,
+           "CR COMPONENT"        DECIMAL (13,2)  NOT NULL,
+           "AVE BALANCE"         DECIMAL (13,2)  NOT NULL,
+           "AVE DR BALANCE"      DECIMAL (13,2)  NOT NULL,
+           "AVE CR BALANCE"      DECIMAL (13,2)  NOT NULL,
+           "DR TURNOVER MTH"     DECIMAL (13,2)  NOT NULL,
+           "DR TURNOVER QTR"     DECIMAL (13,2)  NOT NULL,
+           "DR TURNOVER YR"      DECIMAL (13,2)  NOT NULL,
+           "CR TURNOVER MTH"     DECIMAL (13,2)  NOT NULL,
+           "CR TURNOVER QTR"     DECIMAL (13,2)  NOT NULL,
+           "CR TURNOVER YR"      DECIMAL (13,2)  NOT NULL)
+        IN BGP3;
+
+ COMMENT ON TABLE MAIN
+         IS 'BGP main data table';
+
+ COMMENT ON COLUMN  MAIN.ACCOUNT
+         IS 'Account number';
+ COMMENT ON COLUMN  MAIN.BRANCH
+         IS 'Branch number';
+ COMMENT ON COLUMN  MAIN.TYPE
+         IS 'Account number';
+ COMMENT ON COLUMN  MAIN.DIVISION
+         IS 'Division number';
+ COMMENT ON COLUMN  MAIN.REGION
+         IS 'Region number';
+ COMMENT ON COLUMN  MAIN.BALANCE
+         IS 'Balance for branch';
+ COMMENT ON COLUMN  MAIN."DR COMPONENT"
+         IS 'Debit components for branch';
+ COMMENT ON COLUMN  MAIN."CR COMPONENT"
+         IS 'Credit components for branch';
+ COMMENT ON COLUMN  MAIN."AVE BALANCE"
+         IS 'Average balance for branch';
+ COMMENT ON COLUMN  MAIN."AVE DR BALANCE"
+         IS 'Average Debit balance for branch';
+ COMMENT ON COLUMN  MAIN."AVE CR BALANCE"
+         IS 'Average Credit balance for branch';
+ COMMENT ON COLUMN  MAIN."DR TURNOVER MTH"
+         IS 'Debit turnover for the month';
+ COMMENT ON COLUMN  MAIN."DR TURNOVER QTR"
+         IS 'Debit turnover for the quarter';
+ COMMENT ON COLUMN  MAIN."DR TURNOVER YR"
+         IS 'Debit turnover for the year';
+ COMMENT ON COLUMN  MAIN."CR TURNOVER MTH"
+         IS 'Credit turnover for the month';
+ COMMENT ON COLUMN  MAIN."CR TURNOVER QTR"
+         IS 'Credit turnover for the quarter';
+ COMMENT ON COLUMN  MAIN."CR TURNOVER YR"
+         IS 'Credit turnover for the year';
+
+ CREATE TABLE AVERAGES
+        ( ACCOUNT              DECIMAL  (10)   NOT NULL,
+          BRANCH               DECIMAL   (3)   NOT NULL,
+          TYPE                 DECIMAL   (4)   NOT NULL,
+          MONTH                DECIMAL   (2)   NOT NULL,
+         "MONTHEND BALANCE"    DECIMAL  (13,2) NOT NULL,
+         "DR COMPONENT"        DECIMAL  (13,2) NOT NULL,
+         "CR COMPONENT"        DECIMAL  (13,2) NOT NULL,
+         "AVE DR BALANCE"      DECIMAL  (13,2) NOT NULL,
+         "AVE CR BALANCE"      DECIMAL  (13,2) NOT NULL)
+        IN BGP5;
+ CREATE TABLE ACCOUNTS
+       ( TYPE                      DECIMAL     (4)   NOT NULL,
+         NAME                      CHAR       (40)   NOT NULL,
+         "DB DEST CODE BG"         DECIMAL     (9)   NOT NULL,
+         "CR DEST CODE BG"         DECIMAL     (9)   NOT NULL,
+         "DB DEST CODE BP"         DECIMAL     (3)   NOT NULL,
+         "CR DEST CODE BP"         DECIMAL     (3)   NOT NULL,
+         "CORPORATE ACCT"          DECIMAL     (1)   NOT NULL,
+         "BLOCK ENTRIES"           DECIMAL     (2)   NOT NULL,
+         "BLOCK CHANGES"           DECIMAL     (1)   NOT NULL,
+         "EXCEPTION REPORT"        DECIMAL     (1)   NOT NULL,
+         "EXCEPTION ACCT"          DECIMAL     (1)   NOT NULL,
+         "NORMAL CAT BGPP"         DECIMAL     (2)   NOT NULL,
+         "SPECIAL CAT BGPP"        DECIMAL     (1)   NOT NULL,
+         "RUN CAT BGPP"            DECIMAL     (1)   NOT NULL,
+         "DB CR IND BGPP"          DECIMAL     (1)   NOT NULL,
+         "DB CR IND SPCL"          DECIMAL     (1)   NOT NULL,
+         "PERCENT ACCT DB"         DECIMAL   (5,3)   NOT NULL,
+         "PERCENT ACCT CR"         DECIMAL   (5,3)   NOT NULL,
+         "ACTION TYPE"             DECIMAL     (1)   NOT NULL,
+         "BUDGET CR LINK"          DECIMAL     (4)   NOT NULL,
+         "BUDGET DR LINK"          DECIMAL     (4)   NOT NULL,
+         "SPECIAL PRINT IND"       DECIMAL     (1)   NOT NULL,
+         "RSC LEVY IND"            CHAR        (1)           )
+        IN BGP5;
+
+ COMMENT ON TABLE AVERAGES
+         IS 'BGP averages data table';
+
+ COMMENT ON COLUMN  AVERAGES.ACCOUNT
+         IS 'account number';
+ COMMENT ON COLUMN  AVERAGES.BRANCH
+         IS 'Branch number';
+ COMMENT ON COLUMN  AVERAGES.TYPE
+         IS 'Account number';
+ COMMENT ON COLUMN  AVERAGES.MONTH
+         IS 'Month number for which averages apply';
+ COMMENT ON COLUMN  AVERAGES."MONTHEND BALANCE"
+         IS 'Month/end balance';
+ COMMENT ON COLUMN  AVERAGES."DR COMPONENT"
+         IS 'Average Debit component ';
+ COMMENT ON COLUMN  AVERAGES."CR COMPONENT"
+         IS 'Average Credit component ';
+ COMMENT ON COLUMN  AVERAGES."AVE DR BALANCE"
+         IS 'Average Debit balance';
+ COMMENT ON COLUMN  AVERAGES."AVE CR BALANCE"
+         IS 'Average Credit balance';
+
+
+
+ CREATE TABLE ZTITLES
+        ( TYPE                 DECIMAL   (4)   NOT NULL,
+          NAME                 CHAR     (40)   NOT NULL,
+          "DR DEST FINSTAT"    DECIMAL   (9)   NOT NULL,
+          "CR DEST FINSTAT"    DECIMAL   (9)   NOT NULL,
+          "DR DEST CONTRIB"    DECIMAL   (9)   NOT NULL,
+          "CR DEST CONTRIB"    DECIMAL   (9)   NOT NULL,
+          "STD ACC"            CHAR      (1)   NOT NULL)
+        IN BGP7;
+
+ COMMENT ON TABLE ZTITLES
+         IS 'BGP static data table';
+ COMMENT ON COLUMN  ZTITLES.TYPE
+         IS 'Account number';
+ COMMENT ON COLUMN  ZTITLES.NAME
+         IS 'Description (Name)';
+
+ CREATE TABLE BRANCH
+        ( BRANCH               DECIMAL   (3)   NOT NULL,
+          REGION               DECIMAL   (3)   NOT NULL,
+          DIVISION             DECIMAL   (3)   NOT NULL,
+         "BRANCH DESC"         CHAR     (20)   NOT NULL)
+        IN BGP8;
+
+ COMMENT ON TABLE BRANCH
+         IS 'BGP Branch data table';
+ COMMENT ON COLUMN  BRANCH.BRANCH
+         IS 'Branch number';
+ COMMENT ON COLUMN  BRANCH.REGION
+         IS 'Region number';
+ COMMENT ON COLUMN  BRANCH.DIVISION
+         IS 'Division number';
+ COMMENT ON COLUMN  BRANCH."BRANCH DESC"
+         IS 'Branch name';
+
+
+ CREATE TABLE REGION
+        ( REGION               DECIMAL   (3)   NOT NULL,
+         "REGION DESC"         CHAR     (20)   NOT NULL)
+        IN BGP8;
+
+ COMMENT ON TABLE REGION
+         IS 'BGP Region data table';
+ COMMENT ON COLUMN  REGION.REGION
+         IS 'Region number';
+ COMMENT ON COLUMN  REGION."REGION DESC"
+         IS 'Region name';
+
+
+ CREATE TABLE DIVISION
+        ( DIVISION             DECIMAL   (3)   NOT NULL,
+         "DIVISION DESC"       CHAR     (20)   NOT NULL)
+        IN BGP8;
+
+ COMMENT ON TABLE DIVISION
+         IS 'BGP Division data table';
+ COMMENT ON COLUMN  DIVISION.DIVISION
+         IS 'Division number';
+ COMMENT ON COLUMN  DIVISION."DIVISION DESC"
+         IS 'Division name';
+
+

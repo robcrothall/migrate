@@ -1,0 +1,285 @@
+
+:nick.SYSTEM   :type.VM
+               :onestar.*
+               :pcsdump.DASDUMP
+               :twostar.*
+               :users.All
+
+:nick.AS       :type.DAS
+               :asmsg.AS Version 4 Release 1
+               :case.Lower
+               :csmsg.AS Version 4 Release 1
+               :features.
+               :newline.\
+               :monitor.ASMON410
+               :seg1.DAS1V410
+               :seg2.DAS2V410
+
+:nick.SAMPLE   :type.DAS
+               :advance.Prompt
+               :asmsg.AS Version 4 Release 1
+               :caps.No
+               :case.Lower
+               :comsafe.No
+               :cpu.No
+               :cselect.NoConfirm
+               :csmsg.AS Version 4 Release 1
+               :dateform.MDY
+               :dbcs.No
+               :ddevice.*
+               :diagnose.
+               :editor.AS
+               :epfkey.Yes
+               :features.
+               :heading.'Application System',Red
+               :imacolor.NoProtect
+               :inclpref.Yes
+               :keyboard.Keyboard
+               :language.American English
+               :mouse.Alpha
+               :newline.\
+               :outsafe.No
+               :printch1.1
+               :printx1.
+               :printx2.
+               :queryed.Lower
+               :recall.Entry
+               :run.End
+               :spie.SPIE
+               :sqlbufsz.0
+               :sqlgroup.Group
+               :sqlorder.Order
+               :uppraccd.Yes
+               :vctitle.Yes
+               :vssapl.0
+               :vsscecp.0
+               :vssmark.DASSAMSO
+               :wssize.1024K
+               :asfiles.A
+               :exsearch.Yes
+               :MONITOR.ASMON410
+               :multacc.Yes
+               :pcsdump.DASDUMP
+               :seg1.DAS1V410
+               :seg2.DAS2V410
+               :wkfiles.*
+
+:nick.DEFAULT  :type.PROFILE   :caller.AS
+               :profcmnd.Yes
+               :confirm.Yes
+               :toggle.No
+
+:nick.DEFAULT  :type.PROFILE   :caller.PAS
+               :defcode.MENU
+               :profcmnd.NO
+
+:nick.MKTG     :type.PROFILE   :caller.AS
+               :confirm.No
+               :command.RUN MKTGMAST.MKTG/MKTGMENU
+
+
+:nick.USERONE  :type.LIBRARY
+               :userid.USERONE
+               :format.FILEMODE
+               :location.H
+               :multacc.Yes
+
+:nick.USERTWO  :type.LIBRARY
+               :userid.USERTWO
+               :format.MINIDISK
+               :location.USERTWO 192
+               :linkmode.RR
+               :multacc.Yes
+
+:nick.FP94     :type.LIBRARY
+               :userid.SMITHJ
+               :location.VMSYSU:SMITHJ.FINANCEPROJECT.RESULTS1994
+               :multacc.Yes
+
+:nick.GENERAL  :type.LIBRARY
+               :userid.OTTER
+               :format.VADDR
+               :location.300 G/A
+               :multacc.Yes
+
+
+:nick.*        :type.ARCHIVE
+               :list.AS2CSV
+
+:nick.AS2CSV   :type.ARCHIVE
+               :desc.Export AS to CSV tables
+               :proc.***DEMO/AS2CSV
+
+:nick.*        :type.RESTORE
+               :list.CSV2AS MICRO SUPER PMW
+
+:nick.CSV2AS   :type.RESTORE
+               :desc.Import from AS CSV tables to AS project
+               :proc.***DEMO/CSV2AS
+
+:nick.MICRO    :type.RESTORE
+               :desc.Import from Microsoft Project for Windows
+               :proc.***DEMO/MICRO2AS
+
+:nick.SUPER    :type.RESTORE
+               :desc.Import from CA-SuperProject
+               :proc.SUPER2AS
+
+:nick.PMW      :type.RESTORE
+               :desc.Import from PMW for Windows
+               :proc.PMW2AS
+
+
+
+:nick.*        :type.TEXT
+               :list.SCREEN SAMPLE
+:nick.SCREEN   :type.TEXT
+               :desc.Monochrome output on your screen - saves paper
+               :format.NORMAL
+               :name.DASPRINT
+               :open.EXEC DASCHECK DASPRINT LISTING A ( YES ;
+               :close.XEDIT DASPRINT LISTING A ;
+                      ERASE DASPRINT LISTING A ;
+
+:nick.SAMPLE   :type.TEXT
+  :desc.Please customize the TEXT list entry in the AS Names file!
+
+:nick.WSU16Q   :type.TEXT
+  :desc.Text printing on 3816 on first floor
+  :open.CP SPOOL PRT NOCONT NOHOLD COPY &copies DEST WSU16Q ;
+  :close.CP SPOOL PRT DEST OFF COPY 1 ;
+
+:nick.3820A    :type.TEXT
+  :desc.Text printing on 3827A or 3820B in print room 1
+  :open.CP SPOOL PRT NOCONT NOHOLD COPY &copies DEST 3820A ;
+  :close.CP SPOOL PRT DEST OFF COPY 1 ;
+
+:nick.3820C    :type.TEXT
+  :desc.Text printing on 3820C in print room 2
+  :open.CP SPOOL PRT NOCONT NOHOLD COPY &copies DEST 3820C ;
+  :close.CP SPOOL PRT DEST OFF COPY 1 ;
+
+
+:nick.*        :type.GRAPHICS
+               :list.LIST3820 SAMPLE
+
+:nick.LIST3820 :type.GRAPHICS
+               :desc.AFPDS output displayed on your screen - saves paper
+               :open.EXEC DASCHECK DASPRINT LIST3820 A ( YES ;
+               :close.ADM4CDUV DASPRINT LIST3820 A ()()()(*)(1) ;
+                      ERASE DASPRINT LIST3820 A ;
+
+:nick.SAMPLE   :type.GRAPHICS
+  :desc.Please customize the GRAPHICS list entry in the AS Names file!
+
+:nick.WSU16Q   :type.GRAPHICS
+  :desc.Graphic monochrome printing on 3816 on first floor
+  :open.CP SPOOL PRT COPY &copies ;
+  :close.CP SPOOL PRT DEST OFF COPY 1 ;
+
+:nick.PLOTTER  :type.GRAPHICS
+  :desc.Plotter directly attached to your workstation (not OS/2)
+
+:nick.PCPRINT  :type.GRAPHICS
+  :desc.Printer directly attached to your PC (requires PCLK-not OS/2)
+
+:nick.PMPRINT  :type.GRAPHICS
+  :desc.Print manager queue on your workstation (requires OS/2 Link).
+
+:nick.*        :type.FORMAT
+               :list.NORMAL 3800 GDF
+               :glist.GDF CGM PSEG38PP EPSBIN
+:nick.CGM      :type.FORMAT
+               :desc.Computer Graphics Metafile (requires GDDM V3)
+               :format.GDF
+               :name.DAS-TEMP
+               :open.EXEC DASCHECK &fn CGM A ( &replace NOAPPEND ;
+                     EXEC DASCHECK DAS-TEMP ADMGDF A ( YES ;
+               :close.ADMUGC DAS-TEMP ADMGDF A &fn CGM A ( CODEPAGE 850 ;
+                      ERASE DAS-TEMP ADMGDF A ;
+:nick.BDISK    :type.FORMAT
+               :desc.Save GDF file on your B-disk
+               :format.GDF
+               :name.DAS-TEMP
+               :open.EXEC DASCHECK &fn ADMGDF B ( &replace NOAPPEND ;
+                     EXEC DASCHECK DAS-TEMP ADMGDF A ( YES ;
+               :close.COPYFILE DAS-TEMP ADMGDF A &fn = B ( OLDDATE ;
+                      ERASE DAS-TEMP ADMGDF A ;
+:nick.EPSBIN   :type.FORMAT
+  :desc.Encapsulated PostScript in ASCII (requires GDDM V3.1.1)
+  :format.GDF
+  :name.DAS-TEMP
+  :open.EXEC DASCHECK &fn EPSBIN A ( &replace NOAPPEND ;
+        EXEC DASCHECK DAS-TEMP ADMGDF A ( YES ;
+  :close.ADMUCDSO DAS-TEMP = 99 4 PPS1CQ (5 1 8 60 40 0)(&fn EPSBIN A ;
+         ERASE DAS-TEMP ADMGDF A ;
+:nick.PSEG38PP :type.FORMAT
+  :desc.Create & view page segments for artwork on 38xx printers
+  :format.GDF
+  :name.DAS-TEMP
+  :open.EXEC DASCHECK &fn PSEG38PP A ( &replace NOAPPEND ;
+        EXEC DASCHECK DAS-TEMP ADMGDF A ( YES ;
+  :close.ADMUCDSO DAS-TEMP = 99 4 IMG2401 (5 1 8 60 40 0)(&fn PSEG38PP A;
+         ERASE DAS-TEMP ADMGDF A ;
+         ADM4CDUV &fn PSEG38PP A ()()()(*)(1) ;
+:nick.PSBIN    :type.FORMAT
+               :desc.PostScript in ASCII (requires GDDM V3.1.1)
+               :format.ADMPRINT
+               :open.EXEC DASCHECK &fn PSBIN A ( &replace NOAPPEND ;
+                     EXEC DASCHECK DASPRINT PSBIN A ( YES ;
+               :close.RENAME DASPRINT PSBIN A &fn = = ;
+:nick.GL       :type.FORMAT
+               :desc.Create a Graphics Language file (requires GDDM V3)
+               :format.ADMPRINT
+               :open.EXEC DASCHECK &fn GL A ( &replace ;
+                     EXEC DASCHECK DASPRINT GL A ( YES ;
+               :close.RENAME DASPRINT GL A &fn = = ;
+
+
+:nick.PRT3812A :type.PRINTER
+               :maxpage.20
+
+
+* Lotus 1-2-3/M
+:nick.1-2-3/M  :type.PROGRAM
+               :startcmd.DASLOTVS
+               :module.123M
+               :endcmd.DASLOTVE
+               :command.1/FR{CE}
+               :tilde.ä
+
+* QMF
+:nick.QMF      :type.PROGRAM
+               :startcmd.DASQMFVS
+               :endcmd.DASQMFVE
+               :intface.SAA
+               :qmfexec.DASQCMDI
+               :qmfdb.AS
+
+
+:nick.DASDBI   :type.APL
+               :start.WS(2000K) FR(256K) SH(32K)
+               :load.Q
+               :wspace.DASLOAD.DASAPLDB
+               :vmseg.
+               :test.DASDBI
+               :qname.DASDBI
+               :buffer.16K
+               :endfun.0
+
+* This APL application is used when running QS queries from AS,
+* if not present, the ICE definition will be used
+:nick.ICEQS    :type.APL
+               :start.WS(1300K) FR(256K) SH(64K) SM(OFF)
+               :load.Q
+               :wspace.ICEWS
+               :vmseg.ICE1V410
+               :test.DASEND
+               :runfun.ASICSTART
+               :endfun.ICETERM
+               :qname.ASICSTART DASEND DASLINKS
+                      FULL ICETERM LINE MIGRATEICE TRACE
+               :parms.SYS=QUERY
+
+
+

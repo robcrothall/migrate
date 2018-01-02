@@ -1,0 +1,20 @@
+/**/
+clrscrn
+SAY ' Enter no of records and the Logical Rec Length'
+PULL recs lrecl
+/**/
+SAY 'Enter percentage for Free Pages and Indexes'
+PULL perc_free_pg perc_indexes
+/**/
+data_pages=recs/(4096/lrecl)
+free_pages=perc_free_pg/100
+free_index=perc_indexes/100
+total_pages=(8+data_pages+free_pages)/(1-free_index)
+total_cyl=total_pages/120
+/**/
+SAY '****************************************'
+SAY '***** Data Pages      :' TRUNC(data_pages+.99)'      *****'
+SAY '***** Total Pages     :' TRUNC(total_pages+.99)'      *****'
+SAY '***** Total Cylinder  :' TRUNC(total_cyl+.99)'       *****'
+SAY '****************************************'
+

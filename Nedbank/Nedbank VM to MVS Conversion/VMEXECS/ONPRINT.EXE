@@ -1,0 +1,218 @@
+/***********************************************************************/
+/* This EXEC controls all user OVERNIGHT printing.                     */
+/* The basic flow is:                                                  */
+/*                                                                     */
+/*    1) Check parameter list to see if multiple copies are required,  */
+/*       otherwise set default to one copy....                         */
+/*                                                                     */
+/*    2) Route the print file to SANDTON, if the volume of output      */
+/*       exceeds the installation maximum user is requested to notify  */
+/*       the IC.                                                       */
+/*                                                                     */
+/*    RESTRICTIONS :- CMS Filename cannot be '?' or 'HELP'             */
+/*                    CMS Filetype cannot be numeric                   */
+/*                                                                     */
+/*                    (Admittedly we can program around these but at   */
+/*                     PdT's request and in the interests of EXEC      */
+/*                     efficiency we aren't providing for every single */
+/*                     unlikely combination....)                       */
+/*                                                                     */
+/*    See the HELP information for possible command formats...         */
+/*                                                                     */
+/***********************************************************************/
+
+ARG A B C D E  /* Hopefully he passed us some arguments. Unfortunately */
+               /* we can't assign them meaningful names 'cos the copies*/
+               /* option could be position 2, 3 or 4. (Arg B, C, or D) */
+                                                                     /**/
+FORMAT = 'QD,qd,LD,ld,LS,ls'
+
+IF  A = '?' ³ A = 'HELP' THEN                       /* Help him if...  */
+   CALL PRTHELP                                     /* he's stuck....  */
+ELSE IF A = ' ' THEN DO                                              /**/
+   SAY 'Your file(s) will be printed at Sandton overnight and then',
+   'mailed to you.'
+   makebuf
+   'EXECIO * CP (FIFO STRING Q F * ALL'
+   PULL . . . num .
+   IF num ='NO' THEN DO
+      SAY '****  There are NO files in your print queue  ****'
+      EXIT
+   END
+
+   dropbuf
+   makebuf
+   DO index=1 TO num                        /* For each file:         */
+     'EXECIO * CP (LIFO BUF 16384 STRING Q PRT * ALL'  /* print data */
+      PULL . spoolid . . . cpy .
+      DO c=1 TO cpy
+         MAKEBUF
+         'EXECIO * CP (FIFO STRING TAG QUERY FILE' spoolid
+          PULL tag_info
+          IF tag_info='(TAG BLANK)' THEN DO/* There are no user details*/
+             EXEC DISPATCH
+             SET IMSG OFF
+             TRANS  P spoolid TO OPS1 P
+             SET IMSG ON
+          END
+          ELSE
+          ORDER PRT spoolid
+          DROPBUF
+      END
+      dropbuf
+   END
+   EXIT                                                              /**/
+END
+CPY = 1                                       /* Here's our default....*/
+FORM = LD                                                            /**/
+
+IF B = '' THEN B = 'LISTING'                  /* Null gets default FT. */
+ELSE IF DATATYPE(B,'W') = 1 THEN DO           /* Multiple copies maybe?*/
+                                                                     /**/
+     IF POS(C,FORMAT)=0 & Cª='' THEN         /* If so, it had better  */
+        CALL PRTHELP                        /* be either the final arg*/
+                                                /*......*/
+     CPY = B                                  /* Seems so...assign num */
+     B = 'LISTING'                            /* and set default FT... */
+END
+ELSE IF POS(B,FORMAT) ª= 0 THEN DO            /* or must be followed  */
+     IF C ª= '' THEN                          /* by the format ..... */
+     CALL PRTHELP
+
+     FORM = B                                 /* like so...*/
+     B = 'LISTING'
+END
+
+IF C = '' THEN C = '*'                        /* See logic for B above */
+ELSE IF DATATYPE(C,'W') = 1 THEN DO
+                                                                     /**/
+     IF D ª= '' & POS(D,FORMAT)=0 THEN
+        CALL PRTHELP
+                                                                     /**/
+     CPY = C
+     C = '*'
+END
+ELSE IF POS(C,FORMAT)ª=0 THEN DO
+     IF Dª='' THEN
+        CALL PRTHELP                                              /**/
+
+     FORM = C
+     C = '*'
+END
+
+
+IF D ª= '' THEN DO                            /* If this arg is here,  */
+  IF DATATYPE(D,'W') = 1 THEN                 /* it MUST be numeric or */
+     CPY = D                                  /* we've got a confused  */
+  ELSE IF POS(D,FORMAT)ª=0 THEN DO
+     FORM = D
+  END
+  ELSE
+   CALL PRTHELP                           /* user. (Or at best one */
+END                                           /* with finger trouble...*/
+                                                                     /**/
+
+IF E ª= '' THEN DO                            /* If this arg is here,  */
+  IF POS(E,FORMAT)ª=0  THEN                 /* it MUST be the format */
+     FORM= E
+  ELSE CALL PRTHELP
+END
+
+
+
+
+ADDRESS COMMAND 'LI' A B C '(L STACK'         /* Does the file exist ? */
+                                                                     /**/
+IF RC ª= 0 THEN DO                                         /* Silly... */
+   SAY '***ERROR*** FILE' A B C 'NOT FOUND'                /* ...boy...*/
+   EXIT(RC)
+END
+                                                                     /**/
+COUNT = QUEUED()
+PULL . . . . . RECS .                          /* Get the record count */
+COUNT = COUNT - 1
+                                                                     /**/
+DO WHILE COUNT > 0                                   /* Clear...       */
+     PULL .                                          /*     the...     */
+     COUNT = COUNT - 1                               /*         stack..*/
+END
+                                                                     /**/
+RECS = RECS * CPY                  /* How many records to be printed ? */
+                                                                     /**/
+SAY 'Your file will be printed at Sandton overnight and then',
+    'mailed to you.'
+
+IF RECS > 30000  THEN DO
+        SAY '**********************************************'
+        SAY '* To avoid problems with overnight printing  *'
+        SAY '*                                            *'
+        SAY '**** PLEASE INFORM THE INFORMATION CENTER ****'
+        SAY '*                                            *'
+        SAY '* that your print file EXCEEDS 30000 lines   *'
+        SAY '**********************************************'
+
+ncpy = trunc(cpy)
+        'CP SET MSG OFF'
+        'CP SP PRT OFF NOCONT NOHOLD CL Z COPY' NCPY
+                                                                     /**/
+        ADDRESS COMMAND 'PRINT' A B C              /* Go directly to   */
+                                                   /* CMS to avoid any */
+                                                   /* recursion....    */
+        IF RC ª= 0 THEN
+           SAY '*** ERROR ***' RC 'printing' A B C 'contact',
+               'Systems Support'
+         ELSE EXEC DISPATCH (FORM)
+
+        'CP SET MSG ON'
+END
+ELSE DO                                               /* Within limits */
+                                                                     /**/
+NCPY=trunc(cpy)
+   'CP SET MSG OFF'
+   'CP SP PRT OFF NOCONT NOHOLD CL Z COPY' NCPY              /**changed*/
+                                                                     /**/
+    ADDRESS COMMAND 'PRINT' A B C                  /* Go directly to   */
+                                                   /* CMS to avoid any */
+                                                   /* recursion....    */
+    IF RC ª= 0 THEN
+        SAY '*** ERROR ***' RC 'printing' A B C 'contact',
+            'Systems Support'
+    ELSE EXEC DISPATCH (FORM)
+
+   'CP SET MSG ON'
+
+END
+
+EXIT                                                  /* Byeeee.....   */
+                                                                     /**/
+
+
+PRTHELP: PROCEDURE
+'CLRSCRN'
+SAY'The ONPRINT command can be issued in the following format :-        '
+SAY'                                                                    '
+SAY'"ONPRINT fn ft fm n fmt" -
+                      will print a CMS file of the specified FileName,'
+SAY'                  FileType and FileMode on ANY accessed disk in N     '
+SAY'                  copies and the required format.                    '
+SAY'NOTES :1) "fn" - name of the file to be printed, it cannot be ? or HELP.'
+SAY'       2) "ft" - type of the file, if left blank it will default to    '
+SAY'                 LISTING.  "ft" cannot be wholly numeric.              '
+SAY'       3) "fm" - access mode of the disk where the file is, defaults to'
+SAY'                 "*" (any disk) if omitted.                            '
+SAY'       4) "n"  - number of copies required. If omitted it defaults to one.'
+SAY'       5) "fmt"- format required. Either QD or LD, latter is the defualt.'
+SAY'                                                                       '
+SAY'If no parameters are specified then all files in your PRINT QUEUE will '
+SAY'be sent to overnight printing.                                 '
+SAY'                                                                    '
+SAY'EXAMPLES:  ONPRINT MYFILE                                           '
+SAY'           ONPRINT MYFILE LISTING * 1 LD                            '
+SAY'           These two commands are effectivly identical.             '
+SAY'                                                                    '
+SAY'When working from AS remember to prefix the command with HOS CMS.   '
+SAY'                                                                    '
+EXIT
+
+
+

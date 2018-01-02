@@ -1,0 +1,36 @@
+/***    SQL PRINT EXEC     ***/
+/** set all print files in rdr to overnite */
+'CP Q prt * ALL '
+say 'Do you want these files to be printed overnight ?  (Y/N)'
+pull answer
+if answer='Y' then do
+'CP CHA PRT ALL CLA Z'
+'EXECIO * CP (LIFO STRING Q PRT * '
+COUNT = QUEUED()-1
+if count = 0 then do
+      say 'No print files transferred from your print queue '
+      exit
+end
+i = 1
+do count
+PULL . SPOOLID . . RECS .
+r.i = spoolid
+i = i + 1
+end
+i = 1
+do count
+     'set emsg off'
+     'set imsg off'
+     'set cmstype ht'
+     'exec dispatch'
+     'order prt ' r.i
+     i = i + 1
+     'set imsg on '
+     'set cmstype rt'
+     'set emsg on '
+   end
+desbuf
+END
+say 'Print files tagged for overnite printing'
+EXIT
+

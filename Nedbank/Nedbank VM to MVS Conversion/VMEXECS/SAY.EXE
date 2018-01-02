@@ -1,0 +1,3 @@
+/* Rexx one-liner */ RC=0; Address Command;
+Interpret 'SAY' Arg(1); Exit RC
+

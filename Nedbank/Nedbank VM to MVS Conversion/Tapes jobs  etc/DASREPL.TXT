@@ -1,0 +1,373 @@
+/*REXX================================================================*
+ *            Application System  (AS)                5648-092        *
+ *            Copyright (c) I B M Corporation       1985, 1995        *
+ *            Licensed Materials - Property of I B M                  *
+ *            Refer to Copyright Instructions: Form G120-2083         *
+ *                                                                    *
+ *            US Government users restricted rights - use,            *
+ *            duplication or disclosure restricted by GSA ADP         *
+ *            schedule contract with IBM Corporation                  *
+ *====================================================================*
+ * EXEC NAME        DASREPL                                           *
+ *                                                                    *
+ * ENVIRONMENT      TSO/E                                             *
+ *                                                                    *
+ * DESCRIPTIVE NAME SAMPLE exec for use with AS Names file :open. tag.*
+ *                                                                    *
+ * PURPOSE          Check for user specification of replace option    *
+ *                  and for existence of file.                        *
+ *                  The EXEC deletes the file if it is to be replaced.*
+ *                  The EXEC also allows deletion of a member from    *
+ *                  ddname ADMGDF.                                    *
+ *                                                                    *
+ * DESCRIPTION:                                                       *
+
+   The calling syntax is:
+   >>--%DASREPL---NICK(nick)--+-------------+--+---------------+---><
+                              '--|dsparms|--'  '--DELGDF(gdf)--'
+
+   dsparms:
+   |---+---DS(dsname)-------+---+------------------+---------------->
+       '---DSNAME(dsname)---'   '---MEMBER(name)---'
+
+   >---REPLACE(---+---YES------+---)---+--------------+-------------|
+                  |---NO-------|       '---NOAPPEND---'
+                  '---APPEND---'
+
+   "nick" is the file format nickname as specified in the
+   corresponding :nick. tag.
+
+   The YES/NO/APPEND option corresponds to the &replace variable.
+   The NOAPPEND option is for file formats for which append is not
+   supported such as ADMGDF and ADMPRINT.
+
+   You must supply either the |dsparms| or DELGDF(...) or both.
+
+   The EXEC uses the dsparms to check the validity of REPLACE(NO) or
+   REPLACE(APPEND).  It gives a return code of 8 if the file already
+   exists or if APPEND is specified with NOAPPEND.
+   For REPLACE(YES) the EXEC deletes the data set or member (if it
+   exists) preparatory to AS creating a replacement copy.
+
+   The EXEC uses DELGDF(gdf) to delete the member "gdf" from the
+   dataset allocated to ddname ADMGDF.
+ *                                                                    *
+ *                                                                    *
+ * EXAMPLES         See sample DASMVSNM for examples of usage.        *
+ *                                                                    *
+ *--------------------------------------------------------------------*/
+
+Address TSO
+Parse Arg Argument
+Parse Upper Arg Arg
+
+Parse Source . . ExecName Eddname Edsname Invoked .
+
+MsgStatus = MSG("OFF")
+
+Select
+  When (Arg = '' | Arg = '?' | Abbrev( 'HELP', Arg, 1 )) Then
+    RetCode = Help()
+  When (Parsing() <> 0) Then RetCode = Syntax()
+  When (Consistent() <> 0) Then RetCode = RetCode
+  When (Replace = 'NO') Then RetCode = Check()
+  When (Replace = 'YES') Then RetCode = Delete()
+  Otherwise RetCode = 0
+End
+Select
+  When (RetCode <> 0 ) Then Nop
+  When (Symbol( 'DELGDF' ) = 'VAR') Then RetCode = ProcGdf()
+  Otherwise Nop
+End
+Return RetCode
+
+Parsing:
+RetCode = 0
+Do Until (Arg = '')
+  /* Get the next keyword delimited by a space or a paranthesis */
+  Arg = Strip( Arg )
+  Parse Var Arg Word '(' .
+  Parse Var Arg Word1 Word2 '(' .
+  Select
+    When (Length( Word1 ) > Length( Word )) Then Do
+      KeyWord = Word
+      Parameter = 1
+    End
+    When (Word2 = '' ) Then Do
+      KeyWord = Word1
+      Parameter = 1
+    End
+    Otherwise Do
+      KeyWord = Word1
+      Parameter = 0
+    End
+  End
+  /* Get the value of the keyword parameter if it has one */
+  Select
+    When (Parameter) Then Do
+      Parse Var Arg . '(' Value ')' Arg
+      Value = Strip( Value )
+    End
+    Otherwise Do
+      Parse Var Arg KeyWord Arg
+      Value = ''
+    End
+  End
+  /* Check that the keyword is valid */
+  Select
+    When (Abbrev( 'NICK', KeyWord, 4 )) Then Do
+      Select
+        When (ª Parameter ) Then RetCode = NoValue()
+        When (Symbol( 'NICK' ) = 'VAR') Then RetCode = Duplicate()
+        When (Length( Value ) > 8) Then RetCode = TooLong(8)
+        Otherwise Nick = Value
+      End
+    End
+    When (Abbrev( 'DSNAME', KeyWord, 2 )) Then Do
+      Select
+        When (ª Parameter ) Then RetCode = NoValue()
+        When (Symbol( 'DS' ) = 'VAR') Then RetCode = Duplicate()
+        When (Length( Value ) > 46) Then RetCode = TooLong(46)
+        Otherwise Ds = Value
+      End
+    End
+    When (Abbrev( 'MEMBER', KeyWord, 6 )) Then Do
+      Select
+        When (ª Parameter ) Then RetCode = NoValue()
+        When (Symbol( 'MEMBER' ) = 'VAR') Then RetCode = Duplicate()
+        When (Length( Value ) > 8) Then RetCode = TooLong(8)
+        Otherwise Member = Value
+      End
+    End
+    When (Abbrev( 'REPLACE', KeyWord, 7 )) Then Do
+      Select
+        When (ª Parameter ) Then RetCode = NoValue()
+        When (Symbol( 'REPLACE' ) = 'VAR') Then RetCode = Duplicate()
+        When ((Value <> 'YES') & ,
+              (Value <> 'NO') & ,
+              (Value <> 'APPEND')) Then RetCode = BadValue()
+        Otherwise Replace = Value
+      End
+    End
+    When (Abbrev( 'NOAPPEND', KeyWord, 8 )) Then Do
+      Select
+        When (Symbol( 'NOAPPEND' ) = 'VAR') Then RetCode = Duplicate()
+        Otherwise NoAppend = 'TRUE'
+      End
+    End
+    When (Abbrev( 'DELGDF', KeyWord, 6 )) Then Do
+      Select
+        When (ª Parameter ) Then RetCode = NoValue()
+        When (Symbol( 'DELGDF' ) = 'VAR') Then RetCode = Duplicate()
+        When (Length( Value ) > 8) Then RetCode = TooLong(8)
+        Otherwise Delgdf = Value
+      End
+    End
+    OtherWise RetCode = UnKnown()
+  End
+End
+Return RetCode
+
+Consistent: /* Check that parameters are mutually consistent */
+If (Symbol( 'NICK' ) = 'LIT')
+  Then RetCode = Missing('NICK(...)')
+Select
+  When (Symbol( 'DS' ) = 'LIT') ,
+        Then RetCode = NoDsname()
+  When (Symbol( 'REPLACE' ) = 'LIT')
+    Then RetCode = Missing('REPLACE(...)')
+  When (Allocation() <> 0 ) Then RetCode = AllocFailed()
+  When ((Symbol( 'MEMBER' ) = 'VAR') & ,
+        ª(Abbrev( SYSDSORG, 'PO' ))) Then Retcode = NotaPDS(Ds)
+  When (Replace <> 'APPEND') Then RetCode = 0
+  When ((Symbol( 'MEMBER' ) = 'VAR') | ,
+        (NoAppend = 'TRUE')) Then RetCode = BadAppend()
+  OtherWise Nop
+End
+Select
+When (RetCode > 8) Then Call Syntax
+  Otherwise Nop
+End
+Return RetCode
+
+NoDsname: /* DSNAME(...) was not specified */
+If (Symbol( 'MEMBER' ) = 'VAR') ,
+  Then RetCode = ReqDsname( 'MEMBER(...)' )
+If (Symbol( 'REPLACE' ) = 'VAR') ,
+  Then RetCode = ReqDsname( 'REPLACE(...)' )
+If (Symbol( 'NOAPPEND' ) = 'VAR') ,
+  Then RetCode = ReqDsname( 'NOAPPEND' )
+If (Symbol( 'DELGDF' ) = 'LIT')
+  Then RetCode = Missing('DELGDF(...)", "DSNAME(...)')
+Return RetCode
+
+Allocation: /* Check allocation of Dsname */
+Select /* PDS must be pre-allocated, choose possible return code */
+When (Symbol( 'MEMBER' ) = 'VAR') Then NotAllocated = 8
+  Otherwise NotAllocated = 0 /* OK if not allocated */
+End
+Select
+  When (Symbol( 'DS' ) = 'VAR') Then Do
+    RetCode = ListDsi( Ds ) /* Is Dsname allocated? */
+    Select
+      When (SYSREASON = 5) Then RetCode = NotAllocated
+      Otherwise Nop
+    End
+  End
+  Otherwise RetCode = 20 /* Should not happen */
+End
+Return RetCode
+
+Check: /* Check that file does not already exist */
+Select
+  When (Symbol( 'MEMBER' ) = 'VAR') Then Do  /* PDS */
+    MemberStatus = SYSDSN( "'"SYSDSNAME"("Member")'" )
+    Select
+      When (MemberStatus = 'OK') Then RetCode = Exists()
+      When (MemberStatus = 'MEMBER NOT FOUND') Then RetCode = 0
+      Otherwise RetCode = SysDsnError( MemberStatus )
+    End
+  End
+  Otherwise Do /* Not a PDS */
+    Select
+      When (SYSREASON = 0) Then RetCode = Exists()
+      Otherwise RetCode = 0
+    End
+  End
+End
+Return RetCode
+
+Delete: /* Delete existing file (if any) */
+Select
+  When (Symbol( 'MEMBER' ) = 'VAR') Then Do  /* PDS */
+    "DELETE '"SYSDSNAME"("Member")'"
+  End
+  Otherwise Do
+    "DELETE '"SYSDSNAME"'"
+  End
+End
+RetCode = 0
+Return RetCode
+
+ProcGdf: /* Delete a member from the dataset allocated to ADMGDF */
+RetCode = ListDsi( 'ADMGDF FILE' )
+Select
+  When (RetCode <> 0) Then RetCode = NoAdmgdf()
+  When ª(Abbrev( SYSDSORG, 'PO' )) ,
+    Then Retcode = NotaPds('Ddname "ADMGDF"')
+  Otherwise Do
+    "DELETE '"SYSDSNAME"("DelGdf")'"
+    RetCode = 0
+  End
+End
+Return RetCode
+
+Help:
+ExecN8 = Left( ExecName, 8, '-' )
+Say ExecName 'is intended to be called by using the :open. tag in the'
+Say 'AS Names file.'
+Say ""
+Say 'The calling syntax is:'
+Say ">>--%"ExecN8"--NICK(nick)--+-------------+--+---------------+---><"
+Say "                           '--|dsparms|--'  '--DELGDF(gdf)--'"
+Say ""
+Say "dsparms:"
+Say "|---+---DS(dsname)-------+---+------------------+---------------->"
+Say "    '---DSNAME(dsname)---'   '---MEMBER(name)---'"
+Say ""
+Say ">---REPLACE(---+---YES------+---)---+--------------+-------------|"
+Say "               |---NO-------|       '---NOAPPEND---'"
+Say "               '---APPEND---'"
+Say ""
+Say '"nick" is the file format nickname as specified in the'
+Say 'corresponding :nick. tag.'
+Say ''
+Say 'The YES/NO/APPEND option corresponds to the &replace variable.'
+Say 'The NOAPPEND option is for file formats for which append is not'
+Say 'supported such as ADMGDF and ADMPRINT.'
+Say ''
+Say 'You must supply either the |dsparms| or DELGDF(...) or both.'
+Say ''
+Say 'The EXEC uses the dsparms to check the validity of REPLACE(NO) or'
+Say 'REPLACE(APPEND).  It gives a return code of 8 if the file already'
+Say 'exists or if APPEND is specified with NOAPPEND.'
+Say 'For REPLACE(YES) the EXEC deletes the data set or member (if it'
+Say 'exists) preparatory to AS creating a replacement copy.'
+Say ''
+Say 'The EXEC uses DELGDF(gdf) to delete the member "gdf" from the'
+Say 'dataset allocated to ddname ADMGDF.'
+Return 99
+
+Missing:
+Parse Arg KeyWord
+Say '"'KeyWord'" must be specified.'
+Return 12
+
+ReqDsname:
+Parse Arg KeyWord
+Say '"'KeyWord'" may only be specified with "DSNAME(...)" parameter.'
+Return 12
+
+NoValue:
+Say 'Parameter value missing for: "'KeyWord'".'
+Return 12
+
+Duplicate:
+Say 'Duplicate keyword: "'KeyWord'".'
+Return 12
+
+UnKnown:
+Say 'Unrecognised keyword: "'KeyWord'".'
+Return 12
+
+TooLong:
+Parse Arg Length
+Say 'Parameter exceeds maximum length('Length'): "'KeyWord'('Value')".'
+Return 12
+
+BadValue:
+Say 'Parameter value invalid: "'KeyWord'('Value')".'
+Return 12
+
+Syntax:
+Say ''
+Say ExecName 'called incorrectly.  Actual call was:'
+Say '   ' ExecName Argument
+Say ''
+Call Help
+Return 12
+
+Exists:
+Select
+  When (Symbol( 'MEMBER' ) = 'VAR') Then mem = "("member")"
+  Otherwise mem = ""
+End
+Say Ds||mem" already exists, use a unique name, or specify replace."
+Return 8
+
+BadAppend:
+Say 'Append is not valid for' Nick 'format files.'
+Return 8
+
+NotaPDS:
+Parse Arg Name
+Say '"'Name'" is not a Partitioned Data Set.'
+Return 12
+
+NoADMGDF:
+Say 'Ddname "ADMGDF" is not allocated.'
+Return 12
+
+SysDsnError:
+Parse Arg Error
+Say "SYSDSN( '"SYSDSNAME"("Member")' ) - "Error
+Return 12
+
+AllocFailed:
+Select
+  When (Symbol( 'MEMBER' ) = 'VAR') Then mem = "("member")"
+  Otherwise mem = ""
+End
+Say "Cannot find DSNAME("Ds||mem")."
+Return RetCode
+

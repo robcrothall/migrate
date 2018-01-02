@@ -1,0 +1,18 @@
+  To install into OS/2, create a program object.
+
+  For FILE, use PMREXX.EXE.  OS/2 will use PM as type of session.
+  For parameters, use the FINDFILE.CMD, specifying the path where
+  you placed it:   c:\$REXX\FINDFILE   for example.
+
+  For working directory, specify any directory or leave blank.
+
+  To invoke the PMREXX, double-click on the program object and
+  respond to the PMREXX prompt.  If you reply with a question mark,
+  the REXX will display syntax of the response.
+
+  This REXX file supplements the existing OS/2 2.0 features and
+  also presents a good sample REXX showing several important things.
+
+  Uploaded by Bruce E. H”gman, Compuserve 72050,1327, NASPA HogmBru3,
+  BIX bhogman.
+

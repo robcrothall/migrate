@@ -1,0 +1,30 @@
+&TRACE OFF
+&IF &INDEX = 1 &IF &1 = ? &GOTO -TELL
+&GOTO -RUN
+-TELL &TYPE FORMAT:     &0 ?1 ?2 ?3 ?4 ...
+&BEGTYPE -END
+PURPOSE:    TO ATTACH A TAPE UNIT TO A USER MACHINE FROM SMSG REQUEST.
+
+USAGE:      ?1 - USER MACHINE ID
+            ?2 - VIRT ADDRESS (181,182,183 OR 184)
+            ?3 - ABSOLUTE ADDRESSES OF TAPE UNITS TO TRY (MAX 10)
+            ?4 - ...
+            ?12 -
+
+AUTHOR:     CRL JAN 86
+CHANGED BY:
+LAST CHANGE: DD MMM YY.
+-END
+&EXIT 1
+-RUN
+      &USER  = &1
+      &VADDR = &2
+      &NO = 2
+-A1
+      &NO = &NO + 1
+      &IF &NO > &N &EXIT
+      &UNIT = &&NO
+      EXECIO 0 CP (STRING ATTACH &UNIT &USER &VADDR
+      &IF &RC = 0      &EXIT
+      &GOTO -A1
+

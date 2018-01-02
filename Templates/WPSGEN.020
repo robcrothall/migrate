@@ -1,0 +1,201 @@
+*  Class     classname
+*  name      object name
+*  location  place to put it
+*  Attr      setup string data
+*  attr      more setup string data
+*  .
+*  install
+
+* Mark's Desktop - Holds personal working groups
+
+Class          WPFolder
+Name           Mark's^Desktop
+Location       <WP_BACKGROUND>
+Attr           ICONFILE=E:\SETUP.DSK\GROUP.ICO;
+Attr           OBJECTID=<MS_DESKTOP>;
+Attr           ICONPOS=3,92;"
+Attr           VIEWBUTTON=HIDE;
+Attr           MINWIN=HIDE;
+Attr           ICONVIEW=NONFLOWED,INVISBLE;
+Install
+
+* My main program group
+
+Class          WPFolder
+Name           Mark's Programs
+Location       <MS_DESKTOP>
+Attr           ICONFILE=E:\SETUP.DSK\GROUP.ICO;
+Attr           OBJECTID=<MS_GROUP1>;
+Attr           VIEWBUTTON=HIDE;
+Attr           MINWIN=DESKTOP;
+Attr           ICONVIEW=NONFLOWED,INVISBLE;
+Install
+
+* Program development group
+
+Class          WPFolder
+Name           Program Development
+Location       <MS_DESKTOP>
+Attr           ICONFILE=E:\SETUP.DSK\GROUP.ICO;
+Attr           OBJECTID=<MS_GROUP2>;
+Attr           VIEWBUTTON=HIDE;
+Attr           MINWIN=HIDE;
+Attr           ICONVIEW=NONFLOWED,INVISBLE;
+Install
+
+* OS/2 Full Screen
+
+Class     WPProgram
+Name      OS/2 Full Screen
+Location  <MS_GROUP1>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\HOME;
+Attr      PROGTYPE=FULLSCREEN;
+Attr      MINWIN=DESKTOP;
+Attr      ICONFILE=E:\SETUP.DSK\OS2FULL.ICO;
+Attr      OBJECTID=<MS_OS2FULL>;
+Attr      CONCURRENTVIEW=YES;
+Attr      PARAMETERS=/K MODE CO80,50 & OS2PROMP & "%*";
+Install
+
+* OS/2 Window
+
+Class     WPProgram
+Name      OS/2 Window
+Location  <MS_GROUP1>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\HOME;
+Attr      PROGTYPE=WINDOWABLEVIO;
+Attr      MINWIN=DESKTOP;
+Attr      ICONFILE=E:\SETUP.DSK\OS2WIN.ICO;
+Attr      OBJECTID=<MS_OS2WIN>;
+Attr      CONCURRENTVIEW=YES;
+Attr      PARAMETERS=/K "%*";
+Install
+
+* DOS Window
+
+Class     WPProgram
+Name      DOS Window
+Location  <MS_GROUP1>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\HOME;
+Attr      PROGTYPE=WINDOWEDVDM;
+Attr      MINWIN=DESKTOP;
+Attr      ICONFILE=E:\SETUP.DSK\DOSWIN.ICO;
+Attr      OBJECTID=<MS_DOSWIN>;
+Attr      CONCURRENTVIEW=YES;
+Install
+
+* DOS Full Screen
+
+Class     WPProgram
+Name      DOS Full Screen
+Location  <MS_GROUP1>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\HOME;
+Attr      PROGTYPE=VDM;
+Attr      MINWIN=DESKTOP;
+Attr      ICONFILE=E:\SETUP.DSK\DOSFULL.ICO;
+Attr      OBJECTID=<MS_DOSFULL>;
+Attr      CONCURRENTVIEW=YES;
+Install
+
+* Microsoft Excel 2.21
+
+Class     WPProgram
+Name      MS Excel 2.21 (PM)
+Location  <MS_GROUP1>
+Attr      EXENAME=D:\PRODUCTS\PMEXCEL\EXCEL.EXE
+Attr      STARTUPDIR=D:\DATA\EXCEL;
+Attr      PROGTYPE=PM;
+Attr      MINWIN=DESKTOP;
+Attr      OBJECTID=<MS_EXCEL221>;
+Attr      CONCURRENTVIEW=YES;
+Attr      PARAMETERS=[Enter spreadsheet name];
+Install
+
+* Microsoft Word 5.5
+
+Class     WPProgram
+Name      Word
+Location  <MS_GROUP1>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\DATA\WORD;
+Attr      PROGTYPE=FULLSCREEN;
+Attr      MINWIN=DESKTOP;
+Attr      OBJECTID=<MS_WORD55>;
+Attr      CONCURRENTVIEW=YES;
+Attr      PARAMETERS=/C MODE CO80,50 & D:\PRODUCTS\WORD55\WORD.EXE;
+Install
+
+* Work Log
+
+Class     WPProgram
+Name      Work Log
+Location  <MS_GROUP1>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\PROJECTS\WOERTH;
+Attr      PROGTYPE=WINDOWABLEVIO;
+Attr      MINWIN=DESKTOP;
+Attr      OBJECTID=<MS_WORKLOG>;
+Attr      CONCURRENTVIEW=NO;
+Attr      PARAMETERS=/C X WORK;
+Install
+
+* Run a Program (by name)
+
+Class     WPProgram
+Name      OS/2 Window
+Location  <MS_GROUP1>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\;
+Attr      PROGTYPE=WINDOWABLEVIO;
+Attr      MINWIN=DESKTOP;
+Attr      ICONFILE=E:\SETUP.DSK\OS2WIN.ICO;
+Attr      OBJECTID=<MS_OS2RUN>;
+Attr      CONCURRENTVIEW=NO;
+Attr      PARAMETERS=/C START [Enter the program name to run];
+Install
+
+* Main program development entry
+
+Class     WPProgram
+Name      C 6.0 Working Environment
+Location  <MS_GROUP2>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\SOURCE
+Attr      PROGTYPE=FULLSCREEN;
+Attr      MINWIN=DESKTOP;
+Attr      ICONFILE=E:\SETUP.DSK\OS2FULL.ICO;
+Attr      OBJECTID=<MS_C600ENV>;
+Attr      CONCURRENTVIEW=YES;
+Attr      PARAMETERS=/K MODE CO80,50 & OS2PROMP & D:\LANGUAGE\C600\BINP\NEW-VARS.CMD & CLS;
+Install
+
+* Mixed Language development
+
+Class     WPProgram
+Name      Mixed Lang Development
+Location  <MS_GROUP2>
+Attr      EXENAME=*;
+Attr      STARTUPDIR=D:\SOURCE
+Attr      PROGTYPE=FULLSCREEN;
+Attr      MINWIN=DESKTOP;
+Attr      ICONFILE=E:\SETUP.DSK\OS2FULL.ICO;
+Attr      OBJECTID=<MS_MIXLANG>;
+Attr      CONCURRENTVIEW=YES;
+Attr      PARAMETERS=/K MODE CO80,50 & OS2PROMP & D:\SOURCE\WORK\MIXLANG.CMD & CLS;
+Install
+
+* PM Printf Utility
+
+Class     WPProgram
+Name      PM Pprintf
+Location  <MS_GROUP2>
+Attr      EXENAME=D:\SOURCE\PMPRINTF\PMPRINTF.EXE;
+Attr      STARTUPDIR=H:\
+Attr      PROGTYPE=PM;
+Attr      MINWIN=DESKTOP;
+Attr      OBJECTID=<MS_PMPRINT>;
+Install

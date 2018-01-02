@@ -1,0 +1,57 @@
+/**/
+ID : MAINT
+***************NOTE exec PACKCOP  does not work... do manually*****
+VARY ON 216
+VARY ON 217
+Q 402
+Q 216
+'ATT 216 *'
+'ATT 217 *'
+DDR
+     SYS CONS
+     IN 402 3380 VMPK16
+     OUT 216 3380 VMPK16
+     COPY ALL
+     when it comes back to you with a display of "END:" press enter
+
+Q 403
+Q 217
+DDR
+     SYS CONS
+     IN 403 3380 VMNSYS
+     OUT 217 3380 VMNSYS
+     COPY ALL
+     when it comes back to you with a display of "END:" press enter
+
+Q 202
+DET 202 SYSTEM
+ATT 202 *
+SP PUN *
+PUN IPL FMT * (NOH
+ORDER RDR nnn
+IPL C CL
+F     (format or allocate)
+202   (device address)
+3380  (device type)
+LABEL (start cylinder...label)(
+VMOSYS
+#CP I CMS
+
+Q 213
+DET 213 SYSTEM
+ATT 213 *
+SP PUN *
+PUN IPL FMT * (NOH
+ORDER RDR nnn
+IPL C CL
+F     (format or allocate)
+213   (device address)
+3380  (device type)
+LABEL (start cylinder...label)(
+VMPK30
+#CP I CMS
+
+
+LOGOFF
+******** IPL COLD START    ********
+

@@ -1,0 +1,8 @@
+/***/
+clrscrn
+SAY 'Enter (# of records) and (rec_lenght)'
+PULL a b
+c=(((a*b)/0.5858)/1000000)
+d=TRUNC(c+.99)
+say d
+

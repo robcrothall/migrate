@@ -1,0 +1,206 @@
+/**/                                                                 /**/
+/* clrscrn */
+format = arg(1)
+USER = USERID()                                  /* Who is this ? */
+PREFIX =SUBSTR(USER,1,3)
+PREFIX2 =SUBSTR(USER,1,4)
+FILE_NAME=arg(1)
+SELECT
+   WHEN USER='SQLADMN' ³ USER='878IC012' THEN DO
+                               !name='DOUG MARTIN         *'
+                               !branch='878*'
+                               !b_name='I.C. - 105 West Str, Sandton  *'
+                               END
+   WHEN PREFIX='401' ³ PREFIX='AUD' ³ PREFIX='NFP' THEN DO
+                               !name='ZAIN ALLY           *'
+                               !branch='001*'
+                               !b_name='Nedfin, 5th fl,  66 Sauer Str *'
+                               END
+   WHEN PREFIX='736' THEN DO
+                               !name='R. JENNISON         *'
+                               !branch='736*'
+                               !b_name='Pln & Proj -  85 Main Street. *'
+                               END
+   WHEN PREFIX='739' THEN DO
+                               !name='R. V. Stone         *'
+                               !branch='739*'
+                               !b_name='Int.Trade,8th Fl, 100 Main Str*'
+                               END
+   WHEN USER='760AM003' THEN DO
+                               !name='Hendrik Van Wyk     *'
+                               !branch='065*'
+                               !b_name='TeleCentre, 294 Oak, FernPark *'
+                               END
+   WHEN PREFIX='760' THEN DO
+                               !name='TREVOR RAAL - 06/973*'
+                               !branch='973*'
+                               !b_name='Mngmt Info -  PERM PARK I     *'
+                               END
+   WHEN PREFIX='744' THEN DO
+                               !name='VERNON MOHAPE       *'
+                               !branch='499*'
+                               !b_name='CBD - 64 Eloff Street. 3rd Flr*'
+                               END
+   WHEN PREFIX='807' ³ PREFIX='670' THEN DO
+                               !name='Jayesh Ghella       *'
+                               !branch='807*'
+                               !b_name='H/O Credit - 100 Main Street  *'
+                               END
+   WHEN PREFIX='743' THEN DO
+                               !name='Robin Taggart, Cr.In*'
+                               !branch='743*'
+                               !b_name='10th Floor, Nedhof, 120 End St*'
+                               END
+   WHEN PREFIX='796' THEN DO
+                               !name='S. KOEKEMOER        *'
+                               !branch='743*'
+                               !b_name='Credit Inspection 64 Eloff Str*'
+                               END
+   WHEN PREFIX='810'  THEN DO
+                               !name='Rob Jennison        *'
+                               !branch='809*'
+                               !b_name='7th Floor, 85 Main Street     *'
+                               END
+   WHEN PREFIX='834'  THEN DO
+                               !name='S. VANMALI          *'
+                               !branch='638*'
+                               !b_name='Perm Park I - 3rd Floor       *'
+                               END
+   WHEN PREFIX='822' THEN DO
+                               !name='Rob Jennison        *'
+                               !branch='809*'
+                               !b_name='7th Floor, 85 Main Street     *'
+                               END
+   WHEN PREFIX='818'  THEN DO
+                               !name='S. VANMALI          *'
+                               !branch='638*'
+                               !b_name='Perm Park I, 3rd Floor        *'
+                               END
+   WHEN PREFIX='831' ³ PREFIX='715' ³ USER='LT' ³ USER='830DC001' THEN DO
+                               !name='M. STEYL            *'
+                               !branch='499*'
+                               !b_name='M.I.S.  -  64 Eloff Street    *'
+                               END
+   WHEN USER='830DC002' THEN DO
+                               !name='M. STEYL            *'
+                               !branch='499*'
+                               !b_name='M.I.S.  -  64 Eloff Street    *'
+                               END
+   WHEN PREFIX='830'  THEN DO
+                               !name='DAVE McDONALD       *'
+                               !branch='499*'
+                               !b_name='H/O Accounting-64 Eloff Street*'
+                               END
+   WHEN USER='846PH001' THEN DO
+                               !NAME='PAT BRIGNAL         *'
+                               !BRANCH='690*'
+                               !B_NAME='H.R.M.I.S.-2nd Fl,Perm Park II*'
+                               END
+   WHEN USER='846PH003' THEN DO
+                               !NAME='CAROL SMYTHE        *'
+                               !BRANCH='788*'
+                               !B_NAME='Human Resources- Perm Park II *'
+                               END
+   WHEN USER='846PH004' THEN DO
+                               !NAME='P.A.C. Markgraaff   *'
+                               !BRANCH='690*'
+                               !B_NAME='St.Alignmt,2nd Fl,Perm Park II*'
+                               END
+   WHEN USER='846PH005' THEN DO
+                               !NAME='ANDRE DU TOIT       *'
+                               !BRANCH='791*'
+                               !B_NAME='H.R.M.I.S.-2nd Fl,Perm Park II*'
+                               END
+   WHEN PREFIX='846'  ³ PREFIX='PER' THEN DO
+                               !NAME='PAT BRIGNAL         *'
+                               !BRANCH='690*'
+                               !B_NAME='H.R.M.I.S.-2nd Fl,PERM PARK II*'
+                               END
+/****
+   WHEN PREFIX='857'  THEN DO
+                               !name='M. STEYL            *'
+                               !branch='499*'
+                               !b_name='M.I.S.  - 64 Eloff Street     *'
+                               END
+****/
+   WHEN PREFIX='NET' ³  PREFIX='864' THEN DO
+                               !name='A. LAMPRECHT        *'
+                               !branch='864*'
+                               !b_name='Network - Sandton Place       *'
+                               END
+   WHEN PREFIX='782' THEN DO
+                               !name='A. STAHNKE          *'
+                               !branch='421*'
+                               !b_name='Help Desk - URGENT REPORT !!  *'
+                               END
+   WHEN PREFIX2='OPS4' THEN DO
+                               !name='K. Kuverjee         *'
+                               !branch='839*'
+                               !b_name='Computer Printing Services    *'
+                               END
+   WHEN USER='OPSLOG' THEN DO
+                               !name='ELVIN KAN           *'
+                               !branch='878*'
+                               !b_name='I.C. - 105 West Street,Sandton*'
+                               END
+   WHEN PREFIX='877' THEN DO
+                               !name='Banella Jansen      *'
+                               !branch='853*'
+                               !b_name='HR Consult -6th Floor, NEDHOF *'
+                               END
+   WHEN USER='878IC003' THEN DO
+                               !name='Shareen Baderoon    *'
+                               !branch='878*'
+                               !b_name='IC, B Block, 105 West, Sandton*'
+                               END
+   WHEN USER='878IC005' THEN DO
+                               !name='Patricia Maqetuka   *'
+                               !branch='878*'
+                               !b_name='IC, B Block, 105 West, Sandton*'
+                               END
+   WHEN USER='878IC007' THEN DO
+                               !name='Donavan Brownley    *'
+                               !branch='878*'
+                               !b_name='IC, B Block, 105 West, Sandton*'
+                               END
+   WHEN PREFIX='878' THEN DO
+                               !name='ELVIN KAN           *'
+                               !branch='878*'
+                               !b_name='I.C. - 105 West Str, Sandton  *'
+                               END
+   WHEN PREFIX='901' THEN DO
+                               !name='JOY JOHNSON         *'
+                               !branch='901*'
+                               !b_name='AMEX - 8 New Street South     *'
+                               END
+   WHEN PREFIX='776' THEN DO
+                               !name='SIMON WHEELER       *'
+                               !branch='650*'
+                               !b_name='Ground Floor, Lynton Hall     *'
+                               END
+   WHEN user='271PB005' THEN DO
+                               !name='Benella Janssen     *'
+                               !branch='965*'
+                               !b_name='7th Floor, NEDHOF             *'
+                               END
+   WHEN PREFIX='271' THEN DO
+                               !name='Henco Greyling      *'
+                               !branch='965*'
+                               !b_name='7th Floor, NEDHOF             *'
+                               END
+   OTHERWISE
+                               !name='ELVIN KAN           *'
+                               !branch='878*'
+                               !b_name='I.C. - 105 West Str, Sandton  *'
+END
+
+makebuf
+'EXECIO * CP (LIFO BUF 16384 STRING Q PRT *'
+pull . spoolid .
+'tag file '³³spoolid³³' xxx'³³'*'³³!name³³!branch³³!b_name,
+     ³³date(ordered)³³'*'³³time()³³'*'³³format'*         **'
+
+desbuf
+
+EXIT
+

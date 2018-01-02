@@ -1,0 +1,20 @@
+/*** exec to define temporary disk space for restores ***/
+ARG arg.1      /*** specify amount of disk space required,eg nn cyl**/
+/**/
+IF arg.1=' ' THEN DO
+  say '*****************************************'
+  say '*Please specify the CYLINDERS required  *'
+  say '*e.g TDDEF 10     -     for 10 cylinders*'
+  say '*****************************************'
+EXIT
+END
+DEF T3380 192 arg.1
+PUSH TEMP
+PUSH 1
+FORMAT 192 B
+DEF 191 193
+DEF 192 191
+ACC 191 A
+ACC 193 B
+Q DISK
+

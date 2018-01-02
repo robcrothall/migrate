@@ -1,0 +1,12 @@
+/** exec to link to AS Version 3 Release 2 **/
+
+parse arg opts                      /* get parms                 */
+'REL O (DET'                        /* release disk with AS V3.1 */
+'CP LINK ASV3R2 391 391 RR '        /* Link to AS V3.2           */
+'ACC 391 O'                         /* Access the disk           */
+'EXEC VMAS 'opts                    /* call VMAS with parms      */
+'REL O (DET'                        /* release AS V3.2 disk      */
+'CP LINK VMASSYS 391 391 RR'        /* link to AS V 3.1 again    */
+'ACC 391 O'                         /* access as v3.1 disk       */
+exit                                /* bye.                      */
+

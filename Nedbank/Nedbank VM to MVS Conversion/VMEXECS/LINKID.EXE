@@ -1,0 +1,80 @@
+/* LINKID EXEC */
+TRACE 'O'
+'REL U (DET '
+AS_num = ''
+'MAKEBUF'
+   DO WHILE AS_num = ''
+      'CLRSCRN'
+      SAY
+      SAY "                    ********      L I N K I D      ******** "
+      SAY
+      SAY "The LINKID facility enables you to establish a TEMPORARY",
+          "link to another ID."
+      SAY "To obtain information on LINKID type in HELP LINKID, to continue",
+          "press ENTER"
+      PULL request
+      upper request
+         IF request='HELP LINKID' THEN 'BROWSE LINKID DATA'
+      SAY "Please enter the AS USER NUMBER you want to link to, or type QUIT",
+          "to exit"
+      PULL AS_num .
+      UPPER AS_num
+   END
+'DROPBUF'
+SET PF3 IMM EXIT
+   IF AS_num = QUIT THEN EXIT
+
+'ESTATEW DASUSER NAMES A'
+   IF rc <> '0' then DO
+     'CLRSCRN'
+     'ESTATE DASUSER NAMES A'
+         IF rc = '0' then DO
+           SAY 'You do not have WRITE access to DASUSER NAMES A.'
+           SAY 'Please link disk R/W and try again.'
+         END
+         ELSE DO
+           SAY 'You do not have a DASUSER NAMES on your A disk.'
+           SAY 'Please correct and try again.'
+         END
+      exit
+   END
+
+'EXECIO * DISKR DASUSER NAMES A 0 ( FINIS STEM OLD.'
+'EXECIO * DISKR DASUSER NAMES A 0 ( FINIS Z 40 45 LO $399 U$ STEM F.'
+   IF RC = '0' then DO
+      parse var f.2 rec .
+      rest_rec = strip(rec)+2
+      rec = strip(rec)-2
+   END
+   ELSE DO
+      'EXECIO * DISKR DASUSER NAMES A 0 ( FINIS Z 16 24 LO $:type.DAS$ STEM F.'
+         IF rc <> '0'  then do
+            say 'DASUSER NAMES A is DAMMAGED please correct and retry'
+            exit
+         END
+      parse var f.2 rec .
+      rest_rec = rec
+   END
+
+line.1 = ':nick.'³³left(AS_num,9)':type.LIBRARY'
+line.2 = copies(' ',15)³³':userid.'³³AS_num
+line.3 = copies(' ',15)³³':format.VADDR :location.399 U'
+line.4 = copies(' ',15)
+'EXECIO 4 DISKW DASUSER NAMES A 'rec' (STEM LINE.'
+   DO comp = rest_rec to old.0
+     'EXECIO 1 DISKW DASUSER NAMES A 0 (STRING 'old.comp
+   END
+'FINIS DASUSER NAMES A'
+
+'LINK' AS_num '191 399 RR'
+   IF RC <> '0' THEN DO
+      SAY ' '
+      SAY 'Unable to LINK 'AS_num' 191 disk as 399'
+      SAY 'Enter LINKID to restart'
+      EXIT
+   END
+
+'ACC 399 U'
+SAY
+SAY '****  You are now linked to ' AS_num'  ****'
+

@@ -1,0 +1,14 @@
+/*** exec to backup the iplable dir and the user directory ***/
+/*                                                           */
+trace r
+FI INMOVE DISK IPL DIR S
+FI OUTMOVE TAP1
+MOVE
+TAPE BSF
+FI INMOVE DISK USER DIRECT b
+FI OUTMOVE TAP1
+MOVE
+tape wtm
+tape wtm
+
+

@@ -1,0 +1,201 @@
+ID,Bill,User,Type,Department,Phone,Building,Parking
+715MI001,830,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+743CI001,743,Anna-Marie Fourie,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+744IS980,812,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+744IS993,812,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+744IS994,812,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+744IS995,812,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+744IS996,812,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+744IS997,812,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+744IS998,812,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+744IS999,812,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+776PD001,650,Patricia Maqetuka,AS,Electronic Banking,881-4630,55 Albertyn Ave Weira Valley,No arrangements necessary
+807AD001,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD002,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD003,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD004,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD005,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD994,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD995,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD996,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD997,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD998,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+807AD999,807,Jayesh Ghella,AS,HO Credit,406-0000,120 End St Doornfontein,In Building arrange with user
+820PM999,820,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830DC001,830,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830DC002,830,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA001,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA002,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA003,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA004,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA995,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA996,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA997,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA998,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+830HA999,830,Dave Macdonald,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+831LT001,750,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+831LT003,750,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+857CB999,750,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+878IB001,878,IBM,AS,Info Centre,881-4545,105 West Street,
+878IB002,878,IBM,AS,Info Centre,881-4545,105 West Street,
+878IB003,878,IBM,AS,Info Centre,881-4545,105 West Street,
+878IB004,878,IBM,AS,Info Centre,881-4545,105 West Street,
+878IB005,878,IBM,AS,Info Centre,881-4545,105 West Street,
+878IC003,878,Shareen Baderoon,AS,Info Centre,881-4631,105 West Street,
+878IC005,878,Patricia Maqetuka,AS,Info Centre,881-4630,105 West Street,
+878IC006,878,Elvin Kan,CM LOG,Info Centre,881-4646,105 West Street,
+878IC007,878,Donovan Brownly,AS,Info Centre,881-4632,105 West Street,
+878IC009,443,Patricia Maqetuka,AS,Card Division,881-4630,43 Biccard St,Kings Parkade in Braamfontein
+878IC010,878,Shareen Baderoon,AS,Info Centre,881-4631,105 West Street,
+878IC011,878,Doug Martin,AS,Info Centre,881-4644,105 West Street,
+878IC012,878,Shareen Baderoon,AS,Info Centre,881-4631,105 West Street,
+878IC014,878,Doug Martin,AS,Info Centre,881-4644,105 West Street,
+878IC999,878,Doug Martin,AS,Info Centre,881-4644,105 West Street,
+878ICDF1,750,Elvin Kan,CM AS,Info Centre,881-4646,105 West Street,
+878ICLT1,750,Elvin Kan,CM AS,Info Centre,881-4646,105 West Street,
+878ICNF3,401,Elvin Kan,CM AS,Info Centre,881-4646,105 West Street,
+878ICNF4,401,Elvin Kan,CM AS,Info Centre,881-4646,105 West Street,
+901AX999,901,Patricia Maqetuka,AS,Card Division,881-4630,44 Biccard St,Kings Parkade in Braamfontein
+901TEST,901,Patricia Maqetuka,AS,Card Division,881-4630,45 Biccard St,Kings Parkade in Braamfontein
+ASSTD1,999,Doug Martin,AS,Info Centre,881-4644,105 West Street,
+LT,750,Marie Steyl,AS,Finance Division,333-0516,64 Eloff St,Kings Parkade off Eloff St / User
+NFOPS,998,Elvin Kan,CM LOAD,Info Centre,881-4646,105 West Street,
+RESTORE,998,Elvin Kan,CM LOAD,Info Centre,881-4646,105 West Street,
+SQLAMEX,901,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street,
+SQLASR,830,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLBD,807,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLBGP,830,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLBL,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLCAC,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLCCA,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLCD,901,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLCHD,801,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLCIF,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLCM,807,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLCO,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLCX,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLDCM,650,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLFA,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLINV,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLLG,807,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLLOAD,878,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLPCAC,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLRA,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLSAV,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLSF,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+SQLUB,812,Elvin Kan,CM SQL,Info Centre,881-4646,105 West Street
+5798DWDC,999,System,VM,Info Centre,,
+878IC001,878,System,VM,Info Centre,,
+878IC008,878,System,VM,Info Centre,,
+AUTOLOG1,999,System,VM,Info Centre,,
+AVSVM,999,System,VM,Info Centre,,
+CAIMAINT,999,System,VM,Info Centre,,
+COMTEN,998,System,VM,Info Centre,,
+DASMON32,999,System,VM,Info Centre,,
+DATAMOVE,999,System,VM,Info Centre,,
+DIRADMIN,999,System,VM,Info Centre,,
+DIRMAINT,999,System,VM,Info Centre
+DISKACNT,999,System,VM,Info Centre
+DRP,999,System,VM,Info Centre
+EREP,999,System,VM,Info Centre
+GCS,999,System,VM,Info Centre
+JARMAINT,999,System,VM,Info Centre
+JARSERV,999,System,VM,Info Centre
+MAINT,999,System,VM,Info Centre
+MONWRITE,999,System,VM,Info Centre
+NEDMAINT,999,System,VM,Info Centre
+NETWORK,864,System,VM,Info Centre
+OPER1,999,System,VM,Info Centre
+OPERATNS,999,System,VM,Info Centre
+OPERATOR,999,System,VM,Info Centre
+OPERSYMP,999,System,VM,Info Centre
+OPS,998,System,VM,Info Centre
+OPSLOG,998,System,VM,Info Centre
+OPSMAINT,878,System,VM,Info Centre
+PERCE,999,System,VM,Info Centre
+PRODOPER,999,System,VM,Info Centre
+RSCS,999,System,VM,Info Centre
+RTMESA,999,System,VM,Info Centre
+RUNEREP,999,System,VM,Info Centre
+SQLDBA,999,System,VM,Info Centre
+SQLNV,999,System,VM,Info Centre
+SYSDUMP1,999,System,VM,Info Centre
+SYSMON,999,System,VM,Info Centre
+SYSMON00,999,System,VM,Info Centre
+TSAFVM,999,System,VM,Info Centre
+VMASMON,999,System,VM,Info Centre
+VMASSYS,999,System,VM,Info Centre
+VMBACKUP,998,System,VM,Info Centre
+VMPRF,999,System,VM,Info Centre,,,
+VMRMAINT,998,System,VM,Info Centre,,,
+VMUTIL,999,System,VM,Info Centre,,,
+VTAM,998,System,VM,Info Centre,,,
+VTAMOP,998,System,VM,Info Centre,,,
+WAKEUPID,999,System,VM,Info Centre,,,
+818IN001,818,Sanjay Vermali,AS,Internal Audit,,Nedcor Park Edgardale,No arrangements necessary
+818IN002,834,Sanjay Vermali,AS,Internal Audit,,Nedcor Park Edgardale,No arrangements necessary
+818IN999,818,Sanjay Vermali,AS,Internal Audit,,Nedcor Park Edgardale,No arrangements necessary
+834IA004,834,Sanjay Vermali,AS,Internal Audit,,Nedcor Park Edgardale,No arrangements necessary
+834IA007,834,Sanjay Vermali,AS,Internal Audit,,Nedcor Park Edgardale,No arrangements necessary
+834IA008,834,Sanjay Vermali,AS,Internal Audit,,Nedcor Park Edgardale,No arrangements necessary
+801IT001,801,Patricia Maqetuka,AS,IT Finance,,105 West Street,
+782SA001,421,Neil - Helpdesk,AS,IT Help Desk,,294 Oak Ave Ferndale,No arrangements necessary
+782SA002,421,Neil - Helpdesk,AS,IT Help Desk,,294 Oak Ave Ferndale,No arrangements necessary
+782SA999,421,Neil - Helpdesk,AS,IT Help Desk,,294 Oak Ave Ferndale,No arrangements necessary
+872OM001,776,Neil - Helpdesk,AS,IT Help Desk,,294 Oak Ave Ferndale,No arrangements necessary
+864OP001,421,Neil - Helpdesk,AS,IT Help Desk,,294 Oak Ave Ferndale,No arrangements necessary
+NETLINE,421,Network Helpdesk,VM,IT Help Desk,,294 Oak Ave Ferndale,No arrangements necessary
+OPS2,998,Krish Kuverjee,AS,IT Operations,,105 West Street,
+OPS4,998,Krish Kuverjee,AS,IT Operations,,105 West Street,
+OPS1,998, Xerox Printing,VM,IT Operations,,105 West Street,
+401NF001,401,Eli Henig,AS,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+401NF002,401,Eli Henig,AS,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+401NF003,401,Eli Henig,AS,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+401NF004,401,Eli Henig,AS,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+401NF005,401,Eli Henig,AS,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+401NF006,401,Eli Henig,AS,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+401NF101,401,Eli Henig,AS,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+401NF998,401,Eli Henig,AS,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+NFPACK,401,Eli Henig,AS CM,Nedfin,,66 Sauer St,Kings Parkade off Eloff St / User
+760AM001,812,Trevor Raal,AS,Personal Banking,,Nedcor Park Edgardale,No arrangements necessary
+760AM002,812,Trevor Raal,AS,Personal Banking,,Nedcor Park Edgardale,No arrangements necessary
+760AM005,812,Trevor Raal,AS,Personal Banking,,Nedcor Park Edgardale,No arrangements necessary
+760AM999,812,Trevor Raal,AS,Personal Banking,,Nedcor Park Edgardale,No arrangements necessary
+271PB003,952,Benilla Jansens,AS,Personal Credit,,120 End St Doornfontein,In Building arrange with user
+271PB005,952,Benilla Jansens,AS,Personal Credit,,120 End St Doornfontein,In Building arrange with user
+271PB001,952,Henko Greyling,AS,Personal Credit,,120 End St Doornfontein,In Building arrange with user
+271PB002,952,Henko Greyling,AS,Personal Credit,,120 End St Doornfontein,In Building arrange with user
+271PB004,952,Henko Greyling,AS,Personal Credit,,120 End St Doornfontein,In Building arrange with user
+777IS001,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+777IS999,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+846PH001,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+846PH002,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+846PH003,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+846PH004,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+846PH005,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+846PH012,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+846PH998,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+878ICSAL,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+PERS,846,Pat Brignal,AS,Strategic Alignment,,Nedcor Park Edgardale,No arrangements necessary
+760AM003,65,Hendrik Van Wyk,AS,Telecentre,,294 Oak Ave Ferndale,No arrangements necessary
+760AM004,65,Hendrik Van Wyk,AS,Telecentre,,294 Oak Ave Ferndale,No arrangements necessary
+831LT002,885,Alison Teal,AS,Treasury,,100 Main St,Muncipal Opposite 100 Main Under Bus Depot
+409IB999,409,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+580EX001,580,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+580EX999,580,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+736RB001,809,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+805SD999,805,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+810IT001,809,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+810IT003,886,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+810IT004,886,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+810IT999,809,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+822ID001,809,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+822ID003,822,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+822ID999,822,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+851NR999,851,Rob Jennison,AS,Treasury/Corresp Banking,,85 Main St,Muncipal Opposite 100 Main Under Bus Depot
+670CR001,670,,AS,,,,
+670CR999,670,,AS,,,,
+877NS007,846,,AS,,,,
+878IC002,878,,AS,,,,
+878IC004,878,,AS,,,,
+SQLADMN,812,,AS,,,,

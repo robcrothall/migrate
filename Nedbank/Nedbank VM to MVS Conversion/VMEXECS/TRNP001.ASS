@@ -1,0 +1,133 @@
+*//MSS0001A JOB (),'J GROVE',MSGCLASS=X,NOTIFY=MSS0001                  TRN00010
+*//ASSEM    EXEC ASMHCL,PARM.L='LET,XREF,LIST'                          TRN00020
+         PRINT GEN                                                      TRN00030
+         DCBD DSORG=PS,DEVD=DA,TA                                       TRN00040
+         PRINT NOGEN                                                    TRN00050
+TRNP0001 CSECT                                                          TRN00060
+         ENTRY TRNP000            DEFINE ENTRY                          TRN00070
+         DC    CL8'TRNP000'       MODULE IDENTIFICATION                 TRN00080
+         DC    CL8'&SYSDATE'      ASSEMBLY DATE                         TRN00090
+         DC    CL8'&SYSTIME'      ASSEMBLY TIME                         TRN00100
+         USING *,R15              ESTABLISH BASE REGISTER 15            TRN00110
+TRNP000  SAVE  (14,12)            SAVE REGISTERS                        TRN00120
+         ST    R13,SAVE+4         SAVE BACKCHAIN ADDRESS                TRN00130
+         BAL   R13,BEGIN          LOAD BASE REGISTER                    TRN00140
+         DROP  R15                DROP REGISTER 15                      TRN00150
+         USING *,R13              ESTABLISH BASE REGISTER 13            TRN00160
+SAVE     DC    18F'0'             REGISTER SAVE AREA                    TRN00170
+BEGIN    EQU   *                                                        TRN00180
+         USING IHADCB,R12         ESTABLISH BASE FOR DCB                TRN00190
+         OPEN  (INMOVE,(INPUT))    OPEN INMOVE DATASET                  TRN00200
+         OPEN  (OUTMOVE,(OUTPUT))   OPEN OUTMOVE DATASET                TRN00210
+         LA    R12,INMOVE          POINT TO INMOVE                      TRN00220
+         MVC   RECLEN,DCBLRECL    GET RECORD LENGTH                     TRN00230
+         BAL   R14,READ           READ AN INMOVE RECORD                 TRN00240
+MAIN010  EQU   *                                                        TRN00250
+         TM    EOFREAD,B'10000000' INMOVE EOF?                          TRN00260
+         BO    MAINRET            YES, CONTINUE                         TRN00270
+         BAL   R14,TRAN           PERFORM TRANSLATE                     TRN00280
+         PUT   OUTMOVE,RECORD       WRITE OUTMOVE RECORD                TRN00290
+         BAL   R14,READ           READ AN INMOVE RECORD                 TRN00300
+         B     MAIN010            CONTINUE                              TRN00310
+MAINRET  EQU   *                                                        TRN00320
+         CLOSE (INMOVE,LEAVE)    CLOSE INMOVE DATASET                   TRN00330
+         CLOSE (OUTMOVE,LEAVE)    CLOSE OUTMOVE DATASET                 TRN00340
+         L     R13,SAVE+4         LOAD BACKCHAIN ADDRESS                TRN00350
+         RETURN (14,12),RC=0      RETURN TO CALLER                      TRN00360
+*********************************************************************** TRN00370
+*        ROUTINE TO TRANSLATE X'00'->X'F0' AND X'FF'->X'F9'           * TRN00380
+*********************************************************************** TRN00390
+TRAN     EQU   *                                                        TRN00400
+         ST    R14,TRANSAV        SAVE RETURN ADDRESS                   TRN00410
+         LA    R6,RECORD          POINT TO RECORD                       TRN00420
+         LH    R7,RECLEN          GET RECORD LENGTH                     TRN00430
+TRAN010  EQU   *                                                        TRN00440
+         CH    R7,=H'256'         OUTPUT LENGTH > 256                   TRN00450
+         BNH   TRAN020            NO, CONTINUE                          TRN00460
+         TR    0(256,R6),TAB      PERFORM TRANSLATE                     TRN00470
+         LA    R6,256(R6)         POINT TO NEXT SEGMENT                 TRN00480
+         SH    R7,=H'256'         REDUCE LENGTH BY 256                  TRN00490
+         B     TRAN010            CONTINUE                              TRN00500
+TRAN020  EQU   *                                                        TRN00510
+         BCTR  R7,0               EXECUTE LENGTH                        TRN00520
+         EX    R7,TRANTRN         PERFORM TRANSLATE                     TRN00530
+         L     R14,TRANSAV        LOAD RETURN ADDRESS                   TRN00540
+         BR    R14                RETURN                                TRN00550
+TRANSAV  DS    F                                                        TRN00560
+TRANTRN  TR    0(,R6),TAB         TRANSLATE                             TRN00570
+*********************************************************************** TRN00580
+*        ROUTINE TO READ INMOVE RECORD                                  TRN00590
+*********************************************************************** TRN00600
+READ     EQU   *                                                        TRN00610
+         ST    R14,READSAV        SAVE RETURN ADDRESS                   TRN00620
+         MVI   RECORD,C' '           LOAD BLANK                         TRN00630
+         LA    R4,RECORD                                                TRN00640
+         LA    R5,2303                                                  TRN00650
+         LA    R6,RECORD+1                                              TRN00660
+         LA    R7,X'40'                                                 TRN00670
+         SLL   R7,24                                                    TRN00680
+         MVCL  R4,R6                                                    TRN00690
+*        MVC   RECORD+1(L'RECORD-1),RECORD        CLEAR RECORD          TRN00700
+         GET   INMOVE,RECORD       READ AN INMOVE RECORD                TRN00710
+         B     READRET            CONTINUE                              TRN00720
+READEOF  EQU   *                                                        TRN00730
+         OI    EOFREAD,B'10000000' SET EOF INDICATOR                    TRN00740
+READRET  EQU   *                                                        TRN00750
+         L     R14,READSAV        LOAD RETURN ADDRESS                   TRN00760
+         BR    R14                RETURN                                TRN00770
+READSAV  DS    F                                                        TRN00780
+*********************************************************************** TRN00790
+*        DEFINITION OF WORK AREAS                                     * TRN00800
+*********************************************************************** TRN00810
+         LTORG                                                          TRN00820
+RECLEN   DS    H                                                        TRN00830
+EOFREAD  DC    B'00000000'                                              TRN00840
+TAB      DC    X'F00102030405060708090A0B0C0D0E0F'                      TRN00850
+         DC    X'101112131415161718191A1B1C1D1E1F'                      TRN00860
+         DC    X'202122232425262728292A2B2C2D2E2F'                      TRN00870
+         DC    X'303132333435363738393A3B3C3D3E3F'                      TRN00880
+         DC    X'404142434445464748494A4B4C4D4E4F'                      TRN00890
+         DC    X'505152535455565758595A5B5C5D5E5F'                      TRN00900
+         DC    X'606162636465666768696A6B6C6D6E6F'                      TRN00910
+         DC    X'707172737475767778797A7B7C7D7E7F'                      TRN00920
+         DC    X'808182838485868788898A8B8C8D8E8F'                      TRN00930
+         DC    X'909192939495969798999A9B9C9D9E9F'                      TRN00940
+         DC    X'A0A1A2A3A4A5A6A7A8A9AAABACADAEAF'                      TRN00950
+         DC    X'B0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF'                      TRN00960
+         DC    X'C0C1C2C3C4C5C6C7C8C9CACBCCCDCECF'                      TRN00970
+         DC    X'D0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF'                      TRN00980
+         DC    X'E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEF'                      TRN00990
+         DC    X'F0F1F2F3F4F5F6F7F8F9FAFBFCFDFEF9'                      TRN01000
+R0       EQU   0                                                        TRN01010
+R1       EQU   1                                                        TRN01020
+R2       EQU   2                                                        TRN01030
+R3       EQU   3                                                        TRN01040
+R4       EQU   4                                                        TRN01050
+R5       EQU   5                                                        TRN01060
+R6       EQU   6                                                        TRN01070
+R7       EQU   7                                                        TRN01080
+R8       EQU   8                                                        TRN01090
+R9       EQU   9                                                        TRN01100
+R10      EQU   10                                                       TRN01110
+R11      EQU   11                                                       TRN01120
+R12      EQU   12                                                       TRN01130
+R13      EQU   13                                                       TRN01140
+R14      EQU   14                                                       TRN01150
+R15      EQU   15                                                       TRN01160
+*********************************************************************** TRN01170
+*        DATA CONTROL BLOCKS                                            TRN01180
+*********************************************************************** TRN01190
+INMOVE    DCB   DDNAME=INMOVE,                                         -TRN01200
+               DSORG=PS,                                               -TRN01210
+               EODAD=READEOF,                                          -TRN01220
+               RECFM=FB,                                               -TRN01230
+               MACRF=GM                                                 TRN01240
+OUTMOVE    DCB   DDNAME=OUTMOVE,                                       -TRN01250
+               DSORG=PS,                                               -TRN01260
+               MACRF=PM                                                 TRN01270
+RECORD   DC    9CL256' '                                                TRN01280
+         END   TRNP000                                                  TRN01290
+*/L.SYSLMOD DD DSN=MST.LOADLIB(TRNP000),DISP=SHR                        TRN01300
+*/L.SYSLIB  DD DSN=MST.LOADLIB,DISP=SHR                                 TRN01310
+*/                                                                      TRN01320
+

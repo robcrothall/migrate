@@ -1,0 +1,166 @@
+/***********************************************************************/
+/* This EXEC controls all user printing, whether from AS or CMS.       */
+/* The basic flow is:                                                  */
+/*                                                                     */
+/*    1) Establish where the user is currently logged on and use his   */
+/* terminal address to assign the nearest local printer....            */
+/*                                                                     */
+/*    2) Check parameter list to see if multiple copies are required,  */
+/* otherwise set default to one copy....                               */
+/*                                                                     */
+/*    3) Route the print file to the local printer or, if the volume   */
+/* of output exceeds the installation maximum, route the file to the   */
+/* central system printer from where it will be mailed to the user...  */
+/*                                                                     */
+/*    RESTRICTIONS :- CMS Filename cannot be '?' or 'HELP'             */
+/*                    CMS Filetype cannot be numeric                   */
+/*                                                                     */
+/*                    (Admittedly we can program around these but at   */
+/*                     PdT's request and in the interests of EXEC      */
+/*                     efficiency we aren't providing for every single */
+/*                     unlikely combination....)                       */
+/*                                                                     */
+/*    See the HELP information for possible command formats...         */
+/*                                                                     */
+/***********************************************************************/
+
+                                                                     /**/
+ARG A B C D    /* Hopefully he passed us some arguments. Unfortunately */
+               /* we can't assign them meaningful names 'cos the copies*/
+               /* option could be position 2, 3 or 4. (Arg B, C, or D) */
+                                                                     /**/
+IF A = '' ³ A = '?' ³ A = 'HELP' THEN               /* Help him if...  */
+   CALL PRTHELP                                     /* he's stuck....  */
+/**TRACE R**/
+CALL "ADDRGRP"               /*Find out to which printer the file must */
+PRTID=RESULT                 /*go, according to where the screen is.   */
+IF PRTID='RESULT' THEN EXIT 999
+CPY = 1                                       /* Here's our default....*/
+                                                                     /**/
+IF B = '' THEN B = 'LISTING'                  /* Null gets default FT. */
+ELSE IF DATATYPE(B,'W') = 1 THEN DO           /* Multiple copies maybe?*/
+                                                                     /**/
+     IF C ª= '' THEN                          /* If so, it had better  */
+        CALL PRTHELP                          /* be his final arg....  */
+                                                                     /**/
+     CPY = B                                  /* Seems so...assign num */
+     B = 'LISTING'                            /* and set default FT... */
+END
+                                                                     /**/
+IF C = '' THEN C = '*'                        /* See logic for B above */
+ELSE IF DATATYPE(C,'W') = 1 THEN DO
+                                                                     /**/
+     IF D ª= '' THEN
+        CALL PRTHELP
+                                                                   /**/
+     CPY = C
+     C = '*'
+END
+                                                                     /**/
+IF D ª= '' THEN DO                            /* If this arg is here,  */
+   IF DATATYPE(D,'W') = 1 THEN                /* it MUST be numeric or */
+      CPY = D                                 /* we've got a confused  */
+   ELSE CALL PRTHELP                          /* user. (Or at best one */
+END                                           /* with finger trouble...*/
+                                                                     /**/
+ADDRESS COMMAND 'LI' A B C '(L STACK'         /* Does the file exist ? */
+                                                                     /**/
+IF RC ª= 0 THEN DO                                         /* Silly... */
+   SAY '***ERROR*** FILE' A B C 'NOT FOUND'                /* ...boy...*/
+   EXIT(RC)
+END
+                                                                     /**/
+COUNT = QUEUED()
+PULL . . . . . RECS .                          /* Get the record count */
+COUNT = COUNT - 1
+                                                                     /**/
+DO WHILE COUNT > 0                                   /* Clear...       */
+    PULL .                                           /*     the...     */
+    COUNT = COUNT - 1                                /*         stack..*/
+END
+                                                                     /**/
+RECS = RECS * CPY                  /* How many records to be printed ? */
+                                                                     /**/
+IF RECS > 11000 THEN DO
+        SAY 'Your print file exceeds the maximum allowable record',
+            'count for the local'
+        SAY 'printer. It will be routed to the central printer at',
+            'Sandton and then'
+        SAY 'mailed to you. Enter "Y" to print or "N" to purge the',
+            'file and exit...'
+                                                                     /**/
+        GOOD_REPLY = 0
+        DO UNTIL GOOD_REPLY
+          PULL REPLY
+          IF REPLY = 'N' THEN DO
+               SAY 'Print file purged at your request'
+               GOOD_REPLY = 1
+          END
+          ELSE IF REPLY = 'Y' THEN DO
+              'CP SET MSG OFF'
+ncpy=TRUNC(CPY)
+              'CP SP PRT OFF NOCONT NOHOLD CL Z COPY' NCPY
+                                                                     /**/
+               ADDRESS COMMAND 'PRINT' A B C       /* Go directly to   */
+                                                   /* CMS to avoid any */
+                                                   /* recursion....    */
+               IF RC ª= 0 THEN
+                    SAY '*** ERROR ***' RC 'printing' A B C 'contact',
+                         'Systems Support'
+               ELSE EXEC DISPATCH
+
+               'CP SET MSG ON'
+                GOOD_REPLY = 1
+          END
+          ELSE SAY 'Invalid response. Enter "Y" to print or "N" to purge'
+         END /*until good_reply */
+ END /* rec>11000*/
+ ELSE DO                                              /* Within limits */
+    'CP SET MSG OFF'                                  /* Send it off   */
+ncpy=TRUNC(CPY)
+    'CP SP PRT RSCS NOCONT NOHOLD COPY' NCPY           /* locally....*/
+    'CP TAG DEV PRT' PRTID
+     ADDRESS COMMAND 'PRINT' A B C
+     IF RC ª= 0 THEN
+           SAY '*** ERROR ***' RC 'printing' A B C 'contact',
+               'Systems Support'
+     ELSE SAY 'Print file' A B 'routed to the local printer' PRTID
+    'CP SET MSG ON'
+END
+
+'CP SP PRT OFF COPY 1 NOCONT NOHOLD CL A'             /* Reset options */
+'CP TAG DEV PRT'
+EXIT                                                  /* Byeeee.....   */
+                                                                     /**/
+PRTHELP: PROCEDURE
+'CLRSCRN'
+SAY'The PRINT command can be issued in the following format :           '
+SAY'                                                                    '
+SAY'"PRINT fn ft fm n" -    will print a CMS file of the specified      '
+SAY'                        FileName, FileType and FileMode on ANY      '
+SAY'                        accessed disk in N copies                   '
+SAY'NOTES   :1) "fn" is the name of the file to be printed, it cannot be'
+SAY'             HELP or ?.                                             '
+SAY'         2) "ft" is the the type of the file, if left blank it will '
+SAY'            default to  LISTING.                                    '
+SAY'            "ft" cannot be wholly numeric.                          '
+SAY'         3) "fm" is the access mode of the disk where the file is,  '
+SAY'            this defaults to "*" (any disk) if omitted.             '
+SAY'         4) "n" specifies the number of copies required. If omitted '
+SAY'            it defaults to one.                                     '
+SAY'                                                                    '
+SAY'EXAMPLES:  PRINT MYFILE                                             '
+SAY'           PRINT MYFILE LISTING * 1                                 '
+SAY'           These two commands are effectivly identical.             '
+SAY'                                                                    '
+SAY'When working from AS remember to prefix the command with HOS CMS.   '
+SAY'                                                                    '
+EXIT
+PURGE:
+
+
+
+
+
+
+

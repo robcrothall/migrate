@@ -1,0 +1,99 @@
+CONNECT BGP IDENTIFIED BY BGP;
+SET AUTOCOMMIT ON;
+SET ERRORMODE CONTINUE;
+
+
+DATALOAD TABLE (MAIN)
+         ACCOUNT               1-10     ZONED
+         BRANCH                2-4      ZONED
+         TYPE                  5-8      ZONED
+         DIVISION             11-13     ZONED
+         REGION               14-16     ZONED
+         AREA                 17-19     ZONED
+         PARENT               20-22     ZONED
+         BALANCE              23-35     ZONED(2)
+        "DR COMPONENT"        36-48     ZONED(2)
+        "CR COMPONENT"        49-61     ZONED(2)
+        "AVE BALANCE"         62-74     ZONED(2)
+        "AVE DR BALANCE"      75-87     ZONED(2)
+        "AVE CR BALANCE"      88-100    ZONED(2)
+        "DR TURNOVER MTH"    101-113    ZONED(2)
+        "DR TURNOVER QTR"    114-126    ZONED(2)
+        "DR TURNOVER YR"     127-139    ZONED(2)
+        "CR TURNOVER MTH"    140-152    ZONED(2)
+        "CR TURNOVER QTR"    153-165    ZONED(2)
+        "CR TURNOVER YR"     166-178    ZONED(2)
+       INFILE (ICBG03);
+
+
+DATALOAD TABLE (AVERAGES)
+         ACCOUNT               1-10     ZONED
+         BRANCH                2-4      ZONED
+         TYPE                  5-8      ZONED
+         MONTH                11-12     ZONED
+        "MONTHEND BALANCE"    13-25     ZONED(2)
+        "DR COMPONENT"        26-38     ZONED(2)
+        "CR COMPONENT"        39-51     ZONED(2)
+        "AVE DR BALANCE"      52-64     ZONED(2)
+        "AVE CR BALANCE"      65-77     ZONED(2)
+       INFILE (ICBG04);
+
+
+DATALOAD TABLE (ACCOUNTS)
+         TYPE                     1-4      ZONED
+         NAME                     5-44
+         "DB DEST CODE BG"       45-53     ZONED
+         "CR DEST CODE BG"       54-62     ZONED
+         "DB DEST CODE BP"       63-65     ZONED
+         "CR DEST CODE BP"       66-68     ZONED
+         "CORPORATE ACCT"        69        ZONED
+         "BLOCK ENTRIES"         70-71     ZONED
+         "BLOCK CHANGES"         72        ZONED
+         "EXCEPTION REPORT"      73        ZONED
+         "EXCEPTION ACCT"        74        ZONED
+         "NORMAL CAT BGPP"       75-76     ZONED
+         "SPECIAL CAT BGPP"      77        ZONED
+         "RUN CAT BGPP"          78        ZONED
+         "DB CR IND BGPP"        79        ZONED
+         "DB CR IND SPCL"        80        ZONED
+         "PERCENT ACCT DB"       81-85     ZONED(3)
+         "PERCENT ACCT CR"       86-90     ZONED(3)
+         "ACTION TYPE"           91        ZONED
+         "BUDGET CR LINK"        92-95     ZONED
+         "BUDGET DR LINK"        96-99     ZONED
+         "SPECIAL PRINT IND"     100       ZONED
+         "RSC LEVY IND"          101
+INFILE (ICBG11);
+
+
+DATALOAD TABLE (ZTITLES)
+         TYPE                  1-4      ZONED
+         NAME                  5-44
+         "DR DEST FINSTAT"    45-53     ZONED
+         "CR DEST FINSTAT"    54-62     ZONED
+         "DR DEST CONTRIB"    63-71     ZONED
+         "CR DEST CONTRIB"    72-80     ZONED
+         "STD ACC"               90
+       INFILE (ICBG7A);
+
+
+DATALOAD TABLE (BRANCH)
+         BRANCH                1-3      ZONED
+         REGION                4-6      ZONED
+         DIVISION              7-9      ZONED
+        "BRANCH DESC"         10-29
+       INFILE (ICBG08);
+
+
+DATALOAD TABLE (REGION)
+         REGION                1-3      ZONED
+        "REGION DESC"          4-23
+       INFILE (ICBG09);
+
+
+DATALOAD TABLE (DIVISION)
+         DIVISION              1-3      ZONED
+        "DIVISION DESC"        4-23
+       INFILE (ICBG10);
+
+

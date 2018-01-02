@@ -1,0 +1,36 @@
+/* This exec define a temp mdisk - address and size depend on user */
+say ' This exec defines, formats and accesses a temporary mdisk'
+say ' Please enter number of cylinders, address (default= 111) and ',
+    ' access mode (default= Z)'
+pull cyl address mode rest
+IF DATATYPE(cyl,whole)=0 THEN DO
+   SAY "Invalid numder of cylinders"
+   EXIT
+END
+IF address='' ³  IF  DATATYPE(address)=CHAR
+THEN DO
+     address=111
+     DET 111
+END
+IF mode=''
+THEN mode=Z
+'DEF T3380' address cyl
+IF rcª=0
+THEN DO
+   say " No space available"
+   EXIT
+END
+ELSE DO
+   makebuf
+   QUEUE 'yes'
+   QUEUE 'TMP'³³address
+   say '...Busy formatting'
+   FORMAT address Z
+   ACC address Z
+   DROPBUF
+END
+
+
+
+
+

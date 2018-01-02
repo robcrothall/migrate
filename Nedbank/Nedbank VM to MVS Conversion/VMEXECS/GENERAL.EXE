@@ -1,0 +1,16 @@
+/*************************************************************/
+/*   start NEDCOR parms   */
+/*************************************************************/
+      'ACCESS 191 A'          /* access USERS OWN DISK as a*/
+      'ACCESS 195 X'          /* access sqldba 195 as x*/
+      'ACCESS 391 O'          /* access vmassys 391 as o*/
+      'ACCESS 319 P'          /* access maint 210 as p*/
+      'ACCESS 491 R'          /* access caimaint 391 as r*/
+      'ACCESS 333 T'          /* access asstd1 333  as t*/
+'SET LANGUAGE AMENG (ADD ARI USER '
+'SET PF12 RET'
+'SET PF24 RET'
+'SYN SYN SYNONYM *'
+'EXEC GRFPROF'
+'SET RUN ON'
+

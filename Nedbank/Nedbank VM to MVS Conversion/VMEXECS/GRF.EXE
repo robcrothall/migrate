@@ -1,0 +1,11 @@
+/**/
+sp cons start
+trace all
+SP PUN RSCSV2
+'TAG DEV PUNCH RSCSV2 WALKIN 50 PRT=GRAF'
+SAY 'PLEASE ENTER FN'
+PULL FN
+'ADMOPUV' FN  ' ON PUNCH (DEV R87'
+sp cons stop
+sp cons close
+

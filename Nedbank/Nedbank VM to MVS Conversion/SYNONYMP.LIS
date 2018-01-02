@@ -1,0 +1,132 @@
+1                                                                      Page    1
+ TABLE DETAILS Procedure Command Table  (AS)**util/synonymp     31 May 96  20:42
+
+                                                    Processing Efficiency OPTIM
+ No. of Commands     102
+
+ Title        Synonyms for ISPF, Util ,Alloc .
+ Comment
+ Data Spec
+
+
+ Table Status                        Creation Date     31 May 96  19:21:33
+                                     Last Modified     31 May 96  19:43:48
+
+
+ Protected    No
+ Locked       No                     Data Base         AS
+ Shared       Yes                    Library Number    **
+ Password     No
+
+
+
+
+     1 ROUTE SAVE
+     2 ROUTE INPUT;AUDIT=*
+     3 /*  SynonymP  or S  (NB Keep them the same)
+     4 /*
+     5 /*  Synonyms for Calling ISPF and TSO  functions and VM CMS Functions
+     6 /*    Written by IAN Sutherland 6 October 1995 and updated 31 May 1996
+     7 /*
+     8 PRINT 'To Display Synonyms :- Type SYNONYM or SYN'
+     9 PRINT 'To Edit the AS Procedure SYNONYMP type SYNP'
+    10 /*
+    11 /*  To Display SynonymP Procedure
+    12 SYNONYM SYNP,MIN(4),COMMAND(PRO **UTIL/SYNONYMP)
+    13 /*
+    14 /*  HLOCALPR  A report          eg HL MYREP
+    15 SYNONYM HLOCALPR,MIN(2),COMMAND(HOST TSO LOCALPR ?1)
+    16 /*
+    17 /*
+    18 /*  HSPRINT  change local priner eg   HSP SANDPRT
+    19 SYNONYM HSPRINT,MIN(3),COMMAND(HOST TSO SPRINT ?1)
+    20 /*
+    21 /*  HONPRINT  A report          eg HO MYREP
+    22 SYNONYM HONPRINT,MIN(2),COMMAND(HOST TSO ONPRINT ?1)
+    23 /*
+    24 /*  ISPF Data Utilities Menu  eg. HU
+    25 SYNONYM HUTIL,MIN(2),COMMAND(HOST ISPEXEC SELECT PANEL(ISRUTIL))
+    26 /*
+    27 /*  ISPF Main Menu             eg. HI
+    28 SYNONYM HISPF,MIN(2),COMMAND(HOST ISPEXEC SELECT PANEL(ISR@PRIM))
+    29 /*
+    30 /*  ISPF Main Menu             eg HM
+    31 SYNONYM HMAIN,MIN(2),COMMAND(HOST ISPEXEC SELECT PANEL(ISR@PRIM))
+    32 /*
+    33 /*  Allocate a Dataset to read  eg HALL infile,'icibm01.x.asfile'
+    34 SYNONYM HALLOC,MIN(4),COMMAND(HOST TSO ALLOC DD(?1) DA(?2) SHR REUSE)
+    35 /*
+    36 /* Allocate a Seq Dataset for Filename.LISTING  e.g. HALI out,rep
+    37 SYNONYM HALISTING,MIN(4),COMMAND(HOST TSO ALLOC DD(?1) DA(?2.LISTING) NEW CATALOG SPACE(1,100) TRACKS LRECL(4096) BLKSIZE(0) R
+       ECFM(V,B) )
+1                                                                      Page    2
+    38 /*
+    39 /* Allocate a Seq Dataset for Filename.ASTRAN  NB. Recfm FB  Lrecl 4096.
+    40 /*    eg. HAAS  out,somefile
+    41 SYNONYM HAASTRAN,MIN(4),COMMAND(HOST TSO ALLOC DD(?1) DA(?2.ASTRAN) NEW CATALOG SPACE(1,100) TRACKS LRECL(4096) BLKSIZE(0) REC
+       FM(F,B))
+    42 /*
+    43 /* Allocate a PARTIONED Dataset for Filename  NB. Recfm FB  Lrecl 80.
+    44 /*    eg. HAPD  out,a0.apds
+    45 SYNONYM HAPDS,MIN(4),COMMAND(HOST TSO ALLOC DD(?1) DA(?2) NEW CATALOG SPACE(1,1) TRACKS DIR(1) DSORG(PO) LRECL(80) BLKSIZE(0)
+       RECFM(F,B))
+    46 /*
+    47 /* Free a Data set.  NB Specify filename
+    48 /*    eg. HF infile
+    49 SYNONYM HFREE,MIN(2),COMMAND(HOST TSO FREE DD(?1))
+    50 /*
+    51 /* Delete a Data set.  NB Specify all qualifiers
+    52 /*    eg. HD  mycen1.listing
+    53 SYNONYM HDELETE,MIN(2),COMMAND(HOST TSO DELETE ?1)
+    54 /*
+    55 /* Display Allocated Datasets - ListAlc   eg HLI
+    56 SYNONYM HLista,MIN(3),COMMAND(HOST TSO LISTALC)
+    57 /*
+    58 /* Display Allocated Datasets - ListAlc Status    eg  HLS
+    59 SYNONYM HLStatus,MIN(3),COMMAND(HOST TSO LISTALC STATUS)
+    60 /*
+    61 /* Display SDSF for DA, Held, or Ouput Queues    eg HS
+    62 SYNONYM HSDSF,MIN(2),COMMAND(HOST TSO SDSF)
+    63 /*
+    64 /* SEND a message to another user. eg HSEND Hello there,ICIBM01
+    65 SYNONYM HSEND,MIN(3),COMMAND(HOST TSO SEND '?1' USER(?2) LOGON)
+    66 /*
+    67 /*
+    68 /* Transmit a File to another user. eg HXMIT File,ICIBM01
+    69 SYNONYM HXMIT,MIN(3),COMMAND(HOST TSO XMIT NCJESC00.?2 DSNAME(?1) NOTIFY)
+    70 /*
+    71 /*
+    72 /* Display Reader list files  eg HRL
+    73 SYNONYM HRL,MIN(3),COMMAND(HOST TSO SDSF OB)
+    74 /*
+    75 /************************************************************************
+    76 /* Some AS short cuts
+    77 /************************************************************************
+    78 /*
+    79 SYNONYM F,COMMAND(FIND ?1,CASE,ALL)
+    80 SYNONYM FI,COMMAND(FIND ?1,CASE)
+    81 SYNONYM S1,COMMAND(SCREEN LENGTH(1))
+    82 SYNONYM S2,COMMAND(SCREEN LENGTH(2))
+    83 SYNONYM S3,COMMAND(SCREEN LENGTH(3))
+    84 SYNONYM S4,COMMAND(SCREEN LENGTH(4))
+    85 /*
+    86 /* Who am I??
+    87 /*
+    88 SYNONYM ID,COMMAND("PRI 'TSO User:', @USER, '     AS Application:', @CODE       ,'          DB2 User:', @SQL User &IF(=' ')='N
+       /A'")
+    89 /*
+    90 /* CANCEL ALL (IN OUT INCLUDE)
+    91 /*
+    92 SYNONYM CANALL,MIN(4),COMMAND(CANCEL IN_CANCEL OUT_CANCEL INCLUDE)
+    93 /*
+1                                                                      Page    3
+    94 /*
+    95 when @Start
+    96   EXEC 'ROUTE RECOVER', INS
+    97   if @User='ICCPY01'  ³  STR(@User, 1, 5)='ICIBM'
+    98     EXEC "RUN ICCPY01.CNTL/CMProcP1",INSERT
+    99     EXEC 'ROUTE INP=*;*, OUT=*;TER',INS
+   100   if off
+   101 run
+   102 /*
+

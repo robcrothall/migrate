@@ -1,0 +1,188 @@
+DATASET REFERENCES:                        (ICIBM01.TSOHINTS.ASFILE)
+===================
+
+The name of datasets created by yourself have the format:
+
+     Userid.Filename.Filetype
+
+     These maybe referenced either as
+
+    'Userid.Filename.Filetype'      Full format in single quotes
+  or Filename.Filetype              Omit Userid and quotes. TSO
+                                    automatically inserts the current
+                                    Userid
+
+The name of datasets created by copy management have the format:
+
+     INGG00.ICCPY01.Filename.Filetype
+
+     and are referenced by using the full format in single quotes, i.e.
+
+    'INGG00.ICCPY01.Filename.Filetype'
+
+MVS EQUIVALENT OF COPYFILE
+==========================
+
+EXAMPLE: Copy dataset userid.fromname.filetype to userid.toname filetype
+------------------------------------------------------------------------
+
+On the command line
+     Type =6
+     Press Enter
+
+On the command line
+     Type allocate da('userid.toname.listing') like('userid.fromname.listing')
+       or allocate da(toname.listing) like(fromname.listing)
+     Press Enter
+
+On the command line
+     Type =3.3
+     Press Enter
+
+On the option line
+     Type C
+
+On the line under "From other partitioned or sequential dataset"
+     Type 'userid.fromname.filetype'
+       or fromname.filetype
+     Press Enter
+
+On the line under "To other partitioned or sequential dataset"
+     Type 'userid.toname.filetype'
+       or toname.filetype
+     Press Enter
+.
+MVS EQUIVALENT OF FILELIST
+==========================
+
+On the command line
+     Type =3.4
+
+On the line Dsname level, your Userid will be displayed
+     Press Enter to display all datasets on your userid
+
+     For selective dispaly, use the wildcard *
+     Press Enter to display matching datasets
+
+     Overtype your userid with another userid
+     Press Enter to display all datasets on this userid (if you have theauthority
+
+To VIEW the contents of a particular dataset
+     Type B to the left of the required dataset
+     Press Enter
+
+To EDIT the contents of a particular dataset
+     Type E to the left of the required dataset
+     Press Enter
+
+To DELETE the dataset
+     Type D to the left of a particular dataset
+     Press Enter
+
+     Press Enter again to delete
+  or Press Pfkey 3 to abort the deletion
+
+To RENAME the dataset
+     Type R to the left of a particular dataset
+     Press Enter
+
+     On the line under "From other partitioned or sequential dataset"
+     Type 'userid.newname.filetype'
+       or newname.filetype
+     Press Enter
+
+MVS EQUIVALENT OF PRINT
+=======================
+
+On the command line
+     Type =6
+
+On the command line
+     Type localpr 'userid.filename.filetype' copies destination
+       or localpr filename.filetype copies destination
+                                    copies and destination are optional
+     Press Enter
+
+THERE IS NO MVS EQUIVALENT TO READER LIST
+=========================================
+.
+MVS EQUIVALENT OF RECEIVE
+=========================
+
+On the command line
+     Type =6
+
+On the command line
+     Type receive
+     Press Enter
+
+     Press Enter again to receive all transmitted tables
+     The received dataset will be named youruserid.sentfilename.sentfiletype
+     If it already exists, you will be asked if it is to be replaced
+
+MVS EQUIVALENT OF RENAME
+========================
+
+See MVS EQUIVALENT OF FILELIST
+
+MVS EQUIVALENT OF SENDFILE
+==========================
+
+On the command line
+     Type =6
+     Press Enter
+
+On the command line
+     Type xmit ncjesc00.sendtouserid da(filename.filetype)
+     Press Enter
+
+MVS EQUIVALENT OF XEDIT
+=======================
+
+See MVS EQUIVALENT OF FILELIST
+
+REFERENCING DATASETS IN AS
+==========================
+
+In AS procedures, a dataset must first be allocated before it can be used.
+For the dataset userid.filename.filetype the allocation can be done in one
+of two ways:
+
+METHOD 1
+--------
+
+HOST TSO ALLOCATE DD(anyname) DA(filename.filetype) SHR REUSE
+IN MASKFILE=anyname(REC)
+
+while for a fully defined dataset, it will become
+
+HOST TSO ALLOCATE DD(anyname) DA('userid.filename.filetype') SHR REUSE
+IN MASKFILE=anyname(REC)
+.
+METHOD 2
+--------
+
+A 'better' method which allows for easy control of errors, would be:
+
+When @start
+  Define !rc(n)=host("ALLOCATE DD(anyname) DA(filename.filetype) SHR REUSE")
+  Case !rc
+    Is 0
+*     The command was successful - goto to continuation of processing
+    Otherwise
+*     The command failed - goto error control block
+  Case end
+Run
+
+while for a fully defined dataset, it will become
+
+When @start
+  Define !rc(n)=host("ALLOCATE DD(anyname) DA('userid.filename.filetype') SHR REUSE")
+  Case !rc
+    Is 0
+*     The command was successful - goto to continuation of processing
+    Otherwise
+*     The command failed - goto error control block
+  Case end
+Run
+

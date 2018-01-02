@@ -1,0 +1,70 @@
+* Management Insight Setup File
+* Version 1.0
+'dir';
+*
+* robc 'md \mi';
+*
+* robc 'md \bat';
+*
+CheckDir \cmd      200000;
+CheckDir \MIProd  1000000;
+CheckDir \WP51           ;
+CheckDir \WP51BAT 5000000;
+*
+Say 'Creating a dedicated version of Word Perfect';
+Say 'This may take a while...';
+*
+* robc 'XCopy C:\WP51 C:\WP51BAT /S/E/H/T/R';
+
+classname = 'WPFolder';
+title     = 'Management^Motivation';
+location  = '<WP_DESKTOP>';
+setup     = 'OBJECTID=<MI_FOLDER>;';
+result    = SysCreateObject(classname, title, location, setup, 'f');
+
+/* The Bulletin Board */
+classname = 'WPProgram';
+title     = 'Max BBS';
+location  = '<WP_DESKTOP>';
+setup     = 'OBJECTID=<MAX_BBS>;EXENAME=C:\CMD\MAX.CMD;PROGTYPE=WINDOWABLEVIO;';
+* robc result    = SysCreateObject(classname, title, location, setup, 'f');
+
+/* create a shadow in the STARTUP folder */
+classname = 'WPShadow';
+title     = 'Max BBS';
+location  = '<WP_START>';
+setup     = 'SHADOWID=<MAX_BBS>;OBJECTID=<SHAD_MAX_BBS>;';
+result    = SysCreateObject(classname, title, location, setup, 'U');
+
+classname = 'WPProgram';
+title     = 'Generate Profile';
+location  = '<MI_FOLDER>';
+setup     = 'OBJECTID=<MI_PROF1>;EXENAME=C:\CMD\MImangen.CMD;PROGTYPE=WINDOWABLEVIO;';
+result    = SysCreateObject(classname, title, location, setup, 'f');
+
+classname = 'WPProgram';
+title     = 'Process Queues';
+location  = '<MI_FOLDER>';
+setup     = 'OBJECTID=<MI_PROCQ>;EXENAME=C:\CMD\Procq.CMD;PROGTYPE=WINDOWABLEVIO;';
+result    = SysCreateObject(classname, title, location, setup, 'f');
+
+/* create a shadow in the STARTUP folder */
+classname = 'WPShadow';
+title     = 'Process Queues';
+location  = '<WP_START>';
+setup     = 'SHADOWID=<MI_PROCQ>;OBJECTID=<SHAD_PROCQ_CMD>;';
+result    = SysCreateObject(classname, title, location, setup, 'U');
+
+classname = 'WPProgram';
+title     = 'Stop Queues';
+location  = '<MI_FOLDER>';
+setup     = 'OBJECTID=<MI_STOPQ>;EXENAME=C:\CMD\QuitQ.CMD;PROGTYPE=WINDOWABLEVIO;';
+result    = SysCreateObject(classname, title, location, setup, 'f');
+
+* classname = 'WPShadow';
+* title     = 'OS/2 Window^Shadow';
+* location  = '<MI_FOLDER>';
+* setup     = 'SHADOWID=<WP_OS2WIN>';
+* result    = SysCreateObject(classname, title, location, setup, 'f');
+
+

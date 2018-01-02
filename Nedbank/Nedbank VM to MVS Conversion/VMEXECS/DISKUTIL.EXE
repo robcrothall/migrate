@@ -1,0 +1,16 @@
+/*************/
+Q DISK
+PUSH 1
+'FORMAT 191 A(BLKSIZE 4096'
+say
+clrscrn
+SAY '**********         FORMAT  DONE          **********'
+say
+'ACC 192 B'
+say 'busy copying files '
+say
+'COPY * * B = = A(OLDD'
+SAY '        ***********COPY COMPLETED**********          '
+say
+Q DISK
+

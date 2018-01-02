@@ -1,0 +1,28 @@
+/*  QUERY THE ID"S THAT ARE LOGGED ON CURRENTLY */
+vmfclear
+say 'Step 1 : Searching for Users ....'
+sub=1
+set cmstype ht
+erase qs data a
+erase qs1 data a
+set cmstype rt
+
+'EXECIO * CP (STEM QNLINE. STRING Q N'
+Do while sub <= qnline.0
+qnline1=substr(qnline.sub,1,15)
+  Queue substr(qnline.sub,1,15)
+  'EXECIO 1 DISKW QS DATA A 0 F 80'
+qnline2=substr(qnline.sub,18,15)
+  Queue substr(qnline.sub,18,15)
+  'EXECIO 1 DISKW QS DATA A 0 F 80'
+qnline3=substr(qnline.sub,35,15)
+  Queue substr(qnline.sub,35,15)
+  'EXECIO 1 DISKW QS DATA A 0 F 80'
+qnline4=substr(qnline.sub,52,15)
+  Queue substr(qnline.sub,52,15)
+  'EXECIO 1 DISKW QS DATA A 0 F 80'
+  sub = sub + 1
+end
+
+
+

@@ -1,0 +1,70 @@
+/***    SQL PRINT EXEC     ***/
+
+'CHA P ALL CLA A'
+DESBUF                                                               /**/
+CALL "ADDRGRP"
+PRTID=RESULT
+'EXECIO * CP (LIFO STRING Q PRT CLA A'
+COUNT = QUEUED()
+PULL . SPOOLID . . RECS .
+COUNT = COUNT - 1
+
+DO WHILE COUNT > 0
+   PULL .
+   COUNT = COUNT - 1
+END
+
+IF SPOOLID='PRT' THEN DO
+    SAY ' NO PRINT FILES EXIST FOR YOU !!!!!!'
+    EXIT
+END
+DO UNTIL SPOOLID='PRT'                  /* GET ALL FILES TILL HEAD */
+   IF RECS > 9000 THEN DO
+         SAY 'Your print file 'SPOOLID 'exceeds the allowable',
+             'print maximum for your local printer.'
+         SAY 'It will be routed to Sandton and mailed to you.'
+         SAY 'Please enter Y to print the file or N to purge it.'
+         SAY ''
+         GOOD_REPLY=0
+         DO UNTIL GOOD_REPLY
+            PULL REPLY .
+            IF REPLY = 'N' THEN DO
+               'CP SET IMSG OFF'
+               'CP PURGE PRT' SPOOLID
+               'CP SET IMSG ON'
+                SAY 'Print file purged at your request'
+                SAY ''
+                GOOD_REPLY=1
+            END
+            ELSE IF REPLY='Y' THEN DO
+               'CP SET IMSG OFF'
+               'CP CHANGE PRT' SPOOLID 'NOHOLD CLA Z'
+               'CP SET IMSG ON'
+                SAY 'PRINT FILE' SPOOLID 'ROUTED TO SANDTON AT REQUEST'
+                GOOD_REPLY = 1
+            END
+            ELSE SAY 'INVALID RESPONSE. ENTER "Y" TO PRINT OR',
+                     '"N" TO PURGE'
+         END  /*until good_reply*/
+   END
+   ELSE DO
+      'CP SET IMSG OFF'
+      'CP TAG FILE' SPOOLID PRTID
+      'CP CHA PRT' SPOOLID 'NOHOLD'
+      'CP TRANS PRT' SPOOLID 'RSCS'
+      'CP SET IMSG ON'
+       SAY 'Print file' SPOOLID 'sent to local printer' PRTID
+   END
+'EXECIO * CP (LIFO STRING Q PRT CLA A'
+
+COUNT = QUEUED()
+PULL . SPOOLID . . RECS .
+COUNT = COUNT - 1
+
+  DO WHILE COUNT > 0
+     PULL .
+     COUNT = COUNT - 1
+  END
+END
+EXIT
+

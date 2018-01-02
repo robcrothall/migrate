@@ -1,0 +1,826 @@
+[ver]
+	4
+[sty]
+	
+[files]
+[charset]
+	82
+	ANSI (Windows, IBM CP 1252)
+[revisions]
+	0
+[prn]
+	IBM Color Jetprinter PS 4079
+[port]
+	LPT1:
+[lang]
+	2
+[desc]
+	Reply to Nedcor's Dave Keating memo to Trevor Howcroft dated 16th April, 1996.
+	
+	
+	
+	
+	829778042
+	11
+	771481051
+	325
+	2
+	0
+	0
+	0
+	0
+	
+	
+	
+	
+	
+	
+	1
+[fopts]
+	0
+	1
+	0
+	0
+[lnopts]
+	2
+	Body Text
+	1
+[docopts]
+	5
+	2
+[GramStyle]
+	
+[tag]
+	Body Text
+	2
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		273
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		0
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Body Text
+	0
+	0
+[tag]
+	Body Single
+	3
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		8
+		1
+		0
+		360
+		360
+	[spc]
+		33
+		273
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		0
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Body Single
+	0
+	0
+[tag]
+	Bullet
+	4
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		288
+		288
+	[spc]
+		33
+		273
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		0
+		<*0>
+		360
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		272
+		1
+		2
+		.
+		,
+		</c>
+	Bullet
+	0
+	0
+[tag]
+	Bullet 1
+	5
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		288
+		288
+		288
+	[spc]
+		33
+		273
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		0
+		<*5>
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Bullet 1
+	0
+	0
+[tag]
+	Number List
+	6
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		360
+		360
+		360
+	[spc]
+		33
+		273
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		0
+		<*:>.
+		360
+		1
+		1
+		0
+		16
+		0
+		0
+	[nfmt]
+		272
+		1
+		2
+		.
+		,
+		</c>
+	Number List
+	0
+	0
+[tag]
+	Subhead
+	7
+	[fnt]
+		Times New Roman
+		240
+		0
+		49155
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		273
+		1
+		72
+		72
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		2
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		272
+		1
+		2
+		.
+		,
+		</c>
+	Subhead
+	0
+	0
+[tag]
+	Title
+	8
+	[fnt]
+		Arial
+		360
+		0
+		16385
+	[algn]
+		4
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		446
+		1
+		144
+		72
+		1
+		100
+	[brk]
+		16
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		1
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		272
+		1
+		2
+		.
+		,
+		</c>
+	Title
+	0
+	0
+[tag]
+	Header
+	9
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		273
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		0
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Header
+	0
+	0
+[tag]
+	Footer
+	11
+	[fnt]
+		Times New Roman
+		240
+		0
+		49152
+	[algn]
+		1
+		1
+		0
+		0
+		0
+	[spc]
+		33
+		273
+		1
+		0
+		0
+		1
+		100
+	[brk]
+		4
+	[line]
+		8
+		0
+		1
+		0
+		1
+		1
+		1
+		10
+		10
+		1
+	[spec]
+		0
+		0
+		
+		0
+		1
+		1
+		0
+		0
+		0
+		0
+	[nfmt]
+		280
+		1
+		2
+		.
+		,
+		</c>
+	Footer
+	0
+	0
+[lay]
+	Standard
+	516
+	[rght]
+		16833
+		11908
+		1
+		1440
+		1440
+		1
+		1440
+		1440
+		0
+		1
+		0
+		1
+		0
+		2
+		1
+		1440
+		10465
+		12
+		1
+		720
+		1
+		1440
+		1
+		2160
+		1
+		2880
+		1
+		3600
+		1
+		4320
+		1
+		5040
+		1
+		5760
+		1
+		6480
+		1
+		7200
+		1
+		7920
+		1
+		8640
+	[hrght]
+	[lyfrm]
+		1
+		11200
+		0
+		0
+		11908
+		1440
+		0
+		1
+		3
+		1 0 0 0 0 0 0
+		0
+		0
+		1
+	[frmlay]
+		1440
+		11908
+		1
+		1440
+		72
+		1
+		792
+		1440
+		0
+		1
+		0
+		1
+		1
+		0
+		1
+		1440
+		10465
+		2
+		2
+		4680
+		3
+		9360
+	[txt]
+>
+	[frght]
+	[lyfrm]
+		1
+		13248
+		0
+		15393
+		11908
+		16833
+		0
+		1
+		3
+		1 0 0 0 0 0 0
+		0
+		0
+		2
+	[frmlay]
+		16833
+		11908
+		1
+		1440
+		792
+		1
+		15465
+		1440
+		0
+		1
+		0
+		1
+		1
+		0
+		1
+		1440
+		10465
+		2
+		2
+		4680
+		3
+		9360
+	[txt]
+>
+[elay]
+[l1]
+	0
+[pg]
+	2
+	35 253 87 0 0 0 0 65535 65535 Standard	65535 0 0	0 0 0 0 0 0 0 65535 0 0 65535 0 0 0 0 0
+	64 0 0 1025 0 0 0 65535 65535 Standard	65535 0 0	0 0 0 0 0 0 0 65535 0 0 65535 0 0 0 0 0
+[edoc]
+<:s><:#284,9025>
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>
+
+<+A><:s><:#284,9025>17th April, 1996
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>Mr. Trevor Howcroft
+
+<:s><:#284,9025>Nedcor Bank Limited
+
+<:s><:#284,9025>West Street
+
+<:s><:#284,9025>Sandton
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>Dear Trevor,
+
+<:s><:#284,9025>
+
+<+B><:s><:#303,9025><:f260,2Times New Roman,0,0,0><-!><+#>IC Conversion and future "Turnkey" projects<-#><-!><-!><-!><:f>
+
+<:s><:#284,9025>
+
+<:s><:#284,9025>
+
+<+C><:s><:#568,9025>		Thank you for giving me the opportunity to respond to the concerns raised by Dave Keating in his memo to you dated 16th April, 1996. 
+
+<+C><:s><:#284,9025>
+
+<+C><+#>Para<-#><+#> 1<-#>
+
+<+C><:s><:#284,9025>
+
+@Body Single@<+C><:#1704,9025>Prior to the  start of the project an in-depth study was done to establish the software requirement for the project. GDDM has always been used for the AS users running under VM and that requirement was included for the VM to MVS conversion. GDDM under MVS i
+s a prerequisite for EPDM (used for billings and capacity planning), and has been used by Nedcor for sometime. However, the need for JES328x software on MVS was overlooked, mainly as a result of the VM special network requirements. 
+
+@Body Single@<+C><:s><:#284,9025>
+
+@Body Single@<+C><:s><:#852,9025>The Nedcor standards currently in place with respect to the Development, QA, Production and UNIX systems do not 'fit' the naming required in an IC installation, thus the amendments were sought and approval given. 
+
+@Body Single@<+C><:s><:#284,9025>
+
+<+C><+#>Para<-#><+#> 2<-#>
+
+<+C><:s><:#284,9025>
+
+@Body Single@<+C><:s><:#1136,9025>Understanding the standards has been a problem in the IC MVS Conversion as the Nedcor standards were not applied in the VM environment. It became clear only in the later stage of the AS conversion project who the standards 
+<+">'owner'<-"> and <+">'custodians'<-"> of the processes were. 
+
+<+C><:s><:#284,9025>
+
+<+C><+#>Para<-#><+#> 3<-#>
+
+<+C><:s><:#284,9025>
+
+@Body Single@<+C><:s><:#1704,9025>The issue of copying (non-IBM) products, Control products, over from the Development system to create the new IC Partition was contrary to the instruction given, namely to contact the relevant parties at Futures Software to perform the installation and cust
+omisation (the latter was performed by Futures Software) on the IC Partition. This matter has been addressed with the parties concerned. I wish to apologise should any inconvenience have been incurred by Nedcor. 
+
+@Body Single@<+C><:s><:#284,9025>
+
+<+C><+#>Para<-#><+#> 4<-#>
+
+<+C><:s><:#284,9025>
+
+@Body Single@<+C><:s><:#852,9025>Three iterations of the 'Generic Project' document have been issued since the start of the conversion project with various additions and modifications. The original document was unclear on what was required. 
+
+@Body Single@<+C><:s><:#284,9025>
+
+<+C><+#>Para<-#><+#> 5<-#>
+
+@Body Single@<+C><:s><:#284,9025>
+
+@Body Single@<+C><:s><:#852,9025>Pieter Kruger agreed in conjunction with yourself to use on-site IBM MVS resources for the IC Partition and copy management project. There has been no impact on Nedcor, however priorities should be established. 
+
+@Body Single@<+C><:s><:#284,9025>
+
+<+C><+#>Para<-#><+#> 6<-#>
+
+@Body Single@<+C><:s><:#284,9025>
+
+@Body Single@<+C><:s><:#568,9025>All known assumptions at that time were noted in the Project Definition Workshop held at Nedcor on Thursday 25th January, 1996 prior to the start of the project.
+
+@Body Single@<+C><:s><:#284,9025>
+
+<+C><+#>Para<-#><+#> 7<-#>
+
+<+C><:s><:#284,9025>
+
+@Body Single@<+C><:s><:#1420,9025>Prior to the IC MVS Partition going live into production with Operations the 'Copy Management' and MVS environment including DB2 must be stabilised before any users can be converted from VM to MVS. Some users are running on the IC MVS partition, but only in
+ a 'test' mode. Formal handover to Operations will be done at the end of the parallel run.
+
+<+C><:s><:#284,9025>
+
+<+C><:s><:#284,9025>Should you require any further information please do not hesitate to contact me.
+
+<+C><:s><:#284,9025>
+
+<+C><:s><:#284,9025>
+
+<+C><:s><:#284,9025>Yours faithfully,
+
+<+C><:s><:#284,9025>
+
+<+C><:s><:#284,9025>		
+
+<+C><:s><:#284,9025>
+
+<+C><:s><:#284,9025>
+
+<+C><:s><:#284,9025>Brendon Viljoen
+
+<+C><:s><:#284,9025>SystemView Consultant
+
+<+C><:s><:#284,9025>IBM Services
+
+<+@><:#284,9025>
+
+>
+
+[Embedded]
+00009225

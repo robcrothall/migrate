@@ -1,0 +1,109 @@
+/********************************************************************/
+/* Exec to read data files from mvs originated tapes                */
+/* the name, block size & lrecls are obtained from the hdr2 record  */
+/* the block sizes & lrecls are obtained from the hdr2 record       */
+/* Special notes :                                                  */
+/* a) M_V is a special indicator that you can supply as part of the */
+/*    filenames to indicate multiple volume support ie. a file      */
+/*    spans multiple cartridges.                                    */
+/* b) trnp001 is used to move the data file from the tape because   */
+/*    it translates x'00' to '00' and x'ff' to '99' !!              */
+/********************************************************************/
+TRACE O
+'FI * CLEAR'
+Parse upper arg files
+nooffiles = words(files)
+filecount = 0
+multapes = 0
+'SET EMSG Off'
+'SET IMSG Off'
+'SET CMSTYPE RT'
+IF INDEX(FILES,'M_V') > 0 THEN DO
+   multapes = 1
+   nooffiles = nooffiles - 1
+ END
+say '========= Expecting' nooffiles 'files to be loaded ! ========'
+'FILEDEF INMOVE TAP1 (LRECL 80 BLOCK 80 RECFM FB'
+'FILEDEF OUTMOVE DISK TAPE TOFREC A (LRECL 80 BLOCK 80 RECFM FB'
+'MOVE'
+IF RCª=0 THEN DO
+  SAY 'ERROR READING TAPE !'
+  SAY 'Please check that drive is attached or correct tape is mounted !'
+  EXIT RC
+ END
+DO UNTIL RC ª= 0
+'EXECIO * DISKR TAPE TOFREC A'
+do queued()
+   pull line
+   select
+      when index(line,'VOL1') = 1 then do
+            say '----------------------------- Tape Number is : ' substr(line,5,6) '------------------------'
+         end
+      when index(line,'HDR1') = 1 then do
+            say 'Internal label ----> 'substr(line,1,47)
+            FILENAME=SUBSTR(LINE,16,6)
+         end
+      when index(line,'HDR2') = 1 then do
+            recfm=substr(line,5,1)
+            block=substr(line,6,5)
+            lrecl=substr(line,11,5)
+         end
+     OTHERWISE NOP
+    end   /* select */
+END
+ Say '******** ----> Reading : ' filename ' :- Lrecl' LRECL 'Block' BLOCK 'Recfm' RECFM
+IF INDEX(FILES,FILENAME) = 0 THEN DO
+  SAY 'File on tape is not in expected list of files,'
+  SAY 'PROBABLE CAUSE - Wrong tape mounted for this load !'
+  SAY 'PLEASE mount correct tape and restart load. THANX.'
+  'CP DETACH 181'
+  EXIT 999
+END
+if multapes=1 then 'FILEDEF INMOVE TAP1 SL (LRECL' LRECL 'BLOCK' BLOCK 'RECFM FB'
+              else 'FILEDEF INMOVE TAP1 (LRECL' LRECL 'BLOCK' BLOCK 'RECFM FB'
+'FILEDEF OUTMOVE DISK ' FILENAME '  ASFILE A (LRECL' LRECL 'BLOCK' BLOCK 'RECFM FB'
+'RUN TRNP001'
+SAY '***** File' FILENAME ' read successfully.'
+filecount = filecount + 1
+'SET CMSTYPE rT'
+'SET emsg off'
+'SET imsg off'
+/* SAY 'FILE COUNT IS :' FILECOUNT                           */
+If multapes = 0 then do
+  'FILEDEF INMOVE TAP1 (LRECL 80 BLOCK 80 RECFM FB'
+  'FILEDEF OUTMOVE DISK TAPE EOFREC A (LRECL 80 BLOCK 80 RECFM FB'
+  'MOVE'
+ end
+multapes = 0
+'FILEDEF INMOVE TAP1 (LRECL 80 BLOCK 80 RECFM FB'
+'FILEDEF OUTMOVE DISK TAPE TOFREC A (LRECL 80 BLOCK 80 RECFM FB'
+'MOVE'
+END /* DO UNTIL */
+IF RC = 40 ³ RC = 100 THEN do
+         SAY 'End-of-Tape OR End-of-File reached.'
+         if filecount ª= nooffiles then do
+                        CLRSCRN
+                        say '*************************** I C   L O A D   F A I L E D  !! ****** '
+                        say '******* ERROR ******* Incorrect number of files on tape         ** '
+                        say '******* Expected 'nooffiles' files and ONLY found 'filecount' files on tape        ** '
+                        say '******* Please check that you have the correct tape number      ** '
+                        say '******* from a SUCCESSFUL MVS job !!                            ** '
+                        say '****************************************************************** '
+                        'cp detach 181'
+                        'SET EMSG ON'
+                        'SET IMSG ON'
+                        exit 8888
+                     End
+        End
+     Else DO
+         IF RC > 0 THEN SAY 'Error returned from movefile : ' RC
+         'SET EMSG ON'
+         'SET IMSG ON'
+         EXIT RC
+       End
+'SET EMSG ON'
+'SET IMSG ON'
+'SET CMSTYPE RT'
+'TAPE RUN'
+exit
+

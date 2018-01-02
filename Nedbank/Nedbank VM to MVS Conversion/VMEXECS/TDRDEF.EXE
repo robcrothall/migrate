@@ -1,0 +1,7 @@
+/*** exec to redifine disk order .***/
+DEF 193 191
+DEF 191 192
+ACC 191 A
+ACC 192 B
+Q DISK
+

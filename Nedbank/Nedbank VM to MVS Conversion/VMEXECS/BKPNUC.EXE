@@ -1,0 +1,21 @@
+/* exec to backup IPL DDR and the NUCLEUS ****/
+FI INMOVE DISK IPL DDR S
+FI OUTMOVE TAP1
+MOVE
+REW 181
+trace off
+/*** the following instructions should be followed ***/
+say 'Please type the following **** IPL 181 *****'
+say ' **** IPL 181 *****'
+say '... when utility messages appear Type :'
+say 'SYS CONS'
+say 'IN  312 3380 VMOSYS'
+say 'OUT 181 3420'
+say 'DUMP NUCLEUS'
+/*** To restore Nucleus
+     SYS CONS
+     IN 181 3420
+     OUT 312 3380
+     RESTORE NUCLEUS
+****/
+

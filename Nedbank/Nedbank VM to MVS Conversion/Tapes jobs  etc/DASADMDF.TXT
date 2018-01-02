@@ -1,0 +1,120 @@
+* MEMBER NAME: DASADMDF
+*
+* DESCRIPTIVE NAME:  Sample GDDM external user default specifications
+*
+**********************************************************************
+*            Application System  (AS)                5648-092        *
+*            Copyright (c) I B M Corporation       1985, 1995        *
+*            Licensed Materials - Property of I B M                  *
+*            Refer to Copyright Instructions: Form G120-2083         *
+*                                                                    *
+*            US Government users restricted rights - use,            *
+*            duplication or disclosure restricted by GSA ADP         *
+*            schedule contract with IBM Corporation                  *
+***********************************************************************
+*                                                                     *
+* This sample is designed for use with GDDM V3.1.1 and AS V4.  It     *
+* will work with previous versions of AS and with GDDM V3.1, but some *
+* of the nicknames will not work, and the function will be limited.   *
+* The dependencies are as follows:                                    *
+*                                                                     *
+* Function                                     Required product level *
+* --------                                     ---------------------- *
+* DEVTOK=A3800S/A3816Q/A3820Q                  GDDM V3.1              *
+* AS centre printing to family 4               GDDM V3.1              *
+* Use with AS Names file format entries        AS V4.1                *
+* DEVTOK=PPS1CQ                                GDDM V3.1.1            *
+* PROCOPT=((TOFILE,...                      @  GDDM V3.1              *
+*                                                                     *
+* @ Note: These functions will cause GDDM initialization to fail if   *
+* the GDDM level is lower than specified - this in turn causes AS     *
+* initialization to fail.                                             *
+*                                                                     *
+***********************************************************************
+*
+* This sample shows how to customize some of the GDDM features used by
+* Application System.  Use this as the basis of your own external
+* defaults module (ADMADFT ASSEMBLE) or external defaults source file
+* (ddname ADMDEFS).  For more details see:
+*   GDDM level   Manuals
+*   ----------   ------------------------------------------------------
+*   GDDM V2      GDDM Base Programming Reference Volume 2 SC33-0332
+*   GDDM V2      GDDM Installation & System Management for MVS GC33-0321
+*   GDDM V3      GDDM System Customization and Administration SC33-0871
+*                  and additionally for GDDM V3.1.1:
+*                GDDM Guide to New Function SC33-1393
+*
+************************************************************************
+*  Modifications:                                                      *
+*                                                                      *
+*  Date    Description                                  APAR number    *
+*  ----    -----------                                  ----------     *
+* 02/06/95 Extra nicknames for use with AS Names file.  PN71975        *
+************************************************************************
+ ADMMDFT  APPCPG=00037    Application Code Page: USA / Canada
+ ADMMDFT  IOBFSZ=3072     Transmission buffer size for family 1 devices
+ ADMMDFT  NATLANG=A       National Language: American-English
+*
+* Use the following nicknames to produce text and graphics output from
+* AS.  You can use them in conjunction with text, graphics, and format
+* entries in the AS Names file.
+*
+*  Local plotter (not for GDDM-OS/2 Link, not for text output):
+ ADMMNICK FAM=2,TOFAM=1,NAME=PLOTTER,TONAME=(*,ADMPLOT)
+*  Local printer (for use with GDDM-PCLK, 6242913):
+ ADMMNICK FAM=2,TOFAM=1,NAME=PCPRINT,TONAME=(*,ADMPCPRT)
+*  Local printer (for use with PC/3270 V3 or V4 on Windows or OS/2):
+ ADMMNICK FAM=2,TOFAM=1,NAME=WINPRINT,TONAME=(*,PCSWGPRT)
+*  Local printer (for use with GDDM-OS/2 Link, 5688-113):
+ ADMMNICK FAM=2,TOFAM=1,NAME=PMPRINT,TONAME=(*,ADMPMOP)
+*  To produce a LISTING file (not for graphic output):
+ ADMMNICK FAM=2,TOFAM=3,NAME=LISTING?,PROCOPT=((PRINTCTL,0))
+*  To produce a LIST3820 AFPDS file:
+ ADMMNICK FAM=2,TOFAM=4,NAME=LIST3820,TONAME=*,DEVTOK=A3820Q
+*  To produce an ASCII PostScript file:
+ ADMMNICK FAM=2,TOFAM=4,NAME=PSBIN,TONAME=*,DEVTOK=PPS1CQ
+*  To produce a graphics language output file:
+* >>>Warning<<< AS will fail to start if you use the TOFILE processing
+* option with GDDM V2.3.  Remove the asterisk in column 1 to use this
+* nick name on GDDM V3.
+*ADMMNICK FAM=2,TOFAM=1,NAME=GL,TONAME=DASPRINT,DEVTOK=L6180,
+*     PROCOPT=((TOFILE,YES,REP))
+*
+* Use the following nicknames to produce composed-page printer files.
+* For screen hardcopy and for graphics applications (but not center
+* printing) these files may be handled by your post-processing
+* exit which is named:
+*    DASFAM4M for MVS AS
+* Any TONAME value will be passed to the exit.  If no TONAME value is
+* specified, the nickname is passed as specified to AS.
+*
+* Note that family 4 output for AS center printing requires the use of
+* cell-based device tokens and GDDM V3.  >>> Warning - the following
+* nicknames specify cell-based device tokens which are not available
+* with GDDM V2, so if you use GDDM V2 you will need to change the
+* DEVTOK parameters.
+*
+ ADMMNICK FAM=2,TOFAM=4,NAME=WSU16Q,TONAME=DASOUT,DEVTOK=A3816Q
+ ADMMNICK FAM=2,TOFAM=4,NAME=PSBIN,TONAME=DASOUT,DEVTOK=PPS1CQ
+ ADMMNICK FAM=2,TOFAM=4,NAME=PRT38PPA,DEVTOK=A3800S
+ ADMMNICK FAM=2,TOFAM=4,NAME=PRT3812A,DEVTOK=A3816Q
+ ADMMNICK FAM=2,TOFAM=4,NAME=PRT3820A,DEVTOK=A3820Q
+ ADMMNICK FAM=2,TOFAM=4,NAME=PSEG38PP,
+               PROCOPT=((CDPFTYPE,SEC),(HRIPSIZE,60,40,TENTHS)),
+               DEVTOK=A3800S
+ ADMMNICK FAM=2,TOFAM=4,NAME=PSEG3820,
+               PROCOPT=((CDPFTYPE,SEC),(HRIPSIZE,60,40,TENTHS)),
+               DEVTOK=A3820Q
+*
+* Note that family 4 output for AS center printing is not supported for
+* 4250 printers because GDDM V3.1 does not support cell-based ouput on
+* 4250 printers.
+ ADMMNICK FAM=2,TOFAM=4,NAME=PRT4250A,DEVTOK=IMG85
+ ADMMNICK FAM=2,TOFAM=4,NAME=PSEG4250,
+               PROCOPT=((CDPFTYPE,SEC),(HRIPSIZE,60,40,TENTHS)),
+               DEVTOK=IMG85
+*
+* Note that you may specify a maximum number of pages per file to tell
+* AS to split one file into many by using the ":type.PRINTER" and
+* ":maxpage." tags in the DASAS, DASGROUP, or DASUSER names files.
+

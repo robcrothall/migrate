@@ -1,0 +1,12 @@
+/*  This EXEC calls an XEDIT MACRO (CHNGQUOT) that changes all  */
+/*  single quotes in file FN to double quotes.                  */
+
+ARG fn
+ESTATEW fn ASFILE '*'
+IF RCª=0 THEN DO
+   SAY '*** 'fn 'ASFILE was NOT found on a R/W accessed disk ***'
+   EXIT
+END
+X fn ASFILE '* (PROFILE CHNGQUOT'
+
+

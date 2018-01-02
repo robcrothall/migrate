@@ -1,0 +1,3 @@
+/**/
+rc=0;address command; interpret arg(1); exit rc
+

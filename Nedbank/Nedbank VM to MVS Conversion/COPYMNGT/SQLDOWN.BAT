@@ -1,0 +1,11 @@
+receive a:\glmain95.cre glmain95  create  a (ascii crlf
+receive a:\glmain95.unl glmain95  unld    a (ascii crlf
+receive a:\glmain95.exe glmain95  exec    a (ascii crlf
+receive a:\glmain95.dat glmain95  data    a (ascii crlf
+receive a:\bgp.acq      bgp       acquire a (ascii crlf
+receive a:\bgp.cre      bgp       create  a (ascii crlf
+receive a:\bgp.exe      bgp       exec    a (ascii crlf
+receive a:\bgp.gra      bgp       grant   a (ascii crlf
+receive a:\bgp.ind      bgp       index   a (ascii crlf
+receive a:\bgp.loa      bgp       load    a (ascii crlf
+receive a:\bgp.vie      bgp       view    a (ascii crlf

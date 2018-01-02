@@ -1,0 +1,5 @@
+/*    */
+SET PF12 RETRIEVE
+SET PF24 RETRIEVE
+sp cons sta maint
+

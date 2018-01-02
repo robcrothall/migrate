@@ -1,0 +1,30 @@
+/* Calculate invoice details */
+trace o;
+arg ProcOpts;
+parse var Procopts hours rate rest;
+If Rate = '' then Rate = 142;
+Say 'Hours =' hours '  Rate =' rate;
+If rest \= '' then say 'Rest ignored i.e. ' rest;
+Gross = hours * rate;
+VAT = Gross * 0.14;
+Subtotal = Gross + VAT;
+Parking = 395.00;
+ParkVAT = Parking * 0.14;
+ParkTOT = Parking + ParkVAT;
+Nett    = Subtotal - ParkTOT;
+Say ' ';
+Say 'VAT Registration number = 4220129979';
+Say ' ';
+Say 'Gross      =' Gross;
+Say 'VAT        =' VAT;
+Say '              -------------';
+Say 'Subtotal   =             ' Subtotal;
+Say ' ';
+Say 'Parking    =' Parking;
+Say 'Parking VAT=' ParkVAT;
+Say '              -------------';
+Say 'Parking Tot=             ' ParkTOT;
+Say '                           -------------';
+Say 'Nett invoice             ' Nett;
+exit;
+

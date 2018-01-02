@@ -1,0 +1,82 @@
+/***/
+CLRSCRN
+SAY '  '
+SAY '**************************************************************'
+SAY '*** Please be patient .................................... ***'
+SAY '*** SYSTEM is determining available space for processing   ***'
+SAY '**************************************************************'
+SAY '  '
+SLEEP 10 SEC
+'EXECIO * CP (FIFO STRING Q F ALL'
+ PULL . . . t_num .
+   IF t_num='NO' THEN DO
+      SAY '  '
+      SAY '***** CONTINUE WITH XRXPRINT *****'
+      SAY '  '
+      EXIT
+      END
+         dropbuf
+         total=0
+         IF t_num > 100  THEN DO
+           'EXECIO * CP (FIFO STRING Q P ALL'
+            PULL heading
+            DO index=1 to 100
+              'EXECIO * CP (FIFO STRING Q P ALL'
+               makebuf
+               PULL . . . . rec cop .
+                  DO c=1 TO cop
+                     rec_tot = rec * cop
+                  END
+               total= total + rec_tot
+            END
+         END
+         ELSE DO
+            dropbuf
+           'EXECIO * CP (FIFO STRING Q P ALL'
+            PULL heading
+            DO index=1 TO t_num
+              'EXECIO * CP (FIFO STRING Q P ALL'
+               makebuf
+               PULL . . . . rec cop .
+                  DO c=1 TO cop
+                     rec_tot = rec * cop
+                  END
+               total= total + rec_tot
+            END
+         END
+
+   dropbuf
+trace r
+      required =(((total * 133)/0.5858)/1000000)
+trace off
+      DROPBUF
+      MAKEBUF
+     'Q DISK A (STACK FIFO'
+      PULL heading2
+      PULL . . . . . . . . . left .
+         available=(left/150)
+         DROPBUF
+
+         IF required > available
+         THEN DO
+            CLRSCRN
+            SAY '  '
+            SAY '  '
+            SAY '**********************************************'
+            SAY '***  The available space is NOT adequate *****'
+            SAY '***  for successfull processing.         *****'
+            SAY '***  Please inform the IC.               *****'
+            SAY '**********************************************'
+            SET CMSTYPE HT
+            PRINT ERROR LISTING
+            SET CMSTYPE RT
+            EXIT
+         END
+         ELSE
+            SAY '  '
+            SAY '  '
+            SAY '**********************************************'
+            SAY '***  Continue with XRXPRINT              *****'
+            SAY '**********************************************'
+            EXIT
+

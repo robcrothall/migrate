@@ -1,0 +1,85 @@
+; Sample file for CRONRGF.CMD
+;
+; Rony G. Flatscher, Vienna/Austria/Europe
+; University of Business Administration and Economics
+; Vienna, 1992-06-10
+;
+;
+; This is a comment (starts with a semicolumn)
+; empty lines are ignored too...
+
+
+; LAYOUT OF THE CRON-FILE:
+;    * * * * * command
+; or
+;    minute hour day month weekday command
+; where minute  ranges from 0-59,
+;       hour    ranges from 0-23,
+;       day     ranges from 1-31,
+;       month   ranges from 1-12,
+;       weekday ranges from 1-7 (1 = Monday, 2 = Tuesday, ..., 7 = Sunday
+;
+; you can give a list of values, separated by a comma (,), e.g. "1,3,7"
+; you can give a range of values, separated by a dash (-), e.g. "1-5"
+; you can give a star (*) instead of a value, meaning entire range of all valid values
+;
+; the given command is only executed when all criteriae are fullfilled !
+;
+; restriction: unlike to Unix, the percent-sign (%) is treated like any other character
+;
+
+
+; example-entries in a cron control-file
+;
+; the given command is only executed when all criteriae are fullfilled !
+;
+
+; the following command "@ECHO HI, I am Nr. 1 to be echoed every minute" would be
+; executed every minute
+*  *  *  *  *  @ECHO Hi, I am Nr. 1 to be echoed every minute & pause
+
+59 23 31 12 5 command, one minute before year's end, and only if the last day is a Friday
+
+; comment: every year at 17:45 on June 7th:
+45 17  7  6  *  dir c:\*.exe
+
+; comment: on every full quarter of an hour 
+;          at midnight, 6 in the morning, noon, 6 in the evening
+;          on the 1st, 15th and 31st of 
+;          every month on
+;          weekdays only
+0,15,30,45   0,6,12,18   1,15,31   *   *   backup c:\*.* d:\ /s
+
+; at noon on every day, if it is a weekday:
+0 12 * * 1-5 XCOPY Q:\* D:\ /s
+
+; every minute in January, March, May, July, September and November:
+*  *  *  1,3,5,7,9,11  *  dir c:\*.cmd
+
+; at the last day of the year at 23:01, 23:02, 23:03, 23:05, 23:20, 23:21,
+; 23:22, 23:23, 23:24, 23:25, 23:30, 23:31, 23:32, 23:33, 23:34, 23:35,
+; 23:59
+1,2,3,5,20-25,30-35,59   23   31   12   *   COPY D:\*.log E:\backup
+
+; make backups of OS2.INI and OS2SYS.INI on every first monday of a month,
+; at 9 o'clock in the morning
+0 9 1-7 * 1 showini /bt d:\os2\os2.ini
+0 9 1-7 * 1 showini /bt d:\os2\os2sys.ini
+
+; at midnight on every month:
+0 0 1 * * tapebackup /all
+
+; execute every minute, no restrictions:
+*  *  *  *  *  @ECHO Hi, I am Nr. 2 to be echoed every minute & pause
+
+; execute every minute in January, February, March only !
+* *  *  1,2,3  *  any-command any-arguments
+
+; execute every day at midnight
+0 0 * * * any-command any-arguments
+
+; execute every wednesday at midnigth !
+0 0 * * 3 any-command any-arguments
+
+; this is a comment which concludes the sample file ===========================
+

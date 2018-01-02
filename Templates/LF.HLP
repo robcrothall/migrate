@@ -1,0 +1,153 @@
+LF - Listfiles Version 1.00  (c) Copyright 1990 De Beers
+
+* Invoking LF:
+
+  LF [filespec] [/s] [(options [)]]
+  e.g.
+  LF                  list files in CURRENT DIR    in desc date order
+  LF C:\               "    "    "  ROOT     "      "  "    "    "
+  LF D: /S             "    "    "  D:\ & SUBDIRECTORIES    "    "
+  LF *: /S             "    "    "  ALL DRIVES & SUBDIRS    "    "
+  LF *:\XXX.* /S       "    "    "  ALL DRIVES & SUBDIRS with name XXX
+  LF *:\*.YYY /S       "    "    "  ALL DRIVES & SUBDIRS with ext  YYY
+  LF D: (DI TR         "   dirs  "  D: drive
+  LF D: (DI TR SORTA N "   dirs  "  D: drive in ascending name order
+  LF *.EXE (ENV PATH   "   files "  DIRECTORIES IN PATH  with ext EXE
+
+* LF filespec:
+
+  [d:] [path] [name] [.ext]
+  Defaults to current drive and path.
+  If name and ext are omitted they will be replaced by *.* .
+  Wildcards * and ? can be used as in DOS in the filename and ext.
+  The wildcard * can also be used for drives to search all drives.
+
+* /S: [equivalent to options (TR SORTA P SORTD D]
+
+  Includes all subdirectories and sorts files in descending date
+  within path order. Options entered after /S are ignored.
+
+* Options: [which must be preceeded by '(' and can be in any order]
+
+  TRee             | search in current directory then subdirectories
+   or
+  ENVvar varname   | search in directories given in varname (e.g. PATH)
+
+  ARchive          |
+  REad-only        |
+  HIdden           | To select special files use one or more.
+  SYstem           |
+  DIrectory        |
+
+  TODay            |
+  SINCE  mm/dd/yy  | To select on date.
+  BEFORE mm/dd/yy  |
+
+  SORTA sort-type  | To sort list in ascending  order.
+  SORTD sort-type  | To sort list in descending order.
+
+        sort type:   Name Date Size Type Ext Path
+
+        e.g.         SORTA P N SORTD D to sort in ascending path and name
+                                            then descending date
+
+* Some very important keys:
+  Enter        Executes any command on the command line followed by any
+               commands in the list top down then returns to list.
+  Backspace    Does not delete! Instead it is used to execute special list
+               commands entered on the command line (see below).
+  Esc          As for the Enter key except does not return to list (Exits).
+               LF occupies up to 200K, using Esc frees this space for cmds.
+  F3           Exits from current list without executing any commands.
+  Ctl-Break    Aborts LF system, will leave LF1 and LF2 work files behind
+               in directory given in LF.REX program.
+
+* Cursor and Numeric Pad Keys:
+  Cursor right Move cursor one position to the right
+  Cursor left  Move cursor one position to the left
+  Cursor up    Move cursor up one line; scroll if at top of list area
+  Cursor down  Move cursor down one line; scroll if at bottom of list area
+  Home         Cursor to command line
+  PgUp         Scroll backward one window in the list
+  PgDn         Scroll forward one window in the list
+  End          Delete from cursor position to end of line
+  Del          Delete character at cursor location
+  Ins          Toggle Insert Mode on/off
+  Ctrl-Break   Aborts LF system, will leave LF1 and LF2 work files behind
+               in directory given in LF.REX program.
+  Ctrl-PgUp    Jump to previous LF list in ring.
+  Ctrl-PgDn    Jump to next     LF list in ring.
+
+* Typewriter Area Keys:
+  Enter        Executes any command on the command line followed by any
+               commands in the list top down then returns to list.
+  Backspace    Does not delete! Instead it is used to execute special list
+               commands entered on the command line (see below).
+  Esc          As for the Enter key except does not return to list (Exits).
+               LF occupies up to 200K, using Esc frees this space for cmds.
+  Tab          Moves cursor down a line and to beginning of line,
+               scroll if at bottom of list area.
+  Shift-tab    Moves cursor up a line and to beginning of line,
+               scroll if at top of list area.
+
+* Special characters used as tokens for substitution in list commands
+  Alt-A        é All: Path\Name.Ext
+  Alt-P        ù Path
+  Alt-N        • Name
+  Alt-E        ê Ext
+  Alt-L        Ú Left part of path (i.e. D: in path D:\TEST\)
+  Alt-R        Û Right part of path (i.e. \TEST\ in path D:\TEST\)
+  If no special characters are used in a line command then é is appended.
+
+* Function Keys:
+  F1           Browse LF.HLP help file
+  F2           Browse file in line in which cursor is positioned (List)
+  F3           QUIT current list
+  F4           Edit   file in line in which cursor is positioned (Kedit)
+  F5           Sort list by ascending Path Name Ext
+  Shift-F5     Sort list by ascending .... Name Ext
+  F6           Sort list by ascending Path Ext Name
+  Shift-F6     Sort list by ascending .... Ext Name
+  F7           Sort list by Path and descending Size
+  Shift-F7     Sort list by ........ descending Size
+  F8           Sort list by Path and descending Date
+  Shift-F8     Sort list by ........ descending Date
+  F9           Refresh display
+  F10          Recall previous command entered on command line (max 20)
+  F12          Recall previous command entered on command line (max 20)
+
+* Special List Commands executed by pressing Backspace
+  n            Position list with line n at top of window.
+  +n           Scroll list forward   n lines
+  -n           Scroll list backwards n lines
+  TOP          Position list with first line at top of window.
+  BOT          Position list with last  line at top of window.
+  /ttt         Search for target string ttt and highlight.
+  &/ttt        Search for target string ttt, highlight and restore
+               command in command line.
+
+* Notes on entering Commands on Command Line
+  1. Any DOS command can be entered and it will be executed when you
+     press Enter or Esc (memory permitting).
+  2. Concatenated DOS commands are not recognised. For example CD\TEST
+     will not be recognised and must be entered as CD \TEST.
+  3. An LF command can be entered on the command line. This will add
+     another list to a ring of lists. The number of the current list
+     and the total no. of lists in the ring is displayed in the top
+     left corner. Ctrl-PgUp(PgDn) can be used to jump from list to list.
+
+* Notes on entering Commands on List.
+  1. These commands are executed after any command on the command line,
+     starting from the top of the list to the bottom, regardless of
+     what part of the list is currently in the window.
+  2. A command can be repeated on subsequent lines by entering '=' on
+     the line. (Use Tab, = to do multiple lines).
+  3. When a command has been executed and the file on the line no longer
+     exists then the message '*missing' is displayed on the line, else
+     an '*' is displayed. A command beginning with * will be ignored.
+  4. An LF command can be entered on a list usually when a list of
+     directories is displayed and the contents of a directory are to
+     be listed.
+
+  Clive Loveday June 90
+

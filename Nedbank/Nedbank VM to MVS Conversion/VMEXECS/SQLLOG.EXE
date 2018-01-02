@@ -1,0 +1,19 @@
+/* Exec to create a log for the month-end loads    */
+/* once they have completed successfully           */
+/* Created : January 1994 + Modified :             */
+
+/* NB : **** do changes to LOGLIST EXEC also ****  */
+
+        /** specify the arguments and/or variables as input  **/
+ARG loadno cmsload userid sqlproc
+date=DATE()
+time=TIME()
+        /** erase existing file and write out new parameters **/
+ 'ERASE' loadno 'LISTING A'
+  PUSH ' 'loadno' 'cmsload'  'userid'        'sqlproc'  'date''time
+ 'EXECIO 1 DISKW' loadno 'LISTING A'
+ 'FINIS' loadno 'LISTING A'
+        /** send the file to 878ic006 for monitoring         **/
+    'SF' loadno 'LISTING A TO 878IC006'
+RETURN
+

@@ -1,0 +1,210 @@
+ /*
+   SCANMINI EXEC: This exec will scan a FILE, MINIDISK, OR ALL MINIDISKS
+                  for literals that the user has entered.
+ */
+ arg FN FT FM
+ if FN = "" then
+   do
+     FN = '*'
+     FT = 'JCL'
+     FM = 'A'
+   end
+ if FT = "" then
+   do
+     FN = '*'
+     FT = 'JCL'
+     FM = 'A'
+   end
+ do while FM = '*'
+                 /* In-House Restriction                            */
+    say "Can not search all Minidisks"
+    say "What file mode do you want ? (A - Z)"
+    pull FM
+ end
+ if FM = "" then FM = 'A'
+ N = 0
+ NOMOREINPUT = 'N'
+                 /* Loop until all search literals are entered      */
+ do while NOMOREINPUT = 'N'
+   N = N + 1
+   say "ENTER search literals. ENTER blank if finished."
+   parse upper pull SRCHLIT.N
+   if SRCHLIT.N = "" then NOMOREINPUT = 'Y'
+ end
+ NUM_OF_LITS = N - 1
+ say
+ say "Searching files "FN FT FM
+ RPTNAME = 'SCANMINI LIST A'
+                 /* Report name                                     */
+ address command 'STATE 'RPTNAME
+ if rc = 0 then 'ERASE 'RPTNAME
+ 'makebuf'
+ 'listfile ' FN FT FM '(fifo noheader fmode'
+ if rc ª= 0 then
+   do
+     say
+     say FN FT FM 'NOT FOUND.'
+     exit 8
+   end
+ drop FN FT FM
+ RPT_RECNO       = 0
+ NUM_OF_MATCHES  = 0
+ NUM_OF_FILES    = QUEUED()
+ /*
+      SEARCH ROUTINE
+ */
+ do NUM_OF_FILES
+   parse pull IFN IFT IFM .
+   DO LIT = 1 to NUM_OF_LITS
+                 /* Search for each literal entered                 */
+     FILE_AT_EOF = 'N'
+     FILE_RECNO  = 1
+     do until FILE_AT_EOF = 'Y'
+                 /* Read the file till EOF                          */
+       'EXECIO * DISKR 'IFN IFT IFM FILE_RECNO ,
+                       '(LOCATE /'SRCHLIT.LIT'/ STEM LINEINFO.'
+       if rc > 1 then
+         do
+           FILE_AT_EOF = 'Y'
+           iterate
+         end
+       call FOUND_LIT
+                 /* Print found record                              */
+       NUM_OF_PARMS = LINEINFO.0
+       parse var LINEINFO.NUM_OF_PARMS REL_RECNO ABS_RECNO .
+       FILE_RECNO = ABS_RECNO + 1
+     end
+                 /* End of DO UNTIL                                 */
+     'EXECIO 0 DISKR 'IFN IFT IFM '(FINIS'
+                 /* Close the file                                  */
+   end
+                 /* End of DO LIT =                                 */
+ end
+                 /* End of NUM_OF_FILES                             */
+ /*
+      END OF EXEC PROCESSING
+ */
+ if NUM_OF_MATCHES > 0 then
+   do
+     RPT_LINE  = copies(' ',50)
+     RPT_RECNO = RPT_RECNO + 1
+     'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+                 /* Next Line                                       */
+     RPT_LINE  = '**** NUMBER OF MATCHES = '³³NUM_OF_MATCHES' ****'
+     RPT_RECNO = RPT_RECNO + 1
+     'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+     'EXECIO 0 DISKW 'RPTNAME '(FINIS'
+     say "SEE "RPTNAME" For Matches."
+   end
+ exit
+ /*
+      PRINT ROUTINE
+ */
+ FOUND_LIT:
+                 /* Do Headings                                     */
+   if NUM_OF_MATCHES = 0 then
+     do
+       RPT_LINE  = '    SCAN LITERALS     '
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+                 /* Next line                                       */
+       RPT_LINE  = copies(' ',50)
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+                 /* Next line                                       */
+       do N = 1 to NUM_OF_LITS
+                 /* Write literals for report                       */
+         RPT_LINE  = SRCHLIT.N
+         RPT_RECNO = RPT_RECNO + 1
+         'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+       end
+       RPT_LINE  = copies(' ',50)
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+                 /* Next line                                       */
+       RPT_LINE  = '    MATCHING RECORDS    '
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+                 /* Next line                                       */
+       RPT_LINE  = copies(' ',50)
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+     end
+   if IFN³³IFT³³IFM = HOLDFN³³HOLDFT³³HOLDFM then
+     do
+                 /* Write matched line                              */
+       RPT_LINE  = LINEINFO.1
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+     end
+   else
+     do
+       RPT_LINE  = copies(' ',50)
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+                 /* Next line                                       */
+       RPT_LINE  = '>>>>>>>>> '³³IFN³³' '³³IFT ³³' 'IFM³³' <<<<<<<<<'
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+                 /* Next line                                       */
+       RPT_LINE  = copies(' ',50)
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+                 /* Next line                                       */
+       RPT_LINE  = LINEINFO.1
+       RPT_RECNO = RPT_RECNO + 1
+       'EXECIO 1 DISKW 'RPTNAME RPT_RECNO 'F 80 (VAR RPT_LINE'
+       HOLDFN = IFN
+       HOLDFT = IFT
+       HOLDFM = IFM
+     end
+   NUM_OF_MATCHES = NUM_OF_MATCHES + 1
+ return
+
+ .CS DESCRIPT ON
+ SCANMINI
+ SCANMINI will scan a minidisk for certain literals.
+ .CS DESCRIPT OFF
+ .CS FORMAT ON
+ THE FORMAT OF SCANMINI IS:
+ +-----------------+-----------------------------------------------+
+ ³                 ³                                               ³
+ ³   SCANMINI      ³  '{'FN '{'FT '{'FM '}}}'                      ³
+ ³                 ³    *  JCL  A                                  ³
+ ³                 ³                                               ³
+ +-----------------+-----------------------------------------------+
+ .CS FORMAT OFF
+ .CS PARMS ON
+ WHERE:
+ FN
+      Is the file name of the source.
+      The DEFAULT is '*'.
+ FT
+      Is the file type of the source.
+      The DEFAULT is 'JCL'.
+ FM
+      Is the file mode of the source.
+      The DEFAULT is 'A'.
+ .CS PARMS OFF
+ .CS NOTES ON
+ USAGE NOTES:
+    SCANMINI cab be used to scan MINI-DISKS for a literal or a group
+       of literals.  The search can be limited to certain file names
+       and types by using a generic name (ie. * CICS A).
+    SCANMINI LIST A  will have all the records that match the search
+       criteria.
+ .CS NOTES OFF
+ .CS ERRORS ON
+ RESPONSES:
+      "Can not search all minidisks"
+      "What file mode do you want ? (A -Z)"
+          an * was entered for the file mode.
+      "Enter search literals. Enter nothing if finished."
+          Enter the literals that will be used for the search.
+          This question will be asked until a null (no data) is entered.
+      "Searching files "FN FT FM
+          Show what files will be searched.
+      FN FT FM 'not found.'
+          The file name entered can not be found on that mini-disk.
+ .CS ERRORS OFF
+

@@ -1,0 +1,578 @@
+*--------------------------------------------------------*
+* Sample AS Names file (for MVS)                         *
+*                                                        *
+* This file shows at least one sample of each of the     *
+* different types of entries which can occur in an       *
+* AS Names file.                                         *
+*                                                        *
+* You may use this file as a template or sample to       *
+* create you own AS Names files for system wide, group   *
+* level or induvidual user use.                          *
+*                                                        *
+* Note that this file is a sample only.  DO NOT USE      *
+* ANY ENTRY IN THIS FILE WITHOUT FIRST MAKING ANY        *
+* MODIFICATIONS NECESSARY FOR YOUR INSTALLATION.         *
+*--------------------------------------------------------*
+
+*--------------------------------------------------------*
+* AS MVS System entry                                    *
+*--------------------------------------------------------*
+
+:nick.SYSTEM   :type.MVS
+               :cct.DASXXCCT
+               :fsacmsg.Yes
+               :fsacsmf.128
+               :fsacexit.USERFSX1
+               :racfclas.DASNAMES
+               :racfent.New
+               :racfrcm.DASFSRCM
+               :userpref.DAS0
+               :usersufx.1 100
+
+*--------------------------------------------------------*
+* AS Configuration Entries                               *
+*--------------------------------------------------------*
+
+:nick.AS       :type.DAS
+               :advance.Prompt
+               :asmsg.AS Version 4 Release 1
+               :caps.No
+               :case.Upper
+               :comsafe.No
+               :cpu.No
+               :cselect.NoConfirm
+               :csmsg.AS Version 4 Release 1
+               :dateform.MDY
+               :dbcs.No
+               :ddevice.*
+               :diagnose.CONFIG NAMES
+               :editor.AS
+               :epfkey.Yes
+               :features.ICE
+               :ffst.On
+               :heading.'Application System',Red
+               :imacolor.NoProtect
+               :inclpref.Yes
+               :keyboard.Keyboard
+               :language.American English
+               :mouse.Alpha
+               :newline._
+               :outsafe.No
+               :printch1.1
+               :printx1.
+               :printx2.
+               :queryed.Lower
+               :recall.Entry
+               :run.End
+               :spie.SPIE
+               :sortname.DFSORT
+               :sortrec.500000
+               :sqlbufsz.0
+               :sqlgroup.Group
+               :sqlorder.Order
+               :uppraccd.Yes
+               :vctitle.Yes
+               :vssapl.0
+               :vsscecp.0
+               :vssmark.DASSAMSO
+               :wssize.1024K
+               :asfiles.FS
+               :cct.DASXXCCT
+               :db2planc.4189
+               :db2planr.4472
+               :db2point..
+               :db2sys.DSN
+               :dsnstyle.Standard
+               :qsamblk.23476
+               :qsamsp.10 100
+               :qsamunit.SYSDA
+               :sysout.A
+               :wkfiles.QSAM
+
+*--------------------------------------------------------*
+* AS Profile Entries                                     *
+*--------------------------------------------------------*
+
+* This Profile entry is used if you start AS interactively
+* with an application code for which no other Profile
+* entries applies, or without an application code.
+:nick.DEFAULT  :type.PROFILE   :caller.AS
+               :defcode.MENU
+               :profcmnd.No
+               :confirm.No
+               :toggle.No
+               :command.RUN ASMAST.MAST/APPMENU
+
+* This Profile entry is used if you start AS from Personal
+* AS.
+:nick.DEFAULT  :type.PROFILE   :caller.PAS
+               :profcmnd.NO
+
+* This Profile entry is used if you start AS interactively
+* with MKTG application code, or select MKTG from the
+* application code selection screen.
+:nick.MKTG     :type.PROFILE   :caller.AS
+               :confirm.No
+               :command.RUN MKTGMAST.MKTG/MKTGMENU
+
+*--------------------------------------------------------*
+* AS Library Entries                                     *
+*--------------------------------------------------------*
+
+* Another user's or a shared library residing on a File
+* Server.
+:nick.USERONE  :type.LIBRARY
+               :userid.USERONE
+               :format.FS
+
+* Another user's or a shared library residing in MVS
+* OpenEdition Hierarchical File System.
+:nick.USERTWO  :type.LIBRARY
+               :userid.USERTWO
+               :format.HFS
+               :location./u/usertwo/financedata
+
+* Shared read only library in an MVS load module.
+:nick.ACMEDAT  :type.LIBRARY
+               :userid.BAGGINS
+               :format.MODULE
+               :location.ACMEMD7
+
+* AS product common samples library residing in MVS
+* OpenEdition Hierarchical File System.
+:nick.***      :type.LIBRARY
+               :userid.AS3LIB
+               :format.HFS
+               :location./ibmprod/das410
+
+* Library refered to with "one-star" nickname
+* Resides in OpenEdition Hierarchical File System.
+:nick.*        :type.LIBRARY
+               :userid.ASINST
+               :format.HFS
+               :location./u/asinst
+
+*--------------------------------------------------------*
+* AS Project Management entries                          *
+*--------------------------------------------------------*
+
+* List of available archive formats
+:nick.*        :type.ARCHIVE
+               :list.AS2CSV
+
+* Definition of each archive format
+:nick.AS2CSV   :type.ARCHIVE
+               :desc.Export AS to CSV tables
+               :proc.***DEMO/AS2CSV
+
+* List of available restore formats
+:nick.*        :type.RESTORE
+               :list.CSV2AS MICRO SUPER PMW
+
+* Definition of each restore format
+:nick.CSV2AS   :type.RESTORE
+               :desc.Import from AS CSV tables to AS project
+               :proc.***DEMO/CSV2AS
+
+:nick.MICRO    :type.RESTORE
+               :desc.Import from Microsoft Project for Windows
+               :proc.***DEMO/MPROJ2AS
+
+:nick.SUPER    :type.RESTORE
+               :desc.Import from CA-SuperProject
+               :proc.SUPER2AS
+
+:nick.PMW      :type.RESTORE
+               :desc.Import from PMW for Windows
+               :proc.PMW2AS
+
+
+*--------------------------------------------------------*
+* Text format printing entries                           *
+*--------------------------------------------------------*
+
+:nick.*        :type.TEXT
+               :list.SAMPLE
+* Please replace this sample list with a list of valid destinations
+* like this:
+*              :list.WSU16Q 3820A 3820C
+* Please supply an appropriate default destination like this:
+*              :default.3820A
+*----------------------------------------------------------------------*
+* Text format output device definitions:
+* Tags:
+*   nick     is the name of up to 8 bytes which identifies the printer.
+*   type     is TEXT.
+*   desc     is a description of this printer of up to 61 bytes length.
+*   name     specifies the GDDM file name (for ADMPRINT format), or
+*              the ddname.
+*              Omit the name tag for the default SYSOUT class.
+*   format   is the output format written by AS.
+*              Supported formats for text are: NORMAL, 3800, 6670,
+*                FFT, RFT, POSITION, NOPOSN, ADMPRINT.
+*   depth    specifies the depth of the page in lines.
+*   width    specifies the width of the page in characters.
+*   open     are host commands to be issued before the file is opened.
+*   close    are host commands to be issued after the file is closed.
+* The open and close commands can contain the following variable:
+*   &copies  is replaced by the number of copies.
+*----------------------------------------------------------------------*
+:nick.WSU16Q   :type.TEXT
+  :desc.3816 on first floor
+  :name.DASOUT
+  :open.ALLOC DD(DASOUT) SYSOUT(L) DEST(ASICVM1.3816A) COP(&copies) REU;
+  :close.FREE DD(DASOUT) ;
+
+*----------------------------------------------------------------------*
+:nick.SAMPLE   :type.TEXT
+  :desc.Please customize the TEXT list entry in the AS Names file!
+
+*----------------------------------------------------------------------*
+* List of graphics format output devices
+*----------------------------------------------------------------------*
+:nick.*        :type.GRAPHICS
+               :list.LIST3820 SAMPLE PLOTTER PCPRINT WINPRINT PMPRINT
+* Please replace this sample list with a list of graphics destinations
+* appropriate for your needs.
+* Please supply an appropriate default destination like this:
+*              :default.WSU16Q
+*----------------------------------------------------------------------*
+* Graphics format output device definitions (printers & plotters):
+*----------------------------------------------------------------------*
+* Tags:
+*   nick     is the name of up to 8 bytes which identifies the printer.
+*   type     is GRAPHICS.
+*   desc     is a description of this printer of up to 61 bytes length.
+*   name     specifies the GDDM file name (for ADMPRINT format), or
+*              the GDF file name.
+*   format   is the output format written by AS.
+*              Supported formats for text are: ADMPRINT or GDF.
+*   depth    specifies the depth of the page in lines.
+*   width    specifies the width of the page in characters.
+*   open     TSO/E commands to be issued before the file is opened.
+*   close    TSO/E commands to be issued after the file is closed.
+* The open and close commands can contain the following variable:
+*   &copies  is replaced by the number of copies.
+*   &page    page number for GDF format output.
+*   &part    part number for GDF format output.
+*   &more    is replaced by 0 or 1.
+*              It indicates when several GDF files are produced from a
+*              single output command.
+*              0 indicates they are no more files in this set of files
+*              1 indicates they are more files in this set of files
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=4,NAME=LIST3820,TONAME=*,DEVTOK=A3820Q
+*----------------------------------------------------------------------*
+:nick.LIST3820 :type.GRAPHICS
+  :desc.3820 type output displayed on your screen to save paper
+  :open.ALLOC DD(ADMIMAGE) NEW REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADM4CDUT)' '(ADMIMAGE)()()()(*)(1)' ;
+         FREE DD(ADMIMAGE) ;
+
+*----------------------------------------------------------------------*
+:nick.SAMPLE   :type.GRAPHICS
+  :desc.Please customize the GRAPHICS list entry in the AS Names file!
+
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=4,NAME=WSU16Q,TONAME=DASOUT,DEVTOK=A3816Q
+*----------------------------------------------------------------------*
+:nick.WSU16Q   :type.GRAPHICS
+  :desc.Graphic monochrome printing on 3816 on first floor
+  :open.ALLOC DD(DASOUT) SYSOUT(L) DEST(ASICVM1.3816A) COP(&copies) REU;
+  :close.FREE DD(DASOUT) ;
+
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=1,NAME=PLOTTER,TONAME=(*,ADMPLOT)
+*----------------------------------------------------------------------*
+:nick.PLOTTER  :type.GRAPHICS
+  :desc.Plotter directly attached to your workstation (not OS/2)
+
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=1,NAME=PCPRINT,TONAME=(*,ADMPCPRT)
+*----------------------------------------------------------------------*
+:nick.PCPRINT  :type.GRAPHICS
+  :desc.Printer directly attached to your PC (requires PCLK-not OS/2)
+
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=1,NAME=WINPRINT,TONAME=(*,PCSWGPRT)
+*----------------------------------------------------------------------*
+:nick.WINPRINT :type.GRAPHICS
+  :desc.Default printing on your PC (PC/3270).
+
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=1,NAME=PMPRINT,TONAME=(*,ADMPMOP)
+*----------------------------------------------------------------------*
+:nick.PMPRINT  :type.GRAPHICS
+  :desc.Print manager queue on your workstation (requires OS/2 Link).
+
+
+*--------------------------------------------------------*
+* File save format entries                               *
+*--------------------------------------------------------*
+* List entry tags:
+*   nick     is *.
+*   type     is FORMAT.
+*   list     a list of format nick names separated by spaces.
+*   default  the default format for saving text.
+*   glist    a list of graphic format nick names separated by spaces.
+*   gdefault the default format for saving graphics.
+*----------------------------------------------------------------------*
+:nick.*        :type.FORMAT
+  :list. NORMAL  3800  GDF  6670  FFT  RFT  POSITION  NOPOSN
+               PIFBIN  CGM  CGMCD  CGMFP2  CGMFP3  CGMHG  CGMMD
+    PSEG38PP  PSEG3820  LIST3820  EPSBIN  PSBIN  ADMPRINT
+  :glist. GDF  PIFBIN  CGM  CGMCD  CGMFP2  CGMFP3  CGMHG  CGMMD
+    PSEG38PP  PSEG3820  LIST3820  EPSBIN  PSBIN  ADMPRINT  GL
+* GDDM requirements:
+*   Change the data set & CGM profile names to suit your installation.
+*   In particular for GDDM V2.3 change each occurrence of:
+*     - 'GDDM.V3R1M1.SADMMOD' to 'GDDM.V2R3M0.GDDMLOAD'
+*     - 'GDDM.V3R1M1.SADMSAM' to 'GDDM.V2R3M0.GDDMSAM'
+*     - PROFILE(ADMxxx) to PROFILE(CGMxxx)
+*   Text output to LIST3820 requires GDDM V3.1 & cell-based device
+*     tokens.
+*   PostScript format (EPSBIN and PSBIN) requires GDDM V3.1.1.
+*   GL format requires GDDM V3.1 and does not support text output.
+*----------------------------------------------------------------------*
+* The following entries use a sample EXEC named DASREPL to process the
+*   value of &replace.  DASREPL sets a value of 8 in the return code if
+*   the file exists when &replace=NO, or if NOAPPEND is specified and
+*   &replace=APPEND.  They also use DASREPL to delete temporary ADMGDF
+*   files from the ADMGDF dataset.  They require ddname ADMGDF to have
+*   previously been allocated (for example by the TSO LOGON procedure).
+*----------------------------------------------------------------------*
+* File save format entry tags:
+*   nick     is the name of up to 8 bytes which identifies each format.
+*   type     is FORMAT.
+*   desc     is a description of this format of up to 61 bytes length.
+*   format   is the file format saved by AS.
+*              For graphics the format must be GDF or ADMPRINT.
+*              Other supported formats for text are:
+*                NORMAL, 3800, 6670, FFT, RFT, POSITION, NOPOSN.
+*   depth    specifies the depth of the page in lines.
+*   width    specifies the width of the page in characters.
+*   open     TSO/E commands to be issued before the file is opened.
+*   close    TSO/E commands to be issued after the file is closed.
+* The open and close commands can contain the following variables:
+*   &fn      is replaced by the file name (after insertion of page and
+*              part numbers for multi-page GDF output).
+*   &replace is replaced by YES, NO, or APPEND
+*   &page    page number for GDF format output.
+*   &part    part number for GDF format output.
+*   &more    is replaced by 0 or 1.
+*              It indicates when several GDF files are produced from a
+*              single output command.
+*              0 indicates this is the last file in this set of files
+*              1 indicates there are more files in this set of files
+*----------------------------------------------------------------------*
+:nick.PIFBIN   :type.FORMAT
+  :desc.Picture interchange format (for OS/2 Picture Viewer)
+  :format.GDF
+  :name.DASTEMP
+ :open.%DASREPL NICK(PIFBIN) DS(&fn.PIFBIN) REPLACE(&replace)
+          NOAPPEND DELGDF(DASTEMP) ;
+        ALLOC DD(ADMPIF) DS(&fn.PIFBIN) NEW REU ;
+* Note that if ADMPIF is a sequential file failing to specify "REPLACE"
+* on the following command may cause GDDM to ABEND with user code 1317.
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUPCT)' '(GET DASTEMP REPLACE' ;
+         FREE DD(ADMPIF) CATALOG ;
+         %DASREPL NICK(PIFBIN) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+:nick.CGM      :type.FORMAT
+  :desc.Computer Graphics Metafile
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(CGM) DS(&fn.CGM) REPLACE(&replace) NOAPPEND
+          DELGDF(DASTEMP) ;
+        ALLOC DD(DASCGMDD) DS(&fn.CGM) NEW REU ;
+        ALLOC DD(ADMCGM) DS('GDDM.V3R1M1.SADMSAM') SHR REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUGC)' 'FROM(DASTEMP) TO(DASCGMDD)
+           CODEPAGE(850)' ;
+         FREE DD(DASCGMDD) CATALOG ;
+         %DASREPL NICK(CGM) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+:nick.CGMCD    :type.FORMAT
+  :desc.Computer Graphics Metafile for Corel Draw
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(CGMCD) DS(&fn.CGM) REPLACE(&replace) NOAPPEND
+          DELGDF(DASTEMP) ;
+        ALLOC DD(DASCGMDD) DS(&fn.CGM) NEW REU ;
+        ALLOC DD(ADMCGM) DS('GDDM.V3R1M1.SADMSAM') SHR REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUGC)' 'FROM(DASTEMP) TO(DASCGMDD)
+           CODEPAGE(850) PROFILE(ADMCD)' ;
+         FREE DD(DASCGMDD) CATALOG ;
+         %DASREPL NICK(CGMCD) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+:nick.CGMFP2   :type.FORMAT
+  :desc.Computer Graphics Metafile for Freelance Plus V2
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(CGMFP2) DS(&fn.CGM) REPLACE(&replace) NOAPPEND
+          DELGDF(DASTEMP) ;
+        ALLOC DD(DASCGMDD) DS(&fn.CGM) NEW REU ;
+        ALLOC DD(ADMCGM) DS('GDDM.V3R1M1.SADMSAM') SHR REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUGC)' 'FROM(DASTEMP) TO(DASCGMDD)
+           CODEPAGE(850) PROFILE(ADMFP2)' ;
+         FREE DD(DASCGMDD) CATALOG ;
+         %DASREPL NICK(CGMFP2) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+:nick.CGMFP3   :type.FORMAT
+  :desc.Computer Graphics Metafile for Freelance Plus V3
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(CGMFP3) DS(&fn.CGM) REPLACE(&replace) NOAPPEND
+          DELGDF(DASTEMP) ;
+        ALLOC DD(DASCGMDD) DS(&fn.CGM) NEW REU ;
+        ALLOC DD(ADMCGM) DS('GDDM.V3R1M1.SADMSAM') SHR REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUGC)' 'FROM(DASTEMP) TO(DASCGMDD)
+           CODEPAGE(850) PROFILE(ADMFP3)' ;
+         FREE DD(DASCGMDD) CATALOG ;
+         %DASREPL NICK(CGMFP3) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+:nick.CGMHG    :type.FORMAT
+  :desc.Computer Graphics Metafile for Harvard Graphics
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(CGMHG) DS(&fn.CGM) REPLACE(&replace) NOAPPEND
+          DELGDF(DASTEMP) ;
+        ALLOC DD(DASCGMDD) DS(&fn.CGM) NEW REU ;
+        ALLOC DD(ADMCGM) DS('GDDM.V3R1M1.SADMSAM') SHR REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUGC)' 'FROM(DASTEMP) TO(DASCGMDD)
+           CODEPAGE(850) PROFILE(ADMHG)' ;
+         FREE DD(DASCGMDD) CATALOG ;
+         %DASREPL NICK(CGMHG) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+:nick.CGMMD    :type.FORMAT
+  :desc.Computer Graphics Metafile for Micrografx Designer
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(CGMMD) DS(&fn.CGM) REPLACE(&replace) NOAPPEND
+          DELGDF(DASTEMP) ;
+        ALLOC DD(DASCGMDD) DS(&fn.CGM) NEW REU ;
+        ALLOC DD(ADMCGM) DS('GDDM.V3R1M1.SADMSAM') SHR REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUGC)' 'FROM(DASTEMP) TO(DASCGMDD)
+           CODEPAGE(850) PROFILE(ADMMD)' ;
+         FREE DD(DASCGMDD) CATALOG ;
+         %DASREPL NICK(CGMMD) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+* This entry assumes that a PDS named 'prefix.PSEG38PP' already exists.
+*----------------------------------------------------------------------*
+:nick.PSEG38PP :type.FORMAT
+  :desc.Save as page segments for 38xx printer artwork
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(PSEG38PP) DS(PSEG38PP) MEMBER(&fn)
+          REPLACE(&replace) DELGDF(DASTEMP) ;
+        ALLOC DD(DASPSEGD) DS(PSEG38PP(&fn)) OLD REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUCDSO)'
+           'DASTEMP = 99 4 IMG2401 (5 1 8 60 40 0)(DASPSEGD)' ;
+         FREE DD(DASPSEGD) ;
+         %DASREPL NICK(PSEG38PP) DELGDF(DASTEMP)
+*----------------------------------------------------------------------*
+* This entry assumes that a PDS named 'prefix.PSEG3820' already exists.
+*----------------------------------------------------------------------*
+:nick.PSEG3820 :type.FORMAT
+  :desc.Save as page segments for 38xx printer artwork
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(PSEG3820) DS(PSEG3820) MEMBER(&fn)
+          REPLACE(&replace) DELGDF(DASTEMP) ;
+        ALLOC DD(DASPSEGD) DS(PSEG3820(&fn)) OLD REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUCDSO)'
+           'DASTEMP = 99 4 IMG2401 (5 1 8 60 40 0)(DASPSEGD)' ;
+         FREE DD(DASPSEGD) ;
+         %DASREPL NICK(PSEG3820) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=4,NAME=LIST3820,TONAME=*,DEVTOK=A3820Q
+*----------------------------------------------------------------------*
+:nick.LIST3820 :type.FORMAT
+  :desc.3820 type output stored as a file
+  :format.ADMPRINT
+  :open.%DASREPL NICK(LIST3820) DS(&fn.LIST3820) REPLACE(&replace)
+          NOAPPEND ;
+        ALLOC DD(ADMIMAGE) DS(&fn.LIST3820) NEW REU ;
+  :close.FREE DD(ADMIMAGE) CATALOG ;
+*----------------------------------------------------------------------*
+:nick.EPSBIN   :type.FORMAT
+  :desc.Monochrome Encapsulated PostScript in ASCII
+  :format.GDF
+  :name.DASTEMP
+  :open.%DASREPL NICK(EPSBIN) DS(&fn.EPSBIN) REPLACE(&replace)
+          NOAPPEND DELGDF(DASTEMP) ;
+        ALLOC DD(DASEPSDD) DS(&fn.EPSBIN) NEW REU ;
+  :close.CALL 'GDDM.V3R1M1.SADMMOD(ADMUCDSO)'
+           'DASTEMP = 99 4 PPS1MA4 (5 1 8 60 40 0)(DASEPSDD)' ;
+         FREE DD(DASEPSDD) CATALOG ;
+         %DASREPL NICK(EPSBIN) DELGDF(DASTEMP) ;
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=4,NAME=PSBIN,TONAME=*,DEVTOK=PPS1CQ
+*----------------------------------------------------------------------*
+:nick.PSBIN    :type.FORMAT
+  :desc.Color A4 PostScript in ASCII
+  :format.ADMPRINT
+  :open.%DASREPL NICK(PSBIN) DS(&fn.PSBIN) REPLACE(&replace) NOAPPEND ;
+        ALLOC DD(ADMIMAGE) DS(&fn.PSBIN) NEW REU ;
+  :close.FREE DD(ADMIMAGE) CATALOG ;
+*----------------------------------------------------------------------*
+* This entry requires a GDDM NICKNAME with parameters like this:
+*   FAM=2,TOFAM=1,NAME=GL,TONAME=DASPRINT,DEVTOK=L6180,
+*     PROCOPT=((TOFILE,YES,REP))
+*----------------------------------------------------------------------*
+:nick.GL       :type.FORMAT
+  :desc.Graphics Language
+  :format.ADMPRINT
+  :open.%DASREPL NICK(GL) DS(&fn.GL) REPLACE(&replace) NOAPPEND ;
+        ALLOC DD(DASPRINT) DS(&fn.GL) NEW REU ;
+  :close.FREE DD(DASPRINT) CATALOG ;
+*----------------------------------------------------------------------*
+
+*--------------------------------------------------------*
+* Hardcopy device entries                                *
+*--------------------------------------------------------*
+
+:nick.P3812A   :type.PRINTER
+               :maxpage.20
+
+*--------------------------------------------------------*
+* Program Product entries                                *
+*--------------------------------------------------------*
+
+* Lotus 1-2-3/M
+:nick.1-2-3/M  :type.PROGRAM
+               :startcmd.%DASLOTMS
+               :module.DAOLMAIN
+               :endcmd.%DASLOTME
+               :command.1/FR{CE}
+               :tilde.ä
+
+* QMF
+:nick.QMF      :type.PROGRAM
+               :startcmd.%DASQMFMS
+               :endcmd.%DASQMFME
+               :intface.SAA
+               :qmfexec.DASQCMDI
+               :qmfdb.AS
+
+*--------------------------------------------------------*
+* APL Application Entries                                *
+*--------------------------------------------------------*
+
+* This APL application enables AS to access APL tables
+:nick.DASDBI   :type.APL
+               :start.WS(2000K) FR(128K) SH(32K)
+               :load.Q
+               :wspace.DASAPLDB
+               :test.DASDBI
+               :qname.DASDBI
+               :endfun.0
+
+

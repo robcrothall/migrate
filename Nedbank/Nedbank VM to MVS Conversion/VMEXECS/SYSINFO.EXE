@@ -1,0 +1,13 @@
+/***/
+clrscrn
+say '***************** sys info   ******************'
+ind
+say '***************** users qued ******************'
+ind q
+say '***************** users in i/o ****************'
+'ind i/o'
+say '***************** users favoured **************'
+ind favor
+say '***************** users reserved **************'
+q reserve
+

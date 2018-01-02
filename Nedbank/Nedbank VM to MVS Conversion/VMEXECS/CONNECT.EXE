@@ -1,0 +1,18 @@
+/* USE THIS EXEC TO LINK IN CMS TO OTHER ID'S */
+CLRSCRN
+ARG ARG.1
+IF ARG.1=' ' THEN DO
+SAY '*****************'
+SAY 'THE LINK ID MUST BE SPECIFIED'
+SAY '*****************'
+EXIT
+END
+'REL Z(DET'
+LINK ARG.1 191 199 RR
+ac 199 z
+/****
+'FILEL  * LISTING Z'
+*****/
+'FILEL  * * Z'
+'REL Z(DET'
+

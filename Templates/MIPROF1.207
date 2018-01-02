@@ -1,0 +1,173 @@
+/*Purpose:      Create a personality profile based on clinical evaluation
+ Client:        Management Insight CC
+ Date written:  June 1991
+ Author:        Consolidated Share Registrars Limited
+ Copyright:
+ Arguments:     These are in the form KEYWORD=...  KEYWORD2=...
+                Separate the end of one parameter from the next with a space.
+
+   MICAT=filespec  Use this file to associate industry classifications and
+                   descriptions with the files in the current directory for
+                   selecting categories.  If this file is not specified, the
+                   default will be 'MICAT.CTL' in the current directory.  If the
+                   file is not found, it is created.
+                                                                  
+   QUIET=YES | NO  Suppresses copyright messages and other information displays.
+                                                                     
+ Return codes:  Rc=1   If arg1=? - Request for info.
+                Rc=9   If invalid parms.
+
+ Written by:    Rob Crothall   Date: May 1993
+ Changed by:                   Date:          To:
+*/
+
+/* Set options that help during debugging */
+'echo on';
+rc = 0;
+MI_RC = 0;
+trace r;
+
+/* Display comment info if 1st arg = ? and Exit */
+DisplayUsage:
+If arg(1)='?' then do;  
+   Parse source . . name .;
+   Say; Say name; Say;
+   Do n = 1 by 1;
+      line=sourceline(n);
+      If 0 < pos('*/',line) then exit 1;
+      If n//18 = 0 then do;
+         say; say 'Press <Enter> to continue...';
+         pull ans;
+      end;  /* Do */
+      Say line;
+   End;
+End;
+
+/* For those who start this from an OS/2 Full Screen session... */
+say 'Use Ctrl-Esc to see the windows...';
+
+/* Handle programming errors in a reasonable way... */
+Signal on failure name CLEANUP;
+Signal on halt name CLEANUP;
+Signal on syntax name CLEANUP;
+
+/* Check if utility functions have been loaded; If not, load them...*/
+If 0 < RxFuncQuery('SysLoadFuncs')
+  then do;
+         Call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs';
+         Call SysLoadFuncs;
+         Say 'RexxUtils loaded...';
+       End;
+pull ans;
+If 0 < RxFuncQuery('PrxLoadFuncs')
+  then do;
+         Call RxFuncAdd 'PrxLoadFuncs', 'PRXUTILS', 'PRXLOADFUNCS';
+         Call PrxLoadFuncs;
+         Say 'PrxUtils loaded...';
+       End;
+Say PrxUtilsVersion();
+pull ans;
+If 0 < RxFuncQuery('VInit')
+  then do;
+         Call RxFuncAdd 'VInit', 'VREXX', 'VINIT';
+         rc = VInit();
+         If rc = 'ERROR' then signal CLEANUP;
+       End;
+pull ans;
+/* Handle default options and parameters passed to us... */
+miCat = 'MICAT.CTL';
+
+Parse upper arg ProcOpts;
+Do I = 1 to words(ProcOpts);
+  parse var word(ProcOpts, I) Keyword '=' parm;
+  parm = strip(parm);
+  Select
+     when Keyword = 'MICAT' then miCat = parm;
+  otherwise
+     say 'This parameter is not recognised and has been ignored:' word(ProcOpts, I);
+  end  /* select */
+pull ans;
+end /* do */
+
+Call Copyright;
+
+
+Exit 8;
+
+Dir. = '';
+
+K = 0;
+'CD \MAX';
+retcd = PrxReadToStem('FILEAREA.CTL', 'FileArea');
+If FileArea.0 = 'FILEAREA.0' then do;
+    say 'No FILEAREA.CTL file found';
+    signal End;
+    end  /* Do */
+  else do I = 1 to FileArea.0;
+    parse upper var FileArea.I KeyWord Rest;
+    If KeyWord = '%' then iterate;
+    If KeyWord = '' then iterate;
+    If Keyword = 'DOWNLOAD' then do;
+      K = K + 1;
+      Rest = space(Rest,0);
+      If right(Rest,1) = '\' then Rest = left(Rest,length(Rest)-1);
+      If left(Rest,1) \= '\' then Rest = '\MAX\'||Rest;
+      Dir.K = Rest;
+    end  /* Do */
+  end  /* Do */
+
+If K > 0 then Dir.0 = K;
+else Dir.0 = 0;
+
+Call RxFuncAdd 'VInit', 'VREXX', 'VINIT';
+rc = VInit();
+If rc = 'ERROR' then signal CLEANUP;
+
+Call VDialogPos 20, 50;
+
+sel. = '';
+If Dir.0 > 0 then do forever;
+/*  sel.0 = 0;*/
+/*  sel.1 = Dir.1;*/
+  rc = vlistbox('Select directory for update',Dir,35,10,3);
+  if rc='CANCEL' then signal CLEANUP;
+  else if rc\='OK' then signal CLEANUP;
+  'cd' Dir.vstring;
+/*  msg = 'Sel:' Dir.vstring;*/
+/*  call VMsgBox msg, Dir, 1;*/
+  call bbs
+End /* do */
+
+
+CLEANUP:
+  call VExit;
+  'cd \';
+Exit;
+
+/*========================================================*/
+/* Start of internal subroutines, in alphabetical order   */
+/*========================================================*/
+
+Copyright:
+  If bQuiet > 0 then return;
+???';
+msg.0 = 4
+msg.1 = 'This is a 4 line message box dialog.'
+msg.2 = 'This is the line 2.  Line 3 is blank.'
+msg.3 = ''
+msg.4 = 'Press YES or NO to continue...'
+
+call VDialogPos 50, 50
+rb = VMsgBox('TESTDLGS.CMD', msg, 6)
+if rb = 'YES' then do
+   msg.0 = 1
+   msg.1 = 'You pressed YES'
+end
+else do
+   msg.0 = 1
+   msg.1 = 'You pressed NO'
+end
+call VMsgBox 'VMsgBox Result', msg, 1
+
+
+

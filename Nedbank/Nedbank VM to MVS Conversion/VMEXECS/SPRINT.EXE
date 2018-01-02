@@ -1,0 +1,8 @@
+/** SPECIAL PRINT EXEC TO SEND TO A SPECIFIC PRINTER */
+ARG prtname
+IF arg =' ' then
+SAY 'please enter the printer name, eg ALLTEST'
+SP PRT RSCS
+TAG DEV 00E prtname
+rel w
+

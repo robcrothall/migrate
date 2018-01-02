@@ -1,0 +1,24 @@
+CREATE TABLE GLMAIN95
+  (DIVISION            DECIMAL    (3,0)  NOT NULL,
+   REGION              DECIMAL    (3,0)  NOT NULL,
+  "HG BRANCH"          DECIMAL    (3,0)  NOT NULL,
+  "HG TYPE"            DECIMAL    (5,0)  NOT NULL,
+   BRANCH              DECIMAL    (3,0)  NOT NULL,
+   TYPE                DECIMAL    (5,0)  NOT NULL,
+   RUNDATE             DECIMAL    (7,0)  NOT NULL,
+   BALANCE             DECIMAL   (13,2)  NOT NULL,
+  "DR COMPONENT"       DECIMAL   (13,2)  NOT NULL,
+  "CR COMPONENT"       DECIMAL   (13,2)  NOT NULL,
+  "AVE BALANCE"        DECIMAL   (13,2)  NOT NULL,
+  "AVE DR BALANCE"     DECIMAL   (13,2)  NOT NULL,
+  "AVE CR BALANCE"     DECIMAL   (13,2)  NOT NULL,
+  "ADJ BAL"            DECIMAL   (13,2)  NOT NULL,
+  "ADJ DR COM"         DECIMAL   (13,2)  NOT NULL,
+  "ADJ CR COM"         DECIMAL   (13,2)  NOT NULL,
+  "ADJ AVE BAL"        DECIMAL   (13,2)  NOT NULL,
+  "ADJ AVE DR BAL"     DECIMAL   (13,2)  NOT NULL,
+  "ADJ AVE CR BAL"     DECIMAL   (13,2)  NOT NULL,
+  "DR DEST FINSTAT"    DECIMAL   (11,0)  NOT NULL,
+  "CR DEST FINSTAT"    DECIMAL   (11,0)  NOT NULL)
+IN DAVEM2;
+
