@@ -1,5 +1,4 @@
 #!/usr/bin/rexx 
-/*  */
 /*********************************************************************
  Purpose:       Copy User files to tape from VM, and generate z/OS JCL
                 to read the tape back and create data sets.
@@ -47,7 +46,7 @@ VRexxActive = No;
 
 /* Set options that help during debugging */
 
-DEBUG = YES;
+DEBUG = No;
 If Debug = Yes then call trace('r');
 If Debug = Yes then say 'At beginning...';
 
@@ -89,9 +88,18 @@ If Debug = Yes then say 'At Copyright...';
 Call Copyright;
 /* ... Do the main processing ... */
 
-/*'L * *' Target '(FIFO AL))' */
-'ls ' Target
-'SENTRIES'; RECS1=RC
+If Debug = Yes then call trace('r');
+
+If opsys = 'UNIX' then do;
+   Address System 'ls' Target with OUTPUT FIFO '';
+   
+   RECS1 = 1;
+end; /* do */
+else do;
+     'L * *' Target '(FIFO AL))'
+     'SENTRIES';
+     RECS1=RC;
+     end; /* do */
 Out. = '';
 If RECS1 > 0 then do;
    ln = 0;
@@ -114,15 +122,32 @@ OutFile. = '';
 File_no = 1;
    Parse pull REC;
    Do while REC<>''
-      parse var REC fn ft fm Format Lrecl NoRecs .;
+      If opsys = 'UNIX'
+         then do;
+	    parse var REC fn .;
+	    If Debug = Yes then say 'File name = ' fn;
+	    If left(fn,1) = '#' then iterate;
+	    ft = 'FILE';
+	    fm = Target;
+	    Format = 'V';
+	    address system 'wc -L ' fn with output STEM tmp.
+	    Parse var tmp.1 Lrecl .;
+	    Lrecl = Lrecl + 4; /* allow for the record length field */
+	    address system 'wc < ' fn with output STEM tmp.
+	    parse var tmp.1 NoRecs words FileSize .;
+	    /* NoRecs = trunc(FileSize / Lrecl) + 1; */
+	 end;
+	 else do;
+	    parse var REC fn ft fm Format Lrecl NoRecs .;
+	 end;
       Blksize = trunc(32000/Lrecl)* Lrecl;
-      If Format = 'V' then Format = 'VB';
-      If Format = 'F' then Format = 'FB';
+      If Format = 'V' then RECFM = 'VB';
+      If Format = 'F' then RECFM = 'FB';
       BLOCKS = trunc(NORECS / (BLKSIZE / LRECL)) + 1;
       If left(ft,3) = 'DAS' then Iterate
       File_no = File_no + 1;
       Label_no = File_no + 2;
-      SAY 'FILE NO =' FILE_NO;
+      SAY 'File No =' FILE_NO ' File Name =' fn 
       ln = ln + 1;
       OUT.LN = '//STEP'||FILE_NO 'EXEC PGM=IEBGENER';
       ln = ln + 1;
@@ -130,7 +155,8 @@ File_no = 1;
       ln = ln + 1;
       OUT.LN = '//          LABEL=('||LABEL_NO||',BLP),';
       ln = ln + 1;
-      OUT.LN = '//          DCB=(DSORG=PS,RECFM='||RECFM||',LRECL='||LRECL||',BLKSIZE='||BLKSIZE||')';
+/*      OUT.LN = '//          DCB=(DSORG=PS,RECFM='||RECFM||',LRECL='||LRECL||',BLKSIZE='||BLKSIZE||')'; */
+      OUT.LN = '//          DCB=(DSORG=PS,RECFM=F,LRECL='||LRECL||')';
       ln = ln + 1;
       OUT.LN = '//SYSUT2 DD DSN='||NewUser||'.'||FN||'.'||FT||',DISP=(,CTLG,DELETE),';
       ln = ln + 1;
@@ -142,6 +168,12 @@ File_no = 1;
       ln = ln + 1;
       Out.ln = '//SYSIN  DD DUMMY';
       OutFile.File_no = REC;
+      If opsys = 'UNIX'
+      Then do i = 1 to NoRecs;
+         Record = linein(FN); 
+    	 call lineout 'VMFILE.F'||FILE_NO, Record;
+      End;
+
       PARSE PULL REC;
    End
 ln = ln + 1;
@@ -154,12 +186,19 @@ else do;
    Say 'No files were selected for conversion - Please investigate!';
    Signal CLEANUP;
 end  /* Do */
-'DESBUF'
+If opsys <> 'UNIX' then 'DESBUF';
 Do i = 1 to Out.0;
    queue Out.i;
 end /* do */
-'EXECIO' OUT.0 'DISKW' NAME '$TEMPJCL A 1 F 80 (FINIS'
+If opsys = 'UNIX'
+then do i = 1 to OUT.0;
+        say OUT.i;
+     end;
+else 'EXECIO' OUT.0 'DISKW' NAME '$TEMPJCL A 1 F 80 (FINIS'
 
+/* Now we write the JCL and all files to tape */
+
+/* Closing down */
 If VRexxActive = Yes then Say 'Closing VRexx';
 If VRexxActive = Yes then call VExit;
 VRexxActive = No;
@@ -177,8 +216,7 @@ CLEANUP:
   VRexxActive = No;
 
 EndIt:
-  'DESBUF';
-  Call trace('r');
+  If opsys <> 'UNIX' then 'DESBUF';
   If Debug = Yes then say 'At EndIt...';
   if debug = Yes then say 'Press Enter to continue...';
   if debug = Yes then pull nul;
@@ -191,7 +229,6 @@ Exit;
 
 Copyright:
 
-  If Debug = Yes then call trace('r');
 /*  b=reverse(b);  */
   If bQuiet > 0 then return;
   msg.0 = 6;
@@ -201,7 +238,10 @@ Copyright:
   msg.4 = '';
   msg.5 = '           Press Enter to acknowledge the rights';
   msg.6 = '    of Rob Crothall and Associates, or cancel this task.';
-
+  Do i = 1 to msg.0;
+  say msg.i;
+  end;
+  parse pull .;
 
 Return;
 
@@ -209,13 +249,13 @@ Return;
 /*------------------------------------------------------------*/
 
 Initialize:
-If Debug = Yes then call trace('r');
 
 /* Find the DRIVE, PATH, and FILENAME */
 parse source opsys invoked myname;
 /*myname     = translate(myname);*/
 /*e_drive    = left(myname,2)*/
 /*e-drive     = ' ';*/
+opsys        = translate(opsys);
 ObjectName = myname;
 /*parse var temp 'DMC.'e_name'\'e_path;*/
 temp        = reverse(myname);
@@ -232,7 +272,6 @@ Return;
 /*------------------------------------------------------------*/
 Parameters:  /* Handle default options and parameters passed to us... */
 
-  If Debug = Yes then call trace('r');
   miCat    = 'MICAT.CTL';
   bQuiet   = No;
   Skel     = 'MIREP.TXT';
@@ -243,7 +282,8 @@ Parameters:  /* Handle default options and parameters passed to us... */
   Indent   = 5;
   LineLen  = 60;
   Align    = No;
-  Target   = 'A';
+  If opsys = 'UNIX' then Target = '*';
+  else Target   = 'A';
   Do I = 1 to words(ProcOpts);
 
     work = word(ProcOpts, I);
